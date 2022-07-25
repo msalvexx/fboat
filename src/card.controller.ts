@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { Card } from './card.model';
-import { CardService } from './produtos.service';
+import { CardService } from './card.service';
 
 @Controller('Card')
 export class CardController {
