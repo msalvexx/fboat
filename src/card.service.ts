@@ -1,58 +1,43 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
 import { Card } from './card.model';
 
 @Injectable()
 export class CardService {
-  private _cards: Card[] = [
-    /*     new Card(
-          1,
-          'Card 1',
-          'Description 1',
-          'https://via.placeholder.com/150',
-          new Date(),
-          new Date(),
-        ),
-        new Card(
-          2,
-          'Card 2',
-          'Description 2',
-          'https://via.placeholder.com/150',
-          new Date(),
-          new Date(),
-        ),
-        new Card(
-          3,
-          'Card 3',
-          'Description 3',
-          'https://via.placeholder.com/150',
-          new Date(),
-          new Date(),
-        ), */
-  ];
-  public get cards(): Card[] {
-    return this._cards;
-  }
-  public set cards(value: Card[]) {
-    this._cards = value;
+  constructor(
+    @InjectModel(Card)
+    private cardModel: typeof Card,
+  ) {}
+
+  async obterTodos(): Promise<Card[]> {
+    return this.cardModel.findAll();
   }
 
-  obterTodos(): Card[] {
-    return this.cards;
+  async obterPorId(id: number): Promise<Card> {
+    return this.cardModel.findByPk(id);
   }
 
-  obterPorId(id: number): Card {
-    return this.cards[0];
+  async criar(card: Card) {
+    this.cardModel.create(card);
   }
 
-  criar(card: Card) {
-    this.cards.push(card);
+  async alterar(card: Card): Promise<[number, Card[]]> {
+    return this.cardModel.update(card, {
+      returning: true,
+      where: {
+        id: card.id,
+      },
+    });
   }
 
-  alterar(card: Card): Card {
-    return card;
-  }
-
-  apagar(id: number) {
-    this.cards.pop();
+  async apagar(id: number): Promise<void> {
+    const card: Card = await this.obterPorId(id);
+    card.destroy();
   }
 }
+
+/*   async uploadFile(image: any): Promise<void> {
+    const card: Card = await this.obterPorId(image.id);
+    card.image = image.filename;
+    card.save();
+  } */

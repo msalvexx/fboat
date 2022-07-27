@@ -15,12 +15,9 @@ export class Card extends Model<Card> {
     type: DataType.STRING(60),
     allowNull: false,
   })
-  description: string;
   @Column({
-    type: DataType.STRING(60),
+    type: DataType.BLOB,
     allowNull: false,
   })
   image: string;
-  created_at: Date;
-  updated_at: Date;
 }
