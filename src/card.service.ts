@@ -34,10 +34,10 @@ export class CardService {
     const card: Card = await this.obterPorId(id);
     card.destroy();
   }
-}
 
-/*   async uploadFile(image: any): Promise<void> {
+  async uploadFile(image: any): Promise<void> {
     const card: Card = await this.obterPorId(image.id);
     card.image = image.filename;
     card.save();
-  } */
+  }
+}

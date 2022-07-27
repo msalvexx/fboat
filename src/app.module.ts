@@ -7,14 +7,12 @@ import { AppService } from './app.service';
 import { CardController } from './card.controller';
 import { Card } from './card.model';
 import { CardService } from './card.service';
-import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     MulterModule.register({
       dest: './files',
     }),
-    MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'mysql',
