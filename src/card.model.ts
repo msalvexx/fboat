@@ -1,23 +1,31 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Table
-export class Card extends Model<Card> {
-  @Column({
-    type: DataType.STRING(60),
-    allowNull: false,
-  })
-  @Column({
-    type: DataType.STRING(255),
-    allowNull: false,
-  })
+@Entity()
+export class Card {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
   name: string;
-  @Column({
-    type: DataType.STRING(60),
-    allowNull: false,
-  })
-  @Column({
-    type: DataType.BLOB,
-    allowNull: false,
-  })
+
+  @Column()
+  description: string;
+
+  @Column()
   image: string;
+
+  @Column()
+  price: number;
+
+  @Column()
+  quantity: number;
+
+  @Column()
+  category: string;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
 }
