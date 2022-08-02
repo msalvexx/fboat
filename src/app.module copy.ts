@@ -4,9 +4,9 @@ import { MulterModule } from '@nestjs/platform-express';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CardController } from './card.controller';
-import { Card } from './card.model';
-import { CardService } from './card.service';
+import { CardController } from './card/card.controller';
+import { Card } from './card/card.entity';
+import { CardService } from './card/card.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 

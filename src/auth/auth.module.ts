@@ -9,11 +9,13 @@ import { jwtConstants } from './constants';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { TokenModule } from 'src/token/token.module';
 
 @Module({
   imports: [
     UsersModule,
-    PassportModule.register({ defaultStrategy: 'bearer' }),
+    PassportModule,
+    TokenModule,
     TypeOrmModule.forFeature([User, UsersService]),
     JwtModule.register({
       secret: jwtConstants.secret,

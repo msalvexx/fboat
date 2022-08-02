@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Card } from './card.model';
+import { Card } from './card.entity';
 
 @Injectable()
 export class CardService {
@@ -32,11 +32,5 @@ export class CardService {
   async apagar(id: number): Promise<void> {
     await this.cardRepository.delete(id);
     return Promise.resolve();
-  }
-
-  async uploadFile(image: any): Promise<void> {
-    const card: Card = await this.obterPorId(image.id);
-    card.image = image.filename;
-    await this.cardRepository.update(card.id, card);
   }
 }

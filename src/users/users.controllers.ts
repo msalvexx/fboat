@@ -7,15 +7,18 @@ import {
   Body,
   Param,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 
 import { UsersService } from './users.service';
 import { UsersDTO } from './users.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async showAllUsers() {
     const users = await this.usersService.showAll();
