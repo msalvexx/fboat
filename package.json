@@ -1,0 +1,23 @@
+{
+  "name": "fboat-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msalvexx/fboat-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/msalvexx/fboat-backend/issues"
+  },
+  "homepage": "https://github.com/msalvexx/fboat-backend#readme"
+}
