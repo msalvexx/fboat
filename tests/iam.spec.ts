@@ -33,14 +33,7 @@ describe('When add role to user', () => {
   })
 
   test('User should not has permission if user not has any role that contains permission', () => {
-    const { sut, role } = makeSut()
-    const role2 = new Role('Maintainer')
-    const permission = 'WriteArticle'
-    role.addPermission(permission)
-    role2.addPermission(permission)
-
-    sut.addRole(role)
-    sut.addRole(role2)
+    const { sut } = makeSut()
 
     expect(sut.hasPermission('ReadArticle')).toBeFalsy()
   })
