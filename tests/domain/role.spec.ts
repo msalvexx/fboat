@@ -34,41 +34,48 @@ export class Role {
   }
 }
 
+interface Sut {
+  sut: User
+  role: Role
+}
+
+const makeSut = (): Sut => ({
+  sut: new User('user', 'user@mail.com', 'teste123', '123'),
+  role: new Role('Author')
+})
+
 describe('When add role to user', () => {
   test('Should add role if user not have role yet', () => {
-    const user = new User('user', 'user@mail.com', 'teste123', '123')
-    const role = new Role('Author')
+    const { sut, role } = makeSut()
 
-    user.addRole(role)
+    sut.addRole(role)
 
-    expect(user.hasRole(role)).toBeTruthy()
+    expect(sut.hasRole(role)).toBeTruthy()
   })
 
   test('User should has feature if user has role that contains feature', () => {
-    const user = new User('user', 'user@mail.com', 'teste123', '123')
-    const role1 = new Role('Author')
+    const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
     const feature = 'WriteArticle'
-    role1.addFeature(feature)
+    role.addFeature(feature)
     role2.addFeature(feature)
 
-    user.addRole(role1)
-    user.addRole(role2)
+    sut.addRole(role)
+    sut.addRole(role2)
 
-    expect(user.hasFeature(feature)).toBeTruthy()
+    expect(sut.hasFeature(feature)).toBeTruthy()
   })
 
   test('User should not has feature if user not has any role that contains feature', () => {
-    const user = new User('user', 'user@mail.com', 'teste123', '123')
-    const role1 = new Role('Author')
+    const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
     const feature = 'WriteArticle'
-    role1.addFeature(feature)
+    role.addFeature(feature)
     role2.addFeature(feature)
 
-    user.addRole(role1)
-    user.addRole(role2)
+    sut.addRole(role)
+    sut.addRole(role2)
 
-    expect(user.hasFeature('ReadArticle')).toBeFalsy()
+    expect(sut.hasFeature('ReadArticle')).toBeFalsy()
   })
 })
