@@ -5,7 +5,12 @@
     "target": "ES2022",
     "esModuleInterop": true,
     "allowJs": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/tests*": ["./tests/*"]
+    }
   },
   "include": ["src", "tests", "jest.config.ts"],
   "exclude": []

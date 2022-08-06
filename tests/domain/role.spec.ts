@@ -1,4 +1,4 @@
-import { Role, User } from '../../src/iam/model'
+import { Role, User } from '@/iam/model'
 
 interface Sut {
   sut: User
