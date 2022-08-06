@@ -44,4 +44,19 @@ describe('When add role to user', () => {
 
     expect(sut.hasFeature('ReadArticle')).toBeFalsy()
   })
+
+  test('User should has both features if user has roles that has features', () => {
+    const { sut, role } = makeSut()
+    const role2 = new Role('Maintainer')
+    const feature1 = 'WriteArticle'
+    const feature2 = 'DeleteArticle'
+    role.addFeature(feature1)
+    role2.addFeature(feature2)
+
+    sut.addRole(role)
+    sut.addRole(role2)
+
+    expect(sut.hasFeature('WriteArticle')).toBeTruthy()
+    expect(sut.hasFeature('DeleteArticle')).toBeTruthy()
+  })
 })
