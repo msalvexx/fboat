@@ -1,12 +1,12 @@
-type Feature = string
+type Permission = string
 
 export class Role {
-  features: string[] = []
+  permissions: string[] = []
 
   constructor (private readonly name: string) {}
 
-  addFeature (feature: Feature): void {
-    this.features.push(feature)
+  addPermission (permission: Permission): void {
+    this.permissions.push(permission)
   }
 }
 
@@ -28,8 +28,8 @@ export class User {
     return this.roles.has(role)
   }
 
-  hasFeature (feature: Feature): boolean {
-    const features = Array.from(this.roles).flatMap(x => x.features)
-    return features.includes(feature)
+  hasPermission (permission: Permission): boolean {
+    const permissions = Array.from(this.roles).flatMap(x => x.permissions)
+    return permissions.includes(permission)
   }
 }

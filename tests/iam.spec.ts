@@ -19,44 +19,44 @@ describe('When add role to user', () => {
     expect(sut.hasRole(role)).toBeTruthy()
   })
 
-  test('User should has feature if user has role that contains feature', () => {
+  test('User should has permission if user has role that contains permission', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const feature = 'WriteArticle'
-    role.addFeature(feature)
-    role2.addFeature(feature)
+    const permission = 'WriteArticle'
+    role.addPermission(permission)
+    role2.addPermission(permission)
 
     sut.addRole(role)
     sut.addRole(role2)
 
-    expect(sut.hasFeature(feature)).toBeTruthy()
+    expect(sut.hasPermission(permission)).toBeTruthy()
   })
 
-  test('User should not has feature if user not has any role that contains feature', () => {
+  test('User should not has permission if user not has any role that contains permission', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const feature = 'WriteArticle'
-    role.addFeature(feature)
-    role2.addFeature(feature)
+    const permission = 'WriteArticle'
+    role.addPermission(permission)
+    role2.addPermission(permission)
 
     sut.addRole(role)
     sut.addRole(role2)
 
-    expect(sut.hasFeature('ReadArticle')).toBeFalsy()
+    expect(sut.hasPermission('ReadArticle')).toBeFalsy()
   })
 
-  test('User should has both features if user has roles that has features', () => {
+  test('User should has both permissions if user has roles that has permissions', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const feature1 = 'WriteArticle'
-    const feature2 = 'DeleteArticle'
-    role.addFeature(feature1)
-    role2.addFeature(feature2)
+    const permission1 = 'WriteArticle'
+    const permission2 = 'DeleteArticle'
+    role.addPermission(permission1)
+    role2.addPermission(permission2)
 
     sut.addRole(role)
     sut.addRole(role2)
 
-    expect(sut.hasFeature('WriteArticle')).toBeTruthy()
-    expect(sut.hasFeature('DeleteArticle')).toBeTruthy()
+    expect(sut.hasPermission('WriteArticle')).toBeTruthy()
+    expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
   })
 })
