@@ -8,6 +8,10 @@ export class Role {
   addPermission (permission: Permission): void {
     this.permissions.push(permission)
   }
+
+  hasPermission (permission: Permission): boolean {
+    return this.permissions.includes(permission)
+  }
 }
 
 export class User {
