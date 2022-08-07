@@ -1,12 +1,8 @@
 import { Account } from '@/iam'
 
-export namespace GetAccountByEmail {
+export namespace GetAccountByEmailRepository {
   export type Params = string
   export type Result = Account | Error
-}
-
-export interface GetAccountByEmailRepository {
-  getByEmail: (email: GetAccountByEmail.Params) => Promise<GetAccountByEmail.Result>
 }
 
 export namespace SaveAccountRepository {
@@ -14,6 +10,7 @@ export namespace SaveAccountRepository {
   export type Result = boolean
 }
 
-export interface SaveAccountRepository {
+export interface AccountRepository {
   save: (account: SaveAccountRepository.Params) => Promise<SaveAccountRepository.Result>
+  getByEmail: (email: GetAccountByEmailRepository.Params) => Promise<GetAccountByEmailRepository.Result>
 }

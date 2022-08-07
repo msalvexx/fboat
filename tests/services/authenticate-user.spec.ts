@@ -1,27 +1,7 @@
-import { UnauthorizedError } from '@/iam'
-import { AuthenticateUser } from '@/iam/domain/service'
-import { DbAuthenticateUser } from '@/iam/service'
+import { AuthenticateUser, UnauthorizedError } from '@/iam'
 
-import { GetAccountByEmailRepositoryMock, HashComparerMock, mockAccount, TokenGeneratorMock } from '@/tests/mocks'
-
-type Sut = {
-  sut: DbAuthenticateUser
-  readRepo: GetAccountByEmailRepositoryMock
-  hashComparer: HashComparerMock
-  tokenGenerator: TokenGeneratorMock
-}
-
-const makeSut = (): Sut => {
-  const readRepo = new GetAccountByEmailRepositoryMock()
-  const hashComparer = new HashComparerMock()
-  const tokenGenerator = new TokenGeneratorMock()
-  return {
-    sut: new DbAuthenticateUser(readRepo, hashComparer, tokenGenerator),
-    readRepo,
-    hashComparer,
-    tokenGenerator
-  }
-}
+import { AccountServiceSut } from '@/tests/services/factory'
+import { mockAccount } from '@/tests/mocks'
 
 const mockAuthenticateUserParams = (email: string = 'valid@mail.com'): AuthenticateUser.Params => ({
   email,
@@ -30,7 +10,7 @@ const mockAuthenticateUserParams = (email: string = 'valid@mail.com'): Authentic
 
 describe('When Authenticating user', () => {
   test('Should return UnauthorizedError if account was not found', async () => {
-    const { sut } = makeSut()
+    const { sut } = AccountServiceSut.makeSut()
     const params = mockAuthenticateUserParams()
 
     const result = await sut.authenticate(params)
@@ -39,9 +19,9 @@ describe('When Authenticating user', () => {
   })
 
   test('Should return UnauthorizedError if password not match', async () => {
-    const { sut, readRepo, hashComparer } = makeSut()
-    readRepo.result = mockAccount()
-    hashComparer.result = false
+    const { sut, repo, crypto } = AccountServiceSut.makeSut()
+    repo.readResult = mockAccount()
+    crypto.compareResult = false
     const params = mockAuthenticateUserParams()
 
     const result = await sut.authenticate(params)
@@ -50,8 +30,8 @@ describe('When Authenticating user', () => {
   })
 
   test('Should return response correctly if authentication succeeds', async () => {
-    const { sut, readRepo } = makeSut()
-    readRepo.result = mockAccount()
+    const { sut, repo } = AccountServiceSut.makeSut()
+    repo.readResult = mockAccount()
     const params = mockAuthenticateUserParams()
 
     const result = await sut.authenticate(params)

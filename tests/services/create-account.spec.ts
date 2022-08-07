@@ -1,25 +1,6 @@
 import { CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
-import { DbCreateAccount } from '@/iam/service/create-account'
-
-import { GetAccountByEmailRepositoryMock } from '@/tests/mocks/get-account-by-email-repository'
-import { SaveAccountRepositorySpy } from '@/tests/spies/save-account-repository-spy'
-import { mockAccount } from '@/tests/mocks/account'
-
-type Sut = {
-  sut: DbCreateAccount
-  readRepo: GetAccountByEmailRepositoryMock
-  saveRepo: SaveAccountRepositorySpy
-}
-
-const makeSut = (): Sut => {
-  const readRepo = new GetAccountByEmailRepositoryMock()
-  const saveRepo = new SaveAccountRepositorySpy()
-  return {
-    sut: new DbCreateAccount(readRepo, saveRepo),
-    readRepo,
-    saveRepo
-  }
-}
+import { mockAccount } from '@/tests/mocks'
+import { AccountServiceSut } from '@/tests/services/factory'
 
 const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccount.Params => ({
   email,
@@ -32,10 +13,10 @@ const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccoun
 
 describe('Db Create account', () => {
   test('Should return EmailAlreadyInUseError if email already in use', async () => {
-    const { sut, readRepo } = makeSut()
+    const { sut, repo } = AccountServiceSut.makeSut()
     const invalidEmail = 'test@mail.com'
     const params = mockCreateAccountParams(invalidEmail)
-    readRepo.result = mockAccount(invalidEmail)
+    repo.readResult = mockAccount(invalidEmail)
 
     const result = await sut.create(params)
 
@@ -43,19 +24,18 @@ describe('Db Create account', () => {
   })
 
   test('Should call save account on repository', async () => {
-    const { sut, saveRepo } = makeSut()
+    const { sut, repo } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
 
     const account = await sut.create(params)
 
-    expect(saveRepo.account).toBe(account)
-    expect(saveRepo.calls).toBe(1)
+    expect(account).toStrictEqual(repo.account)
   })
 
   test('Should return PersistDataChangeError if save account on repository fails', async () => {
-    const { sut, saveRepo } = makeSut()
+    const { sut, repo } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
-    saveRepo.result = false
+    repo.saveResult = false
 
     const result = await sut.create(params)
 
