@@ -1,6 +1,6 @@
 export namespace ChangeUserPassword {
   export type Params = {
-    email: string
+    userId: string
     password: string
   }
 

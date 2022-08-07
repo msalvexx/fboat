@@ -6,7 +6,7 @@ interface Sut {
 }
 
 const makeSut = (): Sut => ({
-  sut: new User('user@mail.com', '123'),
+  sut: new User('123', 'user@mail.com', '123'),
   role: new Role('Author')
 })
 

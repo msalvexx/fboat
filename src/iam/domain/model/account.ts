@@ -9,14 +9,14 @@ export type PersonalData = {
 
 export class Account {
   private _updateDate = new Date()
-  readonly email: string
 
   constructor (
+    readonly accountId: string,
     private readonly user: User,
     private personalData: PersonalData,
     readonly creationDate: Date = new Date()
   ) {
-    this.email = user.email
+    this.accountId = user.email
   }
 
   changePersonalData (personalData: PersonalData): void {

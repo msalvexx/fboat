@@ -9,8 +9,8 @@ describe('Account', () => {
       birthDate: new Date(),
       occupation: 'Teacher'
     }
-    const user = new User(email, '123')
-    const sut = new Account(user, personalData)
+    const user = new User('123', email, '123')
+    const sut = new Account('accountId', user, personalData)
 
     const data = {
       firstName: 'any',

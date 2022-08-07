@@ -1,6 +1,6 @@
 export namespace UserActivation {
   export type Params = {
-    email: string
+    userId: string
     password: string
   }
 

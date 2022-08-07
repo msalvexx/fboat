@@ -4,6 +4,7 @@ export class User {
   private readonly roles: Set<Role> = new Set()
 
   constructor (
+    readonly userId: string,
     readonly email: string,
     private password: string
   ) {}
