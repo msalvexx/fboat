@@ -24,6 +24,10 @@ export class User {
     this.roles.add(role)
   }
 
+  addRoles (roles: Role[]): void {
+    roles.forEach(role => this.addRole(role))
+  }
+
   hasRole (role: Role): boolean {
     return this.roles.has(role)
   }

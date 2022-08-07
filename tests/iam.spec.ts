@@ -52,4 +52,18 @@ describe('When add role to user', () => {
     expect(sut.hasPermission('WriteArticle')).toBeTruthy()
     expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
   })
+
+  test('User can add multiple roles', () => {
+    const { sut, role } = makeSut()
+    const role2 = new Role('Maintainer')
+    const permission1 = 'WriteArticle'
+    const permission2 = 'DeleteArticle'
+    role.addPermission(permission1)
+    role2.addPermission(permission2)
+
+    sut.addRoles([role, role2])
+
+    expect(sut.hasPermission('WriteArticle')).toBeTruthy()
+    expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
+  })
 })
