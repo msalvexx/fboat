@@ -6,15 +6,15 @@ export class User {
   constructor (
     readonly userId: string,
     readonly email: string,
-    private password: string
+    private _password: string
   ) {}
 
   changePassword (password: string): void {
-    this.password = password
+    this._password = password
   }
 
-  verifyPassword (password: string): boolean {
-    return this.password === password
+  public get password (): string {
+    return this._password
   }
 
   changeRoles (roles: Role[]): void {
