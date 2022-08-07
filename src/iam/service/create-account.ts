@@ -1,6 +1,6 @@
 import { createAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
 import { GetAccountByEmailRepository, SaveAccountRepository } from '@/iam/domain/repository'
-import { CreateAccount } from '@/iam/domain/usecase'
+import { CreateAccount } from '@/iam/domain/service'
 
 export class DbCreateAccount {
   constructor (
