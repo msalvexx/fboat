@@ -5,7 +5,7 @@ export class SaveAccountRepositorySpy implements SaveAccountRepository {
   calls: number = 0
   result: boolean = true
 
-  async save (account: SaveAccountRepository.Params): SaveAccountRepository.Result {
+  async save (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
     this.account = account
     this.calls++
     return this.result

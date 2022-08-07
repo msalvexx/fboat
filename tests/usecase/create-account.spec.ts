@@ -1,10 +1,13 @@
-import { EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
+import { CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
 import { DbCreateAccount } from '@/iam/service/create-account'
+
 import { GetAccountByEmailRepositoryMock } from '@/tests/mocks/get-account-by-email-repository'
 import { SaveAccountRepositorySpy } from '@/tests/spies/save-account-repository-spy'
+import { mockAccount } from '@/tests/mocks/account'
 
 type Sut = {
   sut: DbCreateAccount
+  readRepo: GetAccountByEmailRepositoryMock
   saveRepo: SaveAccountRepositorySpy
 }
 
@@ -13,22 +16,26 @@ const makeSut = (): Sut => {
   const saveRepo = new SaveAccountRepositorySpy()
   return {
     sut: new DbCreateAccount(readRepo, saveRepo),
+    readRepo,
     saveRepo
   }
 }
 
+const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccount.Params => ({
+  email,
+  firstName: 'first',
+  lastName: 'last',
+  password: '123',
+  occupation: 'any',
+  birthDate: new Date()
+})
+
 describe('Db Create account', () => {
   test('Should return EmailAlreadyInUseError if email already in use', async () => {
-    const { sut } = makeSut()
+    const { sut, readRepo } = makeSut()
     const invalidEmail = 'test@mail.com'
-    const params = {
-      email: invalidEmail,
-      firstName: 'first',
-      lastName: 'last',
-      password: '123',
-      occupation: 'any',
-      birthDate: new Date()
-    }
+    const params = mockCreateAccountParams(invalidEmail)
+    readRepo.result = mockAccount(invalidEmail)
 
     const result = await sut.create(params)
 
@@ -37,14 +44,7 @@ describe('Db Create account', () => {
 
   test('Should call save account on repository', async () => {
     const { sut, saveRepo } = makeSut()
-    const params = {
-      email: 'valid@mail.com',
-      firstName: 'first',
-      lastName: 'last',
-      password: '123',
-      occupation: 'any',
-      birthDate: new Date()
-    }
+    const params = mockCreateAccountParams()
 
     const account = await sut.create(params)
 
@@ -54,14 +54,7 @@ describe('Db Create account', () => {
 
   test('Should return PersistDataChangeError if save account on repository fails', async () => {
     const { sut, saveRepo } = makeSut()
-    const params = {
-      email: 'valid@mail.com',
-      firstName: 'first',
-      lastName: 'last',
-      password: '123',
-      occupation: 'any',
-      birthDate: new Date()
-    }
+    const params = mockCreateAccountParams()
     saveRepo.result = false
 
     const result = await sut.create(params)

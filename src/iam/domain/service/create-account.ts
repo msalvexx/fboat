@@ -1,4 +1,4 @@
-import { Account } from '@/iam'
+import { Account, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
 
 export namespace CreateAccount {
   export type Params = {
@@ -10,7 +10,7 @@ export namespace CreateAccount {
     birthDate: Date
   }
 
-  export type Result = Account
+  export type Result = Account | EmailAlreadyInUseError | PersistDataChangeError
 }
 
 export interface CreateAccount {
