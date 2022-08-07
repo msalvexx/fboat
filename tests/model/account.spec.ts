@@ -20,6 +20,6 @@ describe('Account', () => {
     }
     sut.changePersonalData(data)
 
-    expect(sut.getPersonalData()).toBe(data)
+    expect(sut.personalData).toBe(data)
   })
 })

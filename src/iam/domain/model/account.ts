@@ -12,15 +12,13 @@ export class Account {
 
   constructor (
     readonly accountId: string,
-    private readonly user: User,
-    private personalData: PersonalData,
+    readonly user: User,
+    private _personalData: PersonalData,
     readonly creationDate: Date = new Date()
-  ) {
-    this.accountId = user.email
-  }
+  ) {}
 
   changePersonalData (personalData: PersonalData): void {
-    this.personalData = personalData
+    this._personalData = personalData
     this._updateDate = new Date()
   }
 
@@ -28,7 +26,7 @@ export class Account {
     return this._updateDate
   }
 
-  getPersonalData (): PersonalData {
-    return this.personalData
+  public get personalData (): PersonalData {
+    return this._personalData
   }
 }
