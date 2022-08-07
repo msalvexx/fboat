@@ -24,8 +24,16 @@ export class User {
   constructor (
     private readonly email: string,
     private readonly login: string,
-    private readonly password: string
+    private password: string
   ) {}
+
+  changePassword (password: string): void {
+    this.password = password
+  }
+
+  verifyPassword (password: string): boolean {
+    return this.password === password
+  }
 
   addRole (role: Role): void {
     this.roles.add(role)
