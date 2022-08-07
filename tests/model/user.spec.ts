@@ -10,16 +10,6 @@ const makeSut = (): Sut => ({
   role: new Role('Author')
 })
 
-describe('When user change password', () => {
-  test('Should change password correctly', () => {
-    const { sut } = makeSut()
-
-    sut.changePassword('1234')
-
-    expect(sut.verifyPassword('1234')).toBeTruthy()
-  })
-})
-
 describe('When add role to user', () => {
   test('Should add role if user not have role yet', () => {
     const { sut, role } = makeSut()
