@@ -5,12 +5,9 @@ export class Role {
 
   constructor (private readonly name: string) {}
 
-  addPermission (permission: Permission): void {
-    this.permissions.add(permission)
-  }
-
-  addPermissions (permissions: Permission[]): void {
-    permissions.forEach(permission => this.addPermission(permission))
+  changePermissions (permissions: Permission[]): void {
+    this.permissions.clear()
+    permissions.forEach(permission => this.permissions.add(permission))
   }
 
   hasPermission (permission: Permission): boolean {

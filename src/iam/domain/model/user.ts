@@ -17,12 +17,9 @@ export class User {
     return this.password === password
   }
 
-  addRole (role: Role): void {
-    this.roles.add(role)
-  }
-
-  addRoles (roles: Role[]): void {
-    roles.forEach(role => this.addRole(role))
+  changeRoles (roles: Role[]): void {
+    this.roles.clear()
+    roles.forEach(role => this.roles.add(role))
   }
 
   hasRole (role: Role): boolean {

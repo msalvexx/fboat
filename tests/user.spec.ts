@@ -24,7 +24,7 @@ describe('When add role to user', () => {
   test('Should add role if user not have role yet', () => {
     const { sut, role } = makeSut()
 
-    sut.addRole(role)
+    sut.changeRoles([role])
 
     expect(sut.hasRole(role)).toBeTruthy()
   })
@@ -33,11 +33,10 @@ describe('When add role to user', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
     const permission = 'WriteArticle'
-    role.addPermission(permission)
-    role2.addPermission(permission)
+    role.changePermissions([permission])
+    role2.changePermissions([permission])
 
-    sut.addRole(role)
-    sut.addRole(role2)
+    sut.changeRoles([role, role2])
 
     expect(sut.hasPermission(permission)).toBeTruthy()
   })
@@ -53,11 +52,10 @@ describe('When add role to user', () => {
     const role2 = new Role('Maintainer')
     const permission1 = 'WriteArticle'
     const permission2 = 'DeleteArticle'
-    role.addPermission(permission1)
-    role2.addPermission(permission2)
+    role.changePermissions([permission1])
+    role2.changePermissions([permission2])
 
-    sut.addRole(role)
-    sut.addRole(role2)
+    sut.changeRoles([role, role2])
 
     expect(sut.hasPermission('WriteArticle')).toBeTruthy()
     expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
@@ -68,10 +66,10 @@ describe('When add role to user', () => {
     const role2 = new Role('Maintainer')
     const permission1 = 'WriteArticle'
     const permission2 = 'DeleteArticle'
-    role.addPermission(permission1)
-    role2.addPermission(permission2)
+    role.changePermissions([permission1])
+    role2.changePermissions([permission2])
 
-    sut.addRoles([role, role2])
+    sut.changeRoles([role, role2])
 
     expect(sut.hasPermission('WriteArticle')).toBeTruthy()
     expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
