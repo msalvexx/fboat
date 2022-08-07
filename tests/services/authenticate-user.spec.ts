@@ -16,10 +16,22 @@ const mockAuthenticateUserParams = (email: string = 'valid@mail.com'): Authentic
   password: '123'
 })
 
+type Sut = {
+  sut: DbAuthenticateUser
+  readRepo: GetAccountByEmailRepositoryMock
+}
+
+const makeSut = (): Sut => {
+  const readRepo = new GetAccountByEmailRepositoryMock()
+  return {
+    sut: new DbAuthenticateUser(readRepo),
+    readRepo
+  }
+}
+
 describe('When Authenticating user', () => {
   test('Should return UnauthorizedError if account was not found', async () => {
-    const readRepo = new GetAccountByEmailRepositoryMock()
-    const sut = new DbAuthenticateUser(readRepo)
+    const { sut } = makeSut()
     const params = mockAuthenticateUserParams()
 
     const result = await sut.authenticate(params)
