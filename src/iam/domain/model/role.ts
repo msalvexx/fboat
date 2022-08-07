@@ -3,7 +3,7 @@ export type Permission = string
 export class Role {
   permissions: Set<Permission> = new Set()
 
-  constructor (private readonly name: string) {}
+  constructor (readonly name: string) {}
 
   changePermissions (permissions: Permission[]): void {
     this.permissions.clear()
@@ -14,3 +14,13 @@ export class Role {
     return this.permissions.has(permission)
   }
 }
+
+const availableRoles: Role[] = [
+  new Role('Writer'),
+  new Role('Reader'),
+  new Role('Maintainer'),
+  new Role('Administrator'),
+  new Role('BoatController')
+]
+
+export const findRolesByName = (roleNames: string[]): Role[] => availableRoles.filter(role => roleNames.includes(role.name))

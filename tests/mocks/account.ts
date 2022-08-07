@@ -16,6 +16,7 @@ export class AccountRepositoryMock implements AccountRepository {
   account: Account
   readResult: any
   saveResult: boolean = true
+  saveCalls: number = 0
 
   async save (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
     this.account = account

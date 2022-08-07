@@ -60,4 +60,4 @@ export interface ChangePassword {
   change: (params: ChangePassword.Params) => Promise<ChangePassword.Result>
 }
 
-export type AccountServices = AuthenticateUser & CreateAccount
+export type AccountServices = AuthenticateUser & CreateAccount & ChangeAccount

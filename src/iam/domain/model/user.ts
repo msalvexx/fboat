@@ -1,7 +1,7 @@
 import { Role, Permission } from '@/iam/domain/model'
 
 export class User {
-  private readonly roles: Set<Role> = new Set()
+  readonly roles: Set<Role> = new Set()
 
   constructor (
     readonly userId: string,
