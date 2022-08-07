@@ -7,7 +7,7 @@ export type PersonalData = {
   birthDate: Date
 }
 
-export class Person {
+export class Account {
   private _updateDate = new Date()
   readonly email: string
 

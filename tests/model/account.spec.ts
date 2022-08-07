@@ -1,6 +1,6 @@
-import { Person, PersonalData, User } from '@/iam'
+import { Account, PersonalData, User } from '@/iam'
 
-describe('Person', () => {
+describe('Account', () => {
   test('Can change personal data', () => {
     const email = 'test@mail.com'
     const personalData: PersonalData = {
@@ -10,7 +10,7 @@ describe('Person', () => {
       occupation: 'Teacher'
     }
     const user = new User(email, '123')
-    const sut = new Person(user, personalData)
+    const sut = new Account(user, personalData)
 
     const data = {
       firstName: 'any',
