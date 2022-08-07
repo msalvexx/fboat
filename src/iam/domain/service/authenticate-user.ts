@@ -6,7 +6,6 @@ export namespace AuthenticateUser {
 
   export type Result = {
     personName: string
-    accountId: string
     token: string
   } | Error
 }

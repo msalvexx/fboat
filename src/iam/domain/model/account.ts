@@ -1,24 +1,37 @@
 import { User } from '@/iam'
 
-export type PersonalData = {
-  firstName: string
-  lastName: string
-  occupation: string
-  birthDate: Date
+export namespace PersonalData {
+  export type Params = {
+    firstName: string
+    lastName: string
+    occupation: string
+    birthDate: Date
+  }
+}
+
+class PersonalData {
+  constructor (private readonly data: PersonalData.Params) {}
+
+  get fullName (): string {
+    return `${this.data.firstName} ${this.data.lastName}`
+  }
 }
 
 export class Account {
   private _updateDate = new Date()
+  private _personalData: PersonalData
 
   constructor (
     readonly accountId: string,
     readonly user: User,
-    private _personalData: PersonalData,
+    personalData: PersonalData.Params,
     readonly creationDate: Date = new Date()
-  ) {}
+  ) {
+    this.changePersonalData(personalData)
+  }
 
-  changePersonalData (personalData: PersonalData): void {
-    this._personalData = personalData
+  changePersonalData (personalData: PersonalData.Params): void {
+    this._personalData = new PersonalData(personalData)
     this._updateDate = new Date()
   }
 
