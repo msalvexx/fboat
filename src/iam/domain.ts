@@ -1,16 +1,20 @@
 type Permission = string
 
 export class Role {
-  permissions: string[] = []
+  permissions: Set<Permission> = new Set<Permission>()
 
   constructor (private readonly name: string) {}
 
   addPermission (permission: Permission): void {
-    this.permissions.push(permission)
+    this.permissions.add(permission)
+  }
+
+  addPermissions (permissions: Permission[]): void {
+    permissions.forEach(permission => this.addPermission(permission))
   }
 
   hasPermission (permission: Permission): boolean {
-    return this.permissions.includes(permission)
+    return this.permissions.has(permission)
   }
 }
 
@@ -37,7 +41,7 @@ export class User {
   }
 
   hasPermission (permission: Permission): boolean {
-    const permissions = Array.from(this.roles).flatMap(x => x.permissions)
-    return permissions.includes(permission)
+    const permissions: Set<Permission> = new Set(Array.from(this.roles).flatMap(x => Array.from(x.permissions)))
+    return permissions.has(permission)
   }
 }

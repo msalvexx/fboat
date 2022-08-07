@@ -76,4 +76,12 @@ describe('When add permission to role', () => {
 
     expect(role.hasPermission('WriteArticle')).toBeTruthy()
   })
+
+  test('Should add multiple permissions to role', () => {
+    const role = new Role('Maintainer')
+
+    role.addPermissions(['WriteArticle', 'DeleteArticle'])
+
+    expect(role.hasPermission('WriteArticle')).toBeTruthy()
+  })
 })
