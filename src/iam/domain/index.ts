@@ -1,2 +1,2 @@
-export * from './role'
-export * from './user'
+export * from './model'
+export * from './usecase'

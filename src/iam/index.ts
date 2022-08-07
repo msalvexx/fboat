@@ -1,1 +1,2 @@
-export * from './domain'
+export * from './domain/model'
+export * from './domain/usecase'
