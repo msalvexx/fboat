@@ -8,6 +8,13 @@ class EmailAlreadyInUseError extends Error {
   }
 }
 
+class PersistDataChangeError extends Error {
+  constructor (type: string) {
+    super(`Failed to persist changes on ${type}`)
+    this.name = 'PersistDataChangeError'
+  }
+}
+
 export namespace GetAccountByEmail {
   export type Params = string
   export type Result = Promise<Account>
@@ -29,11 +36,12 @@ interface SaveAccountRepository {
 class SaveAccountRepositorySpy implements SaveAccountRepository {
   account: Account
   calls: number = 0
+  result: boolean = true
 
   async save (account: SaveAccountRepository.Params): SaveAccountRepository.Result {
     this.account = account
     this.calls++
-    return true
+    return this.result
   }
 }
 
@@ -61,7 +69,7 @@ export class DbCreateAccount {
     const retrievedAccount = this.readRepo.getByEmail(email)
     if ((await retrievedAccount).user.email === email) return new EmailAlreadyInUseError(email)
     const newAccount = createAccount(params)
-    await this.saveRepo.save(newAccount)
+    if (!(await this.saveRepo.save(newAccount))) return new PersistDataChangeError(newAccount.constructor.name)
     return newAccount
   }
 }
@@ -83,8 +91,9 @@ const makeSut = (): Sut => {
 describe('Db Create account', () => {
   test('Should return EmailAlreadyInUseError if email already in use', async () => {
     const { sut } = makeSut()
+    const invalidEmail = 'test@mail.com'
     const params = {
-      email: 'test@mail.com',
+      email: invalidEmail,
       firstName: 'first',
       lastName: 'last',
       password: '123',
@@ -94,10 +103,10 @@ describe('Db Create account', () => {
 
     const result = await sut.create(params)
 
-    expect(result).toBeInstanceOf(EmailAlreadyInUseError)
+    expect(result).toStrictEqual(new EmailAlreadyInUseError(invalidEmail))
   })
 
-  test('Should save account on repository', async () => {
+  test('Should call save account on repository', async () => {
     const { sut, saveRepo } = makeSut()
     const params = {
       email: 'valid@mail.com',
@@ -112,5 +121,22 @@ describe('Db Create account', () => {
 
     expect(saveRepo.account).toBe(account)
     expect(saveRepo.calls).toBe(1)
+  })
+
+  test('Should return PersistDataChangeError if save account on repository fails', async () => {
+    const { sut, saveRepo } = makeSut()
+    const params = {
+      email: 'valid@mail.com',
+      firstName: 'first',
+      lastName: 'last',
+      password: '123',
+      occupation: 'any',
+      birthDate: new Date()
+    }
+    saveRepo.result = false
+
+    const result = await sut.create(params)
+
+    expect(result).toStrictEqual(new PersistDataChangeError('Account'))
   })
 })
