@@ -59,7 +59,7 @@ export class DbCreateAccount {
   async create (params: CreateAccount.Params): Promise<any> {
     const { email } = params
     const retrievedAccount = this.readRepo.getByEmail(email)
-    if ((await retrievedAccount).user.email === email) throw new EmailAlreadyInUseError(email)
+    if ((await retrievedAccount).user.email === email) return new EmailAlreadyInUseError(email)
     const newAccount = createAccount(params)
     await this.saveRepo.save(newAccount)
     return newAccount
@@ -81,7 +81,7 @@ const makeSut = (): Sut => {
 }
 
 describe('Db Create account', () => {
-  test('Should throw EmailAlreadyInUseError if email already in use', async () => {
+  test('Should return EmailAlreadyInUseError if email already in use', async () => {
     const { sut } = makeSut()
     const params = {
       email: 'test@mail.com',
@@ -92,9 +92,9 @@ describe('Db Create account', () => {
       birthDate: new Date()
     }
 
-    const promise = sut.create(params)
+    const result = await sut.create(params)
 
-    await expect(promise).rejects.toThrowError(EmailAlreadyInUseError)
+    expect(result).toBeInstanceOf(EmailAlreadyInUseError)
   })
 
   test('Should save account on repository', async () => {
