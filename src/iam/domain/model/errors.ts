@@ -18,3 +18,10 @@ export class AccountNotFoundError extends Error {
     this.name = 'AccountNotFoundError'
   }
 }
+
+export class UnauthorizedError extends Error {
+  constructor () {
+    super('Unauthorized')
+    this.name = 'UnauthorizedError'
+  }
+}
