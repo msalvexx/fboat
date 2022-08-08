@@ -40,7 +40,7 @@ export namespace ChangeAccount {
     personalData: PersonalData.Params
   }
 
-  export type Result = Promise<void> | Promise<Error>
+  export type Result = undefined | Error
 }
 
 export interface ChangeAccount {
@@ -54,7 +54,7 @@ export namespace ChangePassword {
     newPassword: string
   }
 
-  export type Result = boolean
+  export type Result = undefined | Error
 }
 
 export interface ChangePassword {

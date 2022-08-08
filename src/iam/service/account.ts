@@ -40,7 +40,7 @@ export class AccountService implements AccountServices {
     if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)
   }
 
-  async changePassword (params: ChangePassword.Params): Promise<any> {
+  async changePassword (params: ChangePassword.Params): Promise<ChangePassword.Result> {
     const { email, oldPassword: digest, newPassword } = params
     const retrievedAccount = await this.repo.getByEmail(email) as Account
     const { password } = retrievedAccount.user
