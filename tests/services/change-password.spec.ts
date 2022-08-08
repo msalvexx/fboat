@@ -1,4 +1,4 @@
-import { ChangePassword, PersistDataChangeError, UnauthorizedError } from '@/iam'
+import { ChangePassword, PersistDataChangeError } from '@/iam'
 import { mockAccount } from '../mocks'
 import { AccountServiceSut } from './factory'
 
@@ -18,17 +18,6 @@ describe('When change password', () => {
     await sut.changePassword(params)
 
     expect(repo.account.user.password).toBe(hashedPassword)
-  })
-
-  test('will return UnauthorizedError if user not has permission to change password', async () => {
-    const { sut, repo, loggedUser } = AccountServiceSut.makeSut()
-    const params = mockParams()
-    repo.readResult = mockAccount(params.email, '123', 'invalidId')
-    loggedUser.resetRoles()
-
-    const result = await sut.changePassword(params)
-
-    expect(result).toStrictEqual(new UnauthorizedError())
   })
 
   test('Will return error if save fails', async () => {
