@@ -16,7 +16,8 @@ const mockParams = (): ChangeAccount.Params => ({
 
 describe('When change account', () => {
   test('Will update roles and personal data correctly', async () => {
-    const { sut, repo } = AccountServiceSut.makeSut()
+    const { sut, repo, loggedUser } = AccountServiceSut.makeSut()
+    loggedUser.changeRoles(findRolesByName(['Administrator']))
     repo.readResult = mockAccount('any-email@mail.com')
     const params = mockParams()
 
@@ -24,6 +25,20 @@ describe('When change account', () => {
 
     const user = new User('123', params.email, '123')
     user.changeRoles(findRolesByName(['Writer']))
+    const expectedAccount = new Account('123', user, params.personalData)
+    expect(repo.account.personalData).toStrictEqual(expectedAccount.personalData)
+    expect(repo.account.user.roles).toStrictEqual(expectedAccount.user.roles)
+  })
+
+  test('Will not change role if logged user is not admin', async () => {
+    const { sut, repo, loggedUser } = AccountServiceSut.makeSut()
+    loggedUser.resetRoles()
+    repo.readResult = mockAccount('any-email@mail.com')
+    const params = mockParams()
+
+    await sut.change(params)
+
+    const user = new User('123', params.email, '123')
     const expectedAccount = new Account('123', user, params.personalData)
     expect(repo.account.personalData).toStrictEqual(expectedAccount.personalData)
     expect(repo.account.user.roles).toStrictEqual(expectedAccount.user.roles)

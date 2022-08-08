@@ -1,7 +1,7 @@
-import { Role, Permission, findRolesByName } from '@/iam/domain/model'
+import { Role, Permission, findRoleByName } from '@/iam/domain/model'
 
 export class User {
-  readonly roles: Set<Role> = new Set(findRolesByName(['Owner']))
+  readonly roles: Set<Role> = new Set([findRoleByName('Owner')])
 
   constructor (
     readonly userId: string,
@@ -18,9 +18,13 @@ export class User {
   }
 
   changeRoles (roles: Role[]): void {
-    this.roles.clear()
-    roles.concat(findRolesByName(['Owner']))
+    this.resetRoles()
     roles.forEach(role => this.roles.add(role))
+  }
+
+  resetRoles (): void {
+    this.roles.clear()
+    this.roles.add(findRoleByName('Owner'))
   }
 
   hasRole (role: Role): boolean {

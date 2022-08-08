@@ -1,22 +1,25 @@
-import { AccountService } from '@/iam/service/account'
-import { AuthenticationService } from '@/iam/service/authentication'
-import { AccountRepositoryMock, CryptographyMock } from '@/tests/mocks'
-import { HasherMock } from '../mocks/hasher'
+import { findRolesByName, User } from '@/iam'
+import { AccountService, AuthenticationService } from '@/iam/service'
+import { AccountRepositoryMock, CryptographyMock, mockUser, HasherMock } from '@/tests/mocks'
 
 export namespace AccountServiceSut {
   type Sut = {
     sut: AccountService
     repo: AccountRepositoryMock
     hasher: HasherMock
+    loggedUser: User
   }
 
   export const makeSut = (): Sut => {
+    const loggedUser = mockUser()
+    loggedUser.changeRoles(findRolesByName(['Administrator']))
     const repo = new AccountRepositoryMock()
     const hasher = new HasherMock()
     return {
-      sut: new AccountService(repo, hasher),
+      sut: new AccountService(loggedUser, repo, hasher),
       repo,
-      hasher
+      hasher,
+      loggedUser
     }
   }
 }

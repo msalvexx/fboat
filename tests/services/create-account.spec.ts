@@ -29,7 +29,7 @@ describe('Db Create account', () => {
 
     const account = await sut.create(params)
 
-    expect(account).toStrictEqual(repo.account)
+    expect(repo.account).toStrictEqual(account)
   })
 
   test('Should hash password', async () => {

@@ -1,8 +1,9 @@
-import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError, findRolesByName, PersistDataChangeError, UnauthorizedError } from '@/iam/domain/model'
+import { Account, AccountNotFoundError, changeAccount, createAccount, EmailAlreadyInUseError, PersistDataChangeError, UnauthorizedError, User } from '@/iam/domain/model'
 import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher } from '@/iam/domain/protocols'
 
 export class AccountService implements AccountModifier {
   constructor (
+    private readonly loggerUser: User,
     private readonly repo: AccountRepository,
     private readonly hasher: Hasher
   ) {}
@@ -20,10 +21,7 @@ export class AccountService implements AccountModifier {
   async change (params: ChangeAccount.Params): Promise<ChangeAccount.Result> {
     const { email } = params
     const retrievedAccount = await this.repo.getByEmail(email) as Account
-    retrievedAccount.changePersonalData(params.personalData)
-    retrievedAccount.changeAccountActivation(params.isActive)
-    const roles = findRolesByName(params.roles)
-    retrievedAccount.user.changeRoles(roles)
+    changeAccount(this.loggerUser, retrievedAccount, params)
     if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)
   }
 
