@@ -40,8 +40,10 @@ export class AccountService implements AccountServices {
   }
 
   async changePassword (params: ChangePassword.Params): Promise<any> {
-    const { email, newPassword } = params
+    const { email, oldPassword: digest, newPassword } = params
     const retrievedAccount = await this.repo.getByEmail(email) as Account
+    const { password } = retrievedAccount.user
+    if (!(await this.crypto.compare(password, digest))) return new UnauthorizedError()
     const hashedPassword = await this.crypto.generateHash(newPassword)
     retrievedAccount.user.changePassword(hashedPassword)
     if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)
