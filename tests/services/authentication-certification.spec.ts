@@ -1,4 +1,5 @@
 import { UnauthorizedError } from '@/iam'
+import { mockAccount } from '@/tests/mocks'
 import { AuthenticationSut } from './factory'
 
 describe('When certifying token of user', () => {
@@ -8,5 +9,14 @@ describe('When certifying token of user', () => {
     const result = await sut.certificate('invalidToken')
 
     expect(result).toStrictEqual(new UnauthorizedError())
+  })
+
+  test('Should return the logged user', async () => {
+    const { sut, repo } = AuthenticationSut.makeSut()
+    repo.readResult = mockAccount()
+
+    const user = await sut.certificate('validToken')
+
+    expect(user).toStrictEqual(mockAccount().user)
   })
 })

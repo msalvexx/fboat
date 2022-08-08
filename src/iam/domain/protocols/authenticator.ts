@@ -1,4 +1,4 @@
-import { Account } from '@/iam'
+import { User } from '@/iam'
 
 export namespace AuthenticateUser {
   export type Params = {
@@ -19,11 +19,11 @@ export interface AuthenticateUser {
 export namespace AuthenticationCertifier {
   export type Params = string
 
-  export type Result = Account | Error
+  export type Result = User | Error
 }
 
 export interface AuthenticationCertifier {
-  certicate: (token: AuthenticationCertifier.Params) => Promise<AuthenticationCertifier.Result>
+  certificate: (token: AuthenticationCertifier.Params) => Promise<AuthenticationCertifier.Result>
 }
 
-export type Authenticator = AuthenticateUser
+export type Authenticator = AuthenticateUser & AuthenticationCertifier

@@ -1,7 +1,7 @@
 import { GetAccountByEmailRepository, Cryptography, Hasher, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@/iam/domain/protocols'
 import { Account, UnauthorizedError } from '@/iam'
 
-export class AuthenticationService implements Authenticator {
+export class AuthenticationService implements Authenticator, AuthenticationCertifier {
   constructor (
     private readonly repo: GetAccountByEmailRepository,
     private readonly crypto: Cryptography,
@@ -22,9 +22,11 @@ export class AuthenticationService implements Authenticator {
     }
   }
 
-  async certificate (params: AuthenticationCertifier.Params): Promise<any> {
+  async certificate (params: AuthenticationCertifier.Params): Promise<AuthenticationCertifier.Result> {
     try {
-      await this.crypto.verify(params)
+      const { email } = await this.crypto.verify(params)
+      const account = await this.repo.getByEmail(email) as Account
+      return account.user
     } catch {
       return new UnauthorizedError()
     }
