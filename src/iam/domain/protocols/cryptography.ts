@@ -17,8 +17,22 @@ export namespace TokenGenerator {
 }
 
 export interface TokenGenerator {
-  generateToken: (params: TokenGenerator.Params) => Promise<TokenGenerator.Result>
+  generate: (params: TokenGenerator.Params) => Promise<TokenGenerator.Result>
+}
+
+export namespace TokenVerifier {
+  export type Params = string
+
+  export type Result = {
+    accountId: string
+    userId: string
+    email: string
+  }
+}
+
+export interface TokenVerifier {
+  verify: (params: TokenVerifier.Params) => Promise<TokenVerifier.Result>
 }
 
 export type Hasher = HashComparer & HashGenerator
-export type Cryptography = TokenGenerator
+export type Cryptography = TokenGenerator & TokenVerifier
