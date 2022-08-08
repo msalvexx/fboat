@@ -49,8 +49,9 @@ export interface ChangeAccount {
 
 export namespace ChangePassword {
   export type Params = {
-    userId: string
-    password: string
+    email: string
+    oldPassword: string
+    newPassword: string
   }
 
   export type Result = boolean

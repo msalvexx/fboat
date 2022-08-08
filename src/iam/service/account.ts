@@ -1,5 +1,5 @@
 import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError, findRolesByName, PersistDataChangeError, UnauthorizedError } from '@/iam/domain/model'
-import { AccountRepository, AuthenticateUser, CreateAccount, AccountServices, Cryptography, ChangeAccount } from '@/iam/domain/protocols'
+import { AccountRepository, AuthenticateUser, CreateAccount, AccountServices, Cryptography, ChangeAccount, ChangePassword } from '@/iam/domain/protocols'
 
 export class AccountService implements AccountServices {
   constructor (
@@ -14,7 +14,7 @@ export class AccountService implements AccountServices {
     const { userId, password } = retrievedAccount.user
     if (!(await this.crypto.compare(password, digest))) return new UnauthorizedError()
     const { accountId } = retrievedAccount
-    const token = await this.crypto.generate({ accountId, userId, email })
+    const token = await this.crypto.generateToken({ accountId, userId, email })
     return {
       token,
       personName: retrievedAccount.personalData.fullName
@@ -36,6 +36,14 @@ export class AccountService implements AccountServices {
     retrievedAccount.changePersonalData(params.personalData)
     const roles = findRolesByName(params.roles)
     retrievedAccount.user.changeRoles(roles)
+    if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)
+  }
+
+  async changePassword (params: ChangePassword.Params): Promise<any> {
+    const { email, newPassword } = params
+    const retrievedAccount = await this.repo.getByEmail(email) as Account
+    const hashedPassword = await this.crypto.generateHash(newPassword)
+    retrievedAccount.user.changePassword(hashedPassword)
     if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)
   }
 }
