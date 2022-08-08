@@ -10,7 +10,12 @@ export namespace SaveAccountRepository {
   export type Result = boolean
 }
 
-export interface AccountRepository {
+export interface SaveAccountRepository {
   save: (account: SaveAccountRepository.Params) => Promise<SaveAccountRepository.Result>
+}
+
+export interface GetAccountByEmailRepository {
   getByEmail: (email: GetAccountByEmailRepository.Params) => Promise<GetAccountByEmailRepository.Result>
 }
+
+export type AccountRepository = SaveAccountRepository & GetAccountByEmailRepository

@@ -10,11 +10,11 @@ const mockParams = (): ChangePassword.Params => ({
 
 describe('When change password', () => {
   test('will change user password correctly', async () => {
-    const { sut, repo, crypto } = AccountServiceSut.makeSut()
+    const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockParams()
     const hashedPassword = `hashed${params.newPassword}`
     repo.readResult = mockAccount(params.email)
-    crypto.generateHashResult = hashedPassword
+    hasher.generateResult = hashedPassword
 
     await sut.changePassword(params)
 
@@ -22,10 +22,10 @@ describe('When change password', () => {
   })
 
   test('will return UnauthorizedError if oldPassword not match', async () => {
-    const { sut, repo, crypto } = AccountServiceSut.makeSut()
+    const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockParams()
     repo.readResult = mockAccount(params.email)
-    crypto.compareResult = false
+    hasher.compareResult = false
 
     const result = await sut.changePassword(params)
 
@@ -33,11 +33,11 @@ describe('When change password', () => {
   })
 
   test('Will return error if save fails', async () => {
-    const { sut, repo, crypto } = AccountServiceSut.makeSut()
+    const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockParams()
     repo.readResult = mockAccount(params.email)
     repo.saveResult = false
-    crypto.compareResult = true
+    hasher.compareResult = true
 
     const result = await sut.changePassword(params)
 

@@ -1,21 +1,5 @@
 import { Account, EmailAlreadyInUseError, PersistDataChangeError, PersonalData } from '@/iam'
 
-export namespace AuthenticateUser {
-  export type Params = {
-    email: string
-    password: string
-  }
-
-  export type Result = {
-    personName: string
-    token: string
-  } | Error
-}
-
-export interface AuthenticateUser {
-  authenticate: (params: AuthenticateUser.Params) => Promise<AuthenticateUser.Result>
-}
-
 export namespace CreateAccount {
   export type Params = {
     email: string
@@ -62,4 +46,4 @@ export interface ChangePassword {
   change: (params: ChangePassword.Params) => Promise<ChangePassword.Result>
 }
 
-export type AccountServices = AuthenticateUser & CreateAccount & ChangeAccount
+export type AccountModifier = CreateAccount & ChangeAccount

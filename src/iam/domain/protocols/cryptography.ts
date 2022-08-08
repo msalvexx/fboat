@@ -1,9 +1,9 @@
 export interface HashComparer {
-  compareHash: (plaintext: string, digest: string) => Promise<boolean>
+  compare: (plaintext: string, digest: string) => Promise<boolean>
 }
 
 export interface HashGenerator {
-  generateHash: (rawText: string) => Promise<string>
+  generate: (rawText: string) => Promise<string>
 }
 
 export namespace TokenGenerator {
@@ -20,4 +20,5 @@ export interface TokenGenerator {
   generateToken: (params: TokenGenerator.Params) => Promise<TokenGenerator.Result>
 }
 
-export type Cryptography = TokenGenerator & HashComparer & HashGenerator
+export type Hasher = HashComparer & HashGenerator
+export type Cryptography = TokenGenerator
