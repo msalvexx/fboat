@@ -2,7 +2,7 @@ import { ChangePassword, PersistDataChangeError, UnauthorizedError } from '@/iam
 import { mockAccount } from '../mocks'
 import { AccountServiceSut } from './factory'
 
-const mockParams = (oldPassword: string = '123'): ChangePassword.Params => ({
+const mockParams = (): ChangePassword.Params => ({
   oldPassword: '123',
   newPassword: 'newPassword',
   email: 'any-email@mail.com'
@@ -23,7 +23,7 @@ describe('When change password', () => {
 
   test('will return UnauthorizedError if oldPassword not match', async () => {
     const { sut, repo, crypto } = AccountServiceSut.makeSut()
-    const params = mockParams('wrongPassword')
+    const params = mockParams()
     repo.readResult = mockAccount(params.email)
     crypto.compareResult = false
 
@@ -34,7 +34,7 @@ describe('When change password', () => {
 
   test('Will return error if save fails', async () => {
     const { sut, repo, crypto } = AccountServiceSut.makeSut()
-    const params = mockParams('wrongPassword')
+    const params = mockParams()
     repo.readResult = mockAccount(params.email)
     repo.saveResult = false
     crypto.compareResult = true
