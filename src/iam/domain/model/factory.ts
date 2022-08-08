@@ -34,7 +34,8 @@ export const createAvailableRoles = (): Role[] => {
     ...writerPermissions,
     ...fBoatReaderPermissions,
     ...fBoatControllerPermissions,
-    'ChangeRole'
+    'ChangeRole',
+    'CreateAccount'
   ]
   return [
     createRole('Writer', writerPermissions),

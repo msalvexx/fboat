@@ -1,4 +1,4 @@
-import { Account, CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
+import { Account, CreateAccount, EmailAlreadyInUseError, PersistDataChangeError, UnauthorizedError } from '@/iam'
 import { mockAccount } from '@/tests/mocks'
 import { AccountServiceSut } from '@/tests/services/factory'
 
@@ -12,6 +12,16 @@ const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccoun
 })
 
 describe('Db Create account', () => {
+  test('Should return UnauthorizedError if logged user has not permission to create an account', async () => {
+    const { sut, loggedUser } = AccountServiceSut.makeSut()
+    const params = mockCreateAccountParams()
+    loggedUser.resetRoles()
+
+    const result = await sut.create(params)
+
+    expect(result).toStrictEqual(new UnauthorizedError())
+  })
+
   test('Should return EmailAlreadyInUseError if email already in use', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
     const invalidEmail = 'test@mail.com'

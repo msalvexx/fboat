@@ -12,6 +12,7 @@ export class AccountService implements AccountModifier {
     const { email } = params
     const retrievedAccount = await this.repo.getByEmail(email)
     if (!(retrievedAccount instanceof AccountNotFoundError)) return new EmailAlreadyInUseError(email)
+    if (!this.loggerUser.hasPermission('CreateAccount')) return new UnauthorizedError()
     params.password = await this.hasher.generate(params.password)
     const newAccount = createAccount(params)
     if (!(await this.repo.save(newAccount))) return new PersistDataChangeError(newAccount.constructor.name)
