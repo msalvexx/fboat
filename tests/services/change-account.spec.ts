@@ -10,7 +10,8 @@ const mockParams = (): ChangeAccount.Params => ({
     lastName: 'Silva',
     occupation: 'Professor'
   },
-  roles: ['Writer']
+  roles: ['Writer'],
+  isActive: true
 })
 
 describe('When change account', () => {

@@ -1,5 +1,5 @@
 export interface HashComparer {
-  compare: (plaintext: string, digest: string) => Promise<boolean>
+  compareHash: (plaintext: string, digest: string) => Promise<boolean>
 }
 
 export interface HashGenerator {

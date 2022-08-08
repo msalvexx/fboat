@@ -12,7 +12,7 @@ export class AccountService implements AccountServices {
     const retrievedAccount = await this.repo.getByEmail(email)
     if (!(retrievedAccount instanceof Account) || !retrievedAccount.isActive) return new UnauthorizedError()
     const { userId, password } = retrievedAccount.user
-    if (!(await this.crypto.compare(password, digest))) return new UnauthorizedError()
+    if (!(await this.crypto.compareHash(password, digest))) return new UnauthorizedError()
     const { accountId } = retrievedAccount
     const token = await this.crypto.generateToken({ accountId, userId, email })
     return {
@@ -45,7 +45,7 @@ export class AccountService implements AccountServices {
     const { email, oldPassword: digest, newPassword } = params
     const retrievedAccount = await this.repo.getByEmail(email) as Account
     const { password } = retrievedAccount.user
-    if (!(await this.crypto.compare(password, digest)) || !retrievedAccount.isActive) return new UnauthorizedError()
+    if (!(await this.crypto.compareHash(password, digest)) || !retrievedAccount.isActive) return new UnauthorizedError()
     const hashedPassword = await this.crypto.generateHash(newPassword)
     retrievedAccount.user.changePassword(hashedPassword)
     if (!(await this.repo.save(retrievedAccount))) return new PersistDataChangeError(retrievedAccount.constructor.name)

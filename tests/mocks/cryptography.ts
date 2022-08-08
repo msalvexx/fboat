@@ -5,7 +5,7 @@ export class CryptographyMock implements Cryptography {
   generateTokenResult: string = 'validToken'
   generateHashResult: string = 'hashedPassword'
 
-  async compare (plaintext: string, digest: string): Promise<boolean> {
+  async compareHash (plaintext: string, digest: string): Promise<boolean> {
     return this.compareResult
   }
 
