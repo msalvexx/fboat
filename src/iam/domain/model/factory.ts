@@ -25,7 +25,7 @@ const createRole = (roleName: string, permissions: Permission[]): Role => {
 }
 
 export const createAvailableRoles = (): Role[] => {
-  const ownerPermissions: OwnerPermission[] = ['ChangeAccount', 'ChangePassword', 'DeleteAccount']
+  const ownerPermissions: OwnerPermission[] = ['ChangeAccount', 'ChangeOwnPassword', 'DeleteAccount']
   const writerPermissions: WriterPermission[] = ['CreateArticle', 'ChangeArticle', 'PublishArticle', 'DeleteArticle']
   const fBoatReaderPermissions: FBoatReaderPermission[] = ['ReadFBoatData']
   const fBoatControllerPermissions: FBoatControllerPermission[] = ['ControlFBoat']
@@ -35,7 +35,8 @@ export const createAvailableRoles = (): Role[] => {
     ...fBoatReaderPermissions,
     ...fBoatControllerPermissions,
     'ChangeRole',
-    'CreateAccount'
+    'CreateAccount',
+    'ChangeEveryonesPassword'
   ]
   return [
     createRole('Writer', writerPermissions),

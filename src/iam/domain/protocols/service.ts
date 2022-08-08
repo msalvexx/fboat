@@ -35,7 +35,6 @@ export interface ChangeAccount {
 export namespace ChangePassword {
   export type Params = {
     email: string
-    oldPassword: string
     newPassword: string
   }
 

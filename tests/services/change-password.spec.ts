@@ -3,7 +3,6 @@ import { mockAccount } from '../mocks'
 import { AccountServiceSut } from './factory'
 
 const mockParams = (): ChangePassword.Params => ({
-  oldPassword: '123',
   newPassword: 'newPassword',
   email: 'any-email@mail.com'
 })
@@ -21,11 +20,11 @@ describe('When change password', () => {
     expect(repo.account.user.password).toBe(hashedPassword)
   })
 
-  test('will return UnauthorizedError if oldPassword not match', async () => {
-    const { sut, repo, hasher } = AccountServiceSut.makeSut()
+  test('will return UnauthorizedError if user not has permission to change password', async () => {
+    const { sut, repo, loggedUser } = AccountServiceSut.makeSut()
     const params = mockParams()
-    repo.readResult = mockAccount(params.email)
-    hasher.compareResult = false
+    repo.readResult = mockAccount(params.email, '123', 'invalidId')
+    loggedUser.resetRoles()
 
     const result = await sut.changePassword(params)
 

@@ -5,8 +5,8 @@ export function mockUser (userId: string = '123', email: string = 'valid@mail.co
   return new User(userId, email, password)
 }
 
-export function mockAccount (email: string = 'valid@mail.com', password: string = '123'): Account {
-  const user = mockUser('123', email, password)
+export function mockAccount (email: string = 'valid@mail.com', password: string = '123', userId: string = '123'): Account {
+  const user = mockUser(userId, email, password)
   const personalData = {
     firstName: 'any',
     lastName: 'any',
