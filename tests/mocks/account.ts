@@ -1,8 +1,8 @@
 import { Account, User, AccountNotFoundError, GetAccountByEmailRepository } from '@/iam'
 import { AccountRepository, SaveAccountRepository } from '@/iam/domain/protocols'
 
-export function mockAccount (email: string = 'valid@mail.com'): Account {
-  const user = new User('123', email, '123')
+export function mockAccount (email: string = 'valid@mail.com', password: string = '123'): Account {
+  const user = new User('123', email, password)
   const personalData = {
     firstName: 'any',
     lastName: 'any',

@@ -25,6 +25,7 @@ export class AccountService implements AccountServices {
     const { email } = params
     const retrievedAccount = await this.repo.getByEmail(email)
     if (!(retrievedAccount instanceof AccountNotFoundError)) return new EmailAlreadyInUseError(email)
+    params.password = await this.crypto.generateHash(params.password)
     const newAccount = createAccount(params)
     if (!(await this.repo.save(newAccount))) return new PersistDataChangeError(newAccount.constructor.name)
     return newAccount

@@ -1,4 +1,4 @@
-import { CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
+import { Account, CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
 import { mockAccount } from '@/tests/mocks'
 import { AccountServiceSut } from '@/tests/services/factory'
 
@@ -30,6 +30,16 @@ describe('Db Create account', () => {
     const account = await sut.create(params)
 
     expect(account).toStrictEqual(repo.account)
+  })
+
+  test('Should hash password', async () => {
+    const { sut } = AccountServiceSut.makeSut()
+    const params = mockCreateAccountParams()
+
+    const account = await sut.create(params) as Account
+
+    const expectedAccount = mockAccount('valid@mail.com', 'hashedPassword')
+    expect(account.user.password).toStrictEqual(expectedAccount.user.password)
   })
 
   test('Should return PersistDataChangeError if save account on repository fails', async () => {

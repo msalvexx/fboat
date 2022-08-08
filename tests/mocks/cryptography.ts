@@ -3,7 +3,7 @@ import { Cryptography, TokenGenerator } from '@/iam/domain/protocols'
 export class CryptographyMock implements Cryptography {
   compareResult: boolean = true
   generateTokenResult: string = 'validToken'
-  generateHashResult: string = 'hashedToken'
+  generateHashResult: string = 'hashedPassword'
 
   async compare (plaintext: string, digest: string): Promise<boolean> {
     return this.compareResult
