@@ -22,7 +22,7 @@ describe('When add role to user', () => {
   test('User should has permission if user has role that contains permission', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const permission = 'WriteArticle'
+    const permission = 'CreateArticle'
     role.changePermissions([permission])
     role2.changePermissions([permission])
 
@@ -34,34 +34,34 @@ describe('When add role to user', () => {
   test('User should not has permission if user not has any role that contains permission', () => {
     const { sut } = makeSut()
 
-    expect(sut.hasPermission('ReadArticle')).toBeFalsy()
+    expect(sut.hasPermission('CreateArticle')).toBeFalsy()
   })
 
   test('User should has both permissions if user has roles that has permissions', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const permission1 = 'WriteArticle'
+    const permission1 = 'CreateArticle'
     const permission2 = 'DeleteArticle'
     role.changePermissions([permission1])
     role2.changePermissions([permission2])
 
     sut.changeRoles([role, role2])
 
-    expect(sut.hasPermission('WriteArticle')).toBeTruthy()
+    expect(sut.hasPermission('CreateArticle')).toBeTruthy()
     expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
   })
 
   test('User can add multiple roles', () => {
     const { sut, role } = makeSut()
     const role2 = new Role('Maintainer')
-    const permission1 = 'WriteArticle'
+    const permission1 = 'CreateArticle'
     const permission2 = 'DeleteArticle'
     role.changePermissions([permission1])
     role2.changePermissions([permission2])
 
     sut.changeRoles([role, role2])
 
-    expect(sut.hasPermission('WriteArticle')).toBeTruthy()
+    expect(sut.hasPermission('CreateArticle')).toBeTruthy()
     expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
   })
 })

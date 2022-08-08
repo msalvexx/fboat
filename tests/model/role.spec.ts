@@ -4,16 +4,16 @@ describe('When add permission to role', () => {
   test('Should add one permission to role', () => {
     const role = new Role('Maintainer')
 
-    role.changePermissions(['WriteArticle'])
+    role.changePermissions(['CreateArticle'])
 
-    expect(role.hasPermission('WriteArticle')).toBeTruthy()
+    expect(role.hasPermission('CreateArticle')).toBeTruthy()
   })
 
   test('Should add multiple permissions to role', () => {
     const role = new Role('Maintainer')
 
-    role.changePermissions(['WriteArticle', 'DeleteArticle'])
+    role.changePermissions(['CreateArticle', 'DeleteArticle'])
 
-    expect(role.hasPermission('WriteArticle')).toBeTruthy()
+    expect(role.hasPermission('CreateArticle')).toBeTruthy()
   })
 })
