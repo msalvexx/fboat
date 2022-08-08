@@ -20,6 +20,7 @@ class PersonalData {
 export class Account {
   private _updateDate = new Date()
   private _personalData: PersonalData
+  private _isActive: boolean = true
 
   constructor (
     readonly accountId: string,
@@ -33,6 +34,14 @@ export class Account {
   changePersonalData (personalData: PersonalData.Params): void {
     this._personalData = new PersonalData(personalData)
     this._updateDate = new Date()
+  }
+
+  changeAccountActivation (isActive: boolean): void {
+    this._isActive = isActive
+  }
+
+  public get isActive (): boolean {
+    return this._isActive
   }
 
   public get updateDate (): Date {

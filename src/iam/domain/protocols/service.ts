@@ -38,6 +38,7 @@ export namespace ChangeAccount {
     email: string
     roles: string[]
     personalData: PersonalData.Params
+    isActive: boolean
   }
 
   export type Result = undefined | Error
