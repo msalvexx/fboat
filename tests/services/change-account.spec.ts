@@ -35,8 +35,8 @@ describe('When change account', () => {
     repo.saveResult = false
     const params = mockParams()
 
-    const result = await sut.change(params)
+    const promise = sut.change(params)
 
-    expect(result).toStrictEqual(new PersistDataChangeError('Account'))
+    await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })
 })

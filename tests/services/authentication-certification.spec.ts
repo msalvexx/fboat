@@ -6,9 +6,9 @@ describe('When certifying token of user', () => {
   test('Should return error if certification fails', async () => {
     const { sut } = AuthenticationSut.makeSut()
 
-    const result = await sut.certificate('invalidToken')
+    const promise = sut.certificate('invalidToken')
 
-    expect(result).toStrictEqual(new UnauthorizedError())
+    await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
 
   test('Should return the logged user', async () => {

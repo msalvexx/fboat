@@ -13,9 +13,9 @@ describe('When Authenticating user', () => {
     const { sut } = AuthenticationSut.makeSut()
     const params = mockAuthenticateUserParams()
 
-    const result = await sut.authenticate(params)
+    const promise = sut.authenticate(params)
 
-    expect(result).toStrictEqual(new UnauthorizedError())
+    await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
 
   test('Should return UnauthorizedError if password not match', async () => {
@@ -24,9 +24,9 @@ describe('When Authenticating user', () => {
     hasher.compareResult = false
     const params = mockAuthenticateUserParams()
 
-    const result = await sut.authenticate(params)
+    const promise = sut.authenticate(params)
 
-    expect(result).toStrictEqual(new UnauthorizedError())
+    await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
 
   test('Should return response correctly if authentication succeeds', async () => {

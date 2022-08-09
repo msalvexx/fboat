@@ -27,8 +27,8 @@ describe('When change password', () => {
     repo.saveResult = false
     hasher.compareResult = true
 
-    const result = await sut.changePassword(params)
+    const promise = sut.changePassword(params)
 
-    expect(result).toStrictEqual(new PersistDataChangeError('Account'))
+    await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })
 })

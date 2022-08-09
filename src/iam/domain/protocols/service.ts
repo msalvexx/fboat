@@ -25,7 +25,7 @@ export namespace ChangeAccount {
     isActive: boolean
   }
 
-  export type Result = undefined | Error
+  export type Result = void
 }
 
 export interface ChangeAccount {
@@ -38,7 +38,7 @@ export namespace ChangePassword {
     newPassword: string
   }
 
-  export type Result = undefined | Error
+  export type Result = void
 }
 
 export interface ChangePassword {

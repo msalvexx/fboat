@@ -11,9 +11,9 @@ export class AuthenticationService implements Authenticator, AuthenticationCerti
   async authenticate (params: AuthenticateUser.Params): Promise<AuthenticateUser.Result> {
     const { email, password: digest } = params
     const retrievedAccount = await this.repo.getByEmail(email)
-    if (!(retrievedAccount instanceof Account) || !retrievedAccount.isActive) return new UnauthorizedError()
+    if (!(retrievedAccount instanceof Account) || !retrievedAccount.isActive) throw new UnauthorizedError()
     const { userId, password } = retrievedAccount.user
-    if (!(await this.hasher.compare(password, digest))) return new UnauthorizedError()
+    if (!(await this.hasher.compare(password, digest))) throw new UnauthorizedError()
     const { accountId } = retrievedAccount
     const token = await this.crypto.generate({ accountId, userId, email })
     return {
@@ -28,7 +28,7 @@ export class AuthenticationService implements Authenticator, AuthenticationCerti
       const account = await this.repo.getByEmail(email) as Account
       return account.user
     } catch {
-      return new UnauthorizedError()
+      throw new UnauthorizedError()
     }
   }
 }

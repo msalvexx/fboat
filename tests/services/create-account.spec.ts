@@ -18,9 +18,9 @@ describe('Db Create account', () => {
     const params = mockCreateAccountParams(invalidEmail)
     repo.readResult = mockAccount(invalidEmail)
 
-    const result = await sut.create(params)
+    const promise = sut.create(params)
 
-    expect(result).toStrictEqual(new EmailAlreadyInUseError(invalidEmail))
+    await expect(promise).rejects.toThrowError(new EmailAlreadyInUseError(invalidEmail))
   })
 
   test('Should call save account on repository', async () => {
@@ -47,8 +47,8 @@ describe('Db Create account', () => {
     const params = mockCreateAccountParams()
     repo.saveResult = false
 
-    const result = await sut.create(params)
+    const promise = sut.create(params)
 
-    expect(result).toStrictEqual(new PersistDataChangeError('Account'))
+    await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })
 })

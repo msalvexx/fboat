@@ -1,4 +1,4 @@
-import { Account, User, AccountNotFoundError, GetAccountByEmailRepository } from '@/iam'
+import { Account, User, GetAccountByEmailRepository, PersistDataChangeError } from '@/iam'
 import { AccountRepository, SaveAccountRepository } from '@/iam/domain/protocols'
 
 export function mockUser (userId: string = '123', email: string = 'valid@mail.com', password: string = '123'): User {
@@ -18,17 +18,16 @@ export function mockAccount (email: string = 'valid@mail.com', password: string 
 
 export class AccountRepositoryMock implements AccountRepository {
   account: Account
-  readResult: any
+  readResult: any = undefined
   saveResult: boolean = true
   saveCalls: number = 0
 
   async save (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
     this.account = account
-    return this.saveResult
+    if (!this.saveResult) throw new PersistDataChangeError(account.constructor.name)
   }
 
   async getByEmail (email: string): Promise<GetAccountByEmailRepository.Result> {
-    if (!this.readResult) return new AccountNotFoundError(email)
     return this.readResult
   }
 }

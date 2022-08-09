@@ -2,12 +2,12 @@ import { Account } from '@/iam'
 
 export namespace GetAccountByEmailRepository {
   export type Params = string
-  export type Result = Account | Error
+  export type Result = Account | undefined
 }
 
 export namespace SaveAccountRepository {
   export type Params = Account
-  export type Result = boolean
+  export type Result = void
 }
 
 export interface SaveAccountRepository {
