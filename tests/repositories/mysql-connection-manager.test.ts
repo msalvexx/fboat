@@ -1,12 +1,12 @@
-import { MySQLTransactionManager } from '@/repositories/mysql-transaction-manager'
+import { MySQLConnectionManager } from '@/repositories'
 import { MySqlContainer, StartedMySqlContainer } from 'testcontainers'
 
-describe('MySQLTransactionManager', () => {
+describe('MySQLConnectionManager', () => {
   jest.setTimeout(240_000)
 
   let container: StartedMySqlContainer
   let config: any
-  let sut: MySQLTransactionManager
+  let sut: MySQLConnectionManager
 
   beforeAll(async () => {
     container = await new MySqlContainer().withCmd(['--default-authentication-plugin=mysql_native_password']).start()
@@ -17,7 +17,7 @@ describe('MySQLTransactionManager', () => {
       username: container.getUsername(),
       password: container.getUserPassword()
     }
-    sut = MySQLTransactionManager.getInstance()
+    sut = MySQLConnectionManager.getInstance()
   })
 
   afterAll(async () => {
@@ -25,7 +25,7 @@ describe('MySQLTransactionManager', () => {
   })
 
   test('Should return same instance when getInstance is called', () => {
-    const sut2 = MySQLTransactionManager.getInstance()
+    const sut2 = MySQLConnectionManager.getInstance()
 
     expect(sut).toBe(sut2)
   })

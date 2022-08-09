@@ -1,7 +1,7 @@
 import { ConnectionNotFoundError, TransactionNotFoundError } from '@/iam'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 
-export namespace MySQLTransactionManager {
+export namespace MySQLConnectionManager {
   export type Config = {
     connectionString?: string | undefined
     connectTimeout?: number | number
@@ -11,12 +11,14 @@ export namespace MySQLTransactionManager {
     database?: string | undefined
     username?: string | undefined
     password?: string | undefined
+    entities?: string[]
+    migrations?: string[]
   }
 }
 
-export class MySQLTransactionManager {
-  private static instance?: MySQLTransactionManager
-  private readonly defaultConfig: MySQLTransactionManager.Config = {
+export class MySQLConnectionManager {
+  private static instance?: MySQLConnectionManager
+  private readonly defaultConfig: MySQLConnectionManager.Config = {
     host: 'localhost',
     port: 3306,
     username: 'dev',
@@ -29,14 +31,14 @@ export class MySQLTransactionManager {
 
   private constructor () {}
 
-  static getInstance (): MySQLTransactionManager {
+  static getInstance (): MySQLConnectionManager {
     if (this.instance === undefined) {
-      this.instance = new MySQLTransactionManager()
+      this.instance = new MySQLConnectionManager()
     }
     return this.instance
   }
 
-  async connect (config: MySQLTransactionManager.Config = this.defaultConfig): Promise<void> {
+  async connect (config: MySQLConnectionManager.Config = this.defaultConfig): Promise<void> {
     const datasource = new DataSource({
       type: 'mysql',
       url: config.connectionString,
@@ -46,7 +48,9 @@ export class MySQLTransactionManager {
       port: config.port,
       database: config.database,
       username: config.username,
-      password: config.password
+      password: config.password,
+      entities: config.entities,
+      migrations: config.migrations
     })
     if (!await this.isConnected()) this.connection = await datasource.initialize()
   }
@@ -80,6 +84,11 @@ export class MySQLTransactionManager {
   async rollback (): Promise<void> {
     if (this.query === undefined) throw new TransactionNotFoundError()
     await this.query.rollbackTransaction()
+  }
+
+  async runMigrations (): Promise<void> {
+    if (this.connection === undefined) throw new ConnectionNotFoundError()
+    await this.connection.runMigrations()
   }
 
   getRepository<Entity> (entity: ObjectType<Entity>): Repository<Entity> {

@@ -10,8 +10,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/tests/*": ["./tests/*"]
-    }
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "include": ["src", "tests", "jest.config.ts", "jest.integration.config.ts"],
+  "include": ["src", "tests", "jest.config.ts", "jest.integration.config.ts", "migrations"],
   "exclude": []
 }
