@@ -20,7 +20,7 @@ describe('When change account', () => {
     repo.readResult = mockAccount('any-email@mail.com')
     const params = mockParams()
 
-    await sut.change(params)
+    await sut.changeAccount(params)
 
     const user = new User('123', params.email, '123')
     user.changeRoles(findRolesByName(['Writer']))
@@ -35,7 +35,7 @@ describe('When change account', () => {
     repo.saveResult = false
     const params = mockParams()
 
-    const promise = sut.change(params)
+    const promise = sut.changeAccount(params)
 
     await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })

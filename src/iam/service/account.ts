@@ -1,4 +1,4 @@
-import { Account, changeAccount, createAccount, EmailAlreadyInUseError } from '@/iam/domain/model'
+import { Account, createAccount, EmailAlreadyInUseError, findRolesByName } from '@/iam/domain/model'
 import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher } from '@/iam/domain/protocols'
 
 export class AccountService implements AccountModifier {
@@ -16,10 +16,13 @@ export class AccountService implements AccountModifier {
     return newAccount
   }
 
-  async change (params: ChangeAccount.Params): Promise<ChangeAccount.Result> {
+  async changeAccount (params: ChangeAccount.Params): Promise<ChangeAccount.Result> {
     const { email } = params
     const retrievedAccount = await this.repo.getByEmail(email) as Account
-    changeAccount(retrievedAccount, params)
+    retrievedAccount.changePersonalData(params.personalData)
+    retrievedAccount.changeAccountActivation(params.isActive)
+    const roles = findRolesByName(params.roles)
+    retrievedAccount.user.changeRoles(roles)
     await this.repo.save(retrievedAccount)
   }
 

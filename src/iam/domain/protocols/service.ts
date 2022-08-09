@@ -29,7 +29,7 @@ export namespace ChangeAccount {
 }
 
 export interface ChangeAccount {
-  change: (params: ChangeAccount.Params) => Promise<ChangeAccount.Result>
+  changeAccount: (params: ChangeAccount.Params) => Promise<ChangeAccount.Result>
 }
 
 export namespace ChangePassword {
