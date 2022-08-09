@@ -42,7 +42,7 @@ export namespace ChangePassword {
 }
 
 export interface ChangePassword {
-  change: (params: ChangePassword.Params) => Promise<ChangePassword.Result>
+  changePassword: (params: ChangePassword.Params) => Promise<ChangePassword.Result>
 }
 
-export type AccountModifier = CreateAccount & ChangeAccount
+export type AccountModifier = CreateAccount & ChangeAccount & ChangePassword

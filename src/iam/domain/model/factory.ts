@@ -1,4 +1,4 @@
-import { Account, AdminPermission, FBoatControllerPermission, FBoatReaderPermission, OwnerPermission, WriterPermission, Permission, Role, User } from '@/iam/domain/model'
+import { Account, AdminPermission, FBoatControllerPermission, FBoatReaderPermission, WriterPermission, Permission, Role, User } from '@/iam/domain/model'
 import { CreateAccount } from '@/iam/domain/protocols'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -25,22 +25,21 @@ const createRole = (roleName: string, permissions: Permission[]): Role => {
 }
 
 export const createAvailableRoles = (): Role[] => {
-  const ownerPermissions: OwnerPermission[] = ['ChangeAccount', 'ChangeOwnPassword', 'DeleteAccount']
   const writerPermissions: WriterPermission[] = ['CreateArticle', 'ChangeArticle', 'PublishArticle', 'DeleteArticle']
   const fBoatReaderPermissions: FBoatReaderPermission[] = ['ReadFBoatData']
   const fBoatControllerPermissions: FBoatControllerPermission[] = ['ControlFBoat']
   const adminPermissions: AdminPermission[] = [
-    ...ownerPermissions,
     ...writerPermissions,
     ...fBoatReaderPermissions,
     ...fBoatControllerPermissions,
     'ChangeRole',
     'CreateAccount',
-    'ChangeEveryonesPassword'
+    'ChangeAccount',
+    'ChangePassword',
+    'DeleteAccount'
   ]
   return [
     createRole('Writer', writerPermissions),
-    createRole('Owner', ownerPermissions),
     createRole('FBoatController', fBoatControllerPermissions),
     createRole('FBoatReader', fBoatReaderPermissions),
     createRole('Administrator', adminPermissions)

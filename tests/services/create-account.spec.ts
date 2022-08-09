@@ -1,15 +1,6 @@
-import { Account, CreateAccount, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
-import { mockAccount } from '@/tests/mocks'
+import { Account, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
+import { mockAccount, mockCreateAccountParams } from '@/tests/mocks'
 import { AccountServiceSut } from '@/tests/services/factory'
-
-const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccount.Params => ({
-  email,
-  firstName: 'first',
-  lastName: 'last',
-  password: '123',
-  occupation: 'any',
-  birthDate: new Date()
-})
 
 describe('Db Create account', () => {
   test('Should return EmailAlreadyInUseError if email already in use', async () => {
