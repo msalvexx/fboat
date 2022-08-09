@@ -25,3 +25,17 @@ export class UnauthorizedError extends Error {
     this.name = 'UnauthorizedError'
   }
 }
+
+export class ConnectionNotFoundError extends Error {
+  constructor () {
+    super('ConnectionNotFoundError')
+    this.name = 'ConnectionNotFoundError'
+  }
+}
+
+export class TransactionNotFoundError extends Error {
+  constructor () {
+    super('TransactionNotFoundError')
+    this.name = 'TransactionNotFoundError'
+  }
+}
