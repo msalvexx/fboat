@@ -14,7 +14,7 @@ export namespace CreateAccount {
 }
 
 export interface CreateAccount {
-  create: (params: CreateAccount.Params) => Promise<CreateAccount.Result>
+  createAccount: (params: CreateAccount.Params) => Promise<CreateAccount.Result>
 }
 
 export namespace ChangeAccount {

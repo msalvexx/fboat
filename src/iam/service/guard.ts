@@ -7,9 +7,9 @@ export class AccountGuard implements AccountModifier {
     private readonly loggedUser: User
   ) {}
 
-  async create (params: CreateAccount.Params): Promise<CreateAccount.Result> {
+  async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
     if (!this.loggedUser.hasPermission('CreateAccount')) throw new UnauthorizedError()
-    return await this.decoratee.create(params)
+    return await this.decoratee.createAccount(params)
   }
 
   async changeAccount (params: ChangeAccount.Params): Promise<void> {

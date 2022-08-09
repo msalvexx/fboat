@@ -7,7 +7,7 @@ export class AccountService implements AccountModifier {
     private readonly hasher: Hasher
   ) {}
 
-  async create (params: CreateAccount.Params): Promise<CreateAccount.Result> {
+  async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
     const { email } = params
     if (await this.repo.getByEmail(email)) throw new EmailAlreadyInUseError(email)
     params.password = await this.hasher.generate(params.password)

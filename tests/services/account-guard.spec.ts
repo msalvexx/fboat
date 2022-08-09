@@ -9,7 +9,7 @@ describe('When validating permissions', () => {
     const sut = makeSut()
     const params = mockCreateAccountParams('invalid@mail.com')
 
-    const promise = sut.create(params)
+    const promise = sut.createAccount(params)
 
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })

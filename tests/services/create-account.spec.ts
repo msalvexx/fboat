@@ -9,7 +9,7 @@ describe('Db Create account', () => {
     const params = mockCreateAccountParams(invalidEmail)
     repo.readResult = mockAccount(invalidEmail)
 
-    const promise = sut.create(params)
+    const promise = sut.createAccount(params)
 
     await expect(promise).rejects.toThrowError(new EmailAlreadyInUseError(invalidEmail))
   })
@@ -18,7 +18,7 @@ describe('Db Create account', () => {
     const { sut, repo } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
 
-    const account = await sut.create(params)
+    const account = await sut.createAccount(params)
 
     expect(repo.account).toStrictEqual(account)
   })
@@ -27,7 +27,7 @@ describe('Db Create account', () => {
     const { sut } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
 
-    const account = await sut.create(params) as Account
+    const account = await sut.createAccount(params) as Account
 
     const expectedAccount = mockAccount('valid@mail.com', 'hashedPassword')
     expect(account.user.password).toStrictEqual(expectedAccount.user.password)
@@ -38,7 +38,7 @@ describe('Db Create account', () => {
     const params = mockCreateAccountParams()
     repo.saveResult = false
 
-    const promise = sut.create(params)
+    const promise = sut.createAccount(params)
 
     await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })
