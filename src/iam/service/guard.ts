@@ -1,11 +1,16 @@
-import { AccountModifier, ChangeAccount, ChangePassword, CreateAccount } from '@/iam/domain/protocols'
-import { UnauthorizedError, User } from '@/iam/domain'
+import { AccountModifier, ChangeAccount, ChangePassword, CreateAccount, GetAccount } from '@/iam/domain/protocols'
+import { Account, UnauthorizedError, User } from '@/iam/domain'
 
-export class AccountGuard implements AccountModifier {
+export class AccountGuard implements AccountModifier, GetAccount {
   constructor (
-    private readonly decoratee: AccountModifier,
+    private readonly decoratee: AccountModifier & GetAccount,
     private readonly loggedUser: User
   ) {}
+
+  async getAccount (email: string): Promise<Account> {
+    if (!this.loggedUser.hasPermission('GetAccount') && email !== this.loggedUser.email) throw new UnauthorizedError()
+    return await this.decoratee.getAccount(email)
+  }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
     if (!this.loggedUser.hasPermission('CreateAccount')) throw new UnauthorizedError()

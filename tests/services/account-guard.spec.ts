@@ -14,7 +14,7 @@ describe('When validating permissions', () => {
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
 
-  test('Will throw UnauthorizeError if not has permission to change account', async () => {
+  test('Will throw UnauthorizedError if not has permission to change account', async () => {
     const sut = makeSut()
     const params = mockChangeAccountParams('invalid@mail.com')
 
@@ -23,11 +23,19 @@ describe('When validating permissions', () => {
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
 
-  test('Will throw UnauthorizeError if not has permission to change password', async () => {
+  test('Will throw UnauthorizedError if not has permission to change password', async () => {
     const sut = makeSut()
     const params = mockChangePasswordParams()
 
     const promise = sut.changePassword(params)
+
+    await expect(promise).rejects.toThrowError(new UnauthorizedError())
+  })
+
+  test('Will throw UnauthorizedError if not has permission to get account', async () => {
+    const sut = makeSut()
+
+    const promise = sut.getAccount('invalid@mail.com')
 
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
