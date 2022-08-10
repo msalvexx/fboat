@@ -91,6 +91,11 @@ export class MySQLConnectionManager {
     await this.connection.runMigrations()
   }
 
+  async undoLastMigration (): Promise<void> {
+    if (this.connection === undefined) throw new ConnectionNotFoundError()
+    await this.connection.undoLastMigration()
+  }
+
   getRepository<Entity> (entity: ObjectType<Entity>): Repository<Entity> {
     if (this.connection === undefined) throw new ConnectionNotFoundError()
     if (this.query !== undefined) return this.query.manager.getRepository(entity)

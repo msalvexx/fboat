@@ -1,15 +1,15 @@
 import { MySQLConnectionManager } from '@/repositories'
-import { MySqlContainer, StartedMySqlContainer } from 'testcontainers'
+import { startMySQLTestContainer, stopMySQLTestContainer } from '@/tests/configs/helpers.integration'
+
+import { StartedMySqlContainer } from 'testcontainers'
 
 describe('MySQLConnectionManager', () => {
-  jest.setTimeout(240_000)
-
   let container: StartedMySqlContainer
   let config: any
   let sut: MySQLConnectionManager
 
   beforeAll(async () => {
-    container = await new MySqlContainer().withCmd(['--default-authentication-plugin=mysql_native_password']).start()
+    container = await startMySQLTestContainer()
     config = {
       database: container.getDatabase(),
       host: container.getHost(),
@@ -20,9 +20,7 @@ describe('MySQLConnectionManager', () => {
     sut = MySQLConnectionManager.getInstance()
   })
 
-  afterAll(async () => {
-    await container.stop()
-  })
+  afterAll(async () => await stopMySQLTestContainer())
 
   test('Should return same instance when getInstance is called', () => {
     const sut2 = MySQLConnectionManager.getInstance()
