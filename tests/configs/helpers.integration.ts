@@ -30,11 +30,11 @@ export const getTestConnectionManager = async (): Promise<MySQLConnectionManager
   }
   connectionManager = MySQLConnectionManager.getInstance()
   await connectionManager.connect(config)
+  await connectionManager.runMigrations()
   return connectionManager
 }
 
 export const refreshDatabase = async (): Promise<void> => {
   if (connectionManager === undefined) return
-  await connectionManager.undoLastMigration()
-  await connectionManager.runMigrations()
+  await connectionManager.truncateEntities()
 }

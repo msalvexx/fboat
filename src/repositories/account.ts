@@ -1,15 +1,20 @@
-import { Account, GetAccountByEmailRepository, User } from '@/iam'
-import { MySQLUser } from '@/repositories/entities'
+import { Account, GetAccountByEmailRepository, SaveAccountRepository, User } from '@/iam'
+import { MySQLAccount, MySQLUser } from '@/repositories/entities'
 import { MySQLConnectionManager } from './mysql-connection-manager'
 
-import { ObjectType, Repository } from 'typeorm'
+import { Repository } from 'typeorm'
 
-export class MySQLAccountRepository implements GetAccountByEmailRepository {
-  constructor (private readonly connection: MySQLConnectionManager) {}
+export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository {
+  private readonly userRepo: Repository<MySQLUser>
+  private readonly accountRepo: Repository<MySQLAccount>
+
+  constructor (private readonly connection: MySQLConnectionManager) {
+    this.userRepo = connection.getRepository(MySQLUser)
+    this.accountRepo = connection.getRepository(MySQLAccount)
+  }
 
   async getByEmail (email: string): Promise<GetAccountByEmailRepository.Result> {
-    const repository = this.getRepository(MySQLUser)
-    const dbUser = await repository.findOne({ where: { email } })
+    const dbUser = await this.userRepo.findOne({ where: { email } })
     let account: Account | undefined
     if (dbUser !== null) {
       const user = new User(dbUser.userId, dbUser?.email, dbUser?.password)
@@ -24,7 +29,21 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository {
     return account
   }
 
-  getRepository<Entity> (entity: ObjectType<Entity>): Repository<Entity> {
-    return this.connection.getRepository(entity)
+  async save (account: Account): Promise<void> {
+    await this.accountRepo.save({
+      accountId: account.accountId,
+      birthDate: account.personalData.birthDate,
+      createdAt: account.creationDate,
+      updatedAt: account.updateDate,
+      firstName: account.personalData.firstName,
+      isActive: account.isActive,
+      lastName: account.personalData.lastName,
+      occupation: account.personalData.occupation,
+      user: {
+        email: account.user.email,
+        password: account.user.password,
+        userId: account.user.userId
+      }
+    })
   }
 }

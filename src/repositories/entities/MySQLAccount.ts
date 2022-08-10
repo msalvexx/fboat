@@ -1,8 +1,35 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { MySQLUser } from './MySQLUser'
 
+export type AccountParams = {
+  id: number
+  accountId: string
+  firstName: string
+  lastName: string
+  occupation: string
+  birthDate: Date
+  createdAt: Date
+  updatedAt: Date
+  isActive: boolean
+}
+
 @Entity({ name: 'contas' })
 export class MySQLAccount {
+  constructor ()
+  constructor (params: AccountParams)
+  constructor (params?: AccountParams) {
+    if (params === undefined) return
+    this.id = params.id
+    this.accountId = params.accountId
+    this.firstName = params.firstName
+    this.lastName = params.lastName
+    this.occupation = params.occupation
+    this.birthDate = params.birthDate
+    this.createdAt = params.createdAt
+    this.updatedAt = params.updatedAt
+    this.isActive = params.isActive
+  }
+
   @PrimaryGeneratedColumn({ name: 'id_int' })
     id!: number
 

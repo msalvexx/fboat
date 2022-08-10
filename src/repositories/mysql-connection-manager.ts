@@ -91,9 +91,14 @@ export class MySQLConnectionManager {
     await this.connection.runMigrations()
   }
 
-  async undoLastMigration (): Promise<void> {
+  async truncateEntities (): Promise<void> {
     if (this.connection === undefined) throw new ConnectionNotFoundError()
-    await this.connection.undoLastMigration()
+    const entities = this.connection.entityMetadatas
+    await this.connection.query('SET foreign_key_checks = 0')
+    for (const entity of entities) {
+      const repository = this.connection.getRepository(entity.name)
+      await repository.clear()
+    }
   }
 
   getRepository<Entity> (entity: ObjectType<Entity>): Repository<Entity> {
