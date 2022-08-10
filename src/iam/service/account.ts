@@ -10,7 +10,7 @@ export class AccountService implements AccountModifier, GetAccount {
   async getAccount (email: GetAccount.Params): Promise<GetAccount.Result> {
     const account = await this.repo.getByEmail(email)
     if (account === undefined) throw new AccountNotFoundError(email)
-    return null as any
+    return account
   }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
