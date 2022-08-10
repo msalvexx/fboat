@@ -13,12 +13,13 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository {
     let account: Account | undefined
     if (dbUser !== null) {
       const user = new User(dbUser.userId, dbUser?.email, dbUser?.password)
-      account = new Account(dbUser.account.accountId, user, {
+      const personalData = {
         birthDate: dbUser.account.birthDate,
         firstName: dbUser.account.firstName,
         lastName: dbUser.account.lastName,
         occupation: dbUser.account.occupation
-      })
+      }
+      account = new Account(dbUser.account.accountId, user, personalData, dbUser.account.createdAt, dbUser.account.updatedAt)
     }
     return account
   }

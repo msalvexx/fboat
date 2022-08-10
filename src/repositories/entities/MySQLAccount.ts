@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
 import { MySQLUser } from './MySQLUser'
 
 @Entity({ name: 'contas' })
@@ -9,7 +9,7 @@ export class MySQLAccount {
   @Column({ name: 'id_conta', unique: true })
     accountId!: string
 
-  @OneToOne(() => MySQLUser, user => user.account)
+  @OneToOne(() => MySQLUser, user => user.account, { cascade: ['insert', 'update'] })
   @JoinColumn({ name: "id_int_usuario" })
     user: MySQLUser
 
@@ -25,10 +25,10 @@ export class MySQLAccount {
   @Column({ name: 'data_nascimento', nullable: false })
     birthDate!: Date
 
-  @Column({ name: 'criado_em' })
+  @CreateDateColumn({ name: 'criado_em', type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     createdAt!: Date
 
-  @Column({ name: 'atualizado_em' })
+  @UpdateDateColumn({ name: 'atualizado_em', type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
     updatedAt!: Date
 
   @Column({ name: 'ativo', default: true })
