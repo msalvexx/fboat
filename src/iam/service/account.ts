@@ -1,11 +1,17 @@
-import { Account, createAccount, EmailAlreadyInUseError, findRolesByName } from '@/iam/domain/model'
-import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher } from '@/iam/domain/protocols'
+import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError, findRolesByName } from '@/iam/domain/model'
+import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher, GetAccount } from '@/iam/domain/protocols'
 
-export class AccountService implements AccountModifier {
+export class AccountService implements AccountModifier, GetAccount {
   constructor (
     private readonly repo: AccountRepository,
     private readonly hasher: Hasher
   ) {}
+
+  async getAccount (email: GetAccount.Params): Promise<GetAccount.Result> {
+    const account = await this.repo.getByEmail(email)
+    if (account === undefined) throw new AccountNotFoundError(email)
+    return null as any
+  }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
     const { email } = params

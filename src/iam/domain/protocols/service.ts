@@ -45,4 +45,13 @@ export interface ChangePassword {
   changePassword: (params: ChangePassword.Params) => Promise<ChangePassword.Result>
 }
 
+export namespace GetAccount {
+  export type Params = string
+  export type Result = Account
+}
+
+export interface GetAccount {
+  getAccount: (email: GetAccount.Params) => Promise<GetAccount.Result>
+}
+
 export type AccountModifier = CreateAccount & ChangeAccount & ChangePassword
