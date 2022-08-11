@@ -1,5 +1,5 @@
 import { PersistDataChangeError } from '@/iam'
-import { mockAccount, mockChangeAccountParams } from '@/tests/mocks'
+import { mockAccount, mockChangeAccountParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'
 
 describe('When change account', () => {

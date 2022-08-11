@@ -1,6 +1,6 @@
 import { Account, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam'
-import { MySQLAccount, MySQLUser } from '@/repositories/entities'
-import { MySQLConnectionManager } from './mysql-connection-manager'
+import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
+import { MySQLConnectionManager } from '@/shared/infra'
 
 import { Repository } from 'typeorm'
 import { MySQLRole } from './entities/MySQLRole'

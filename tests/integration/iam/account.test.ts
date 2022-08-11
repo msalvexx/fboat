@@ -1,10 +1,10 @@
-import { MySQLAccountRepository } from '@/repositories'
-import { MySQLAccount, MySQLUser } from '@/repositories/entities'
+import { MySQLAccountRepository } from '@/iam/infra/repositories'
+import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
 
-import { mockAccount } from '@/tests/mocks'
-import { stopMySQLTestContainer, getTestConnectionManager, refreshDatabase } from '@/tests/configs/helpers.integration'
+import { mockAccount } from '@/tests/mocks/iam'
+import { stopMySQLTestContainer, getTestConnectionManager, refreshDatabase } from '@/tests/integration/configs/helpers.integration'
 import { Repository } from 'typeorm'
-import { MySQLRole } from '@/repositories/entities/MySQLRole'
+import { MySQLRole } from '@/iam/infra/repositories/entities/MySQLRole'
 import { Account, GetAccountByEmailRepository } from '@/iam'
 
 describe('AccountRepository', () => {

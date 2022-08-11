@@ -1,5 +1,6 @@
 import { AccountNotFoundError } from "@/iam"
-import { mockAccount } from "../mocks"
+
+import { mockAccount } from "@/tests/mocks/iam"
 import { AccountServiceSut } from "./factory"
 
 describe('Get Account', () => {

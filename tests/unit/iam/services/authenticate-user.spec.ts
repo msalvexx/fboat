@@ -1,7 +1,7 @@
 import { UnauthorizedError } from '@/iam'
 
-import { AuthenticationSut } from '@/tests/services/factory'
-import { mockAuthenticateUserParams, mockAccount } from '@/tests/mocks'
+import { AuthenticationSut } from '@/tests/unit/iam/services/factory'
+import { mockAuthenticateUserParams, mockAccount } from '@/tests/mocks/iam'
 
 describe('When Authenticating user', () => {
   test('Should return UnauthorizedError if account was not found', async () => {

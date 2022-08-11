@@ -1,4 +1,4 @@
-import { MySQLConnectionManager } from '@/repositories'
+import { MySQLConnectionManager } from '@/shared/infra/repositories'
 import path from 'path'
 import { StartedMySqlContainer, MySqlContainer } from 'testcontainers'
 
@@ -25,7 +25,7 @@ export const getTestConnectionManager = async (): Promise<MySQLConnectionManager
     port: container.getPort(),
     username: container.getUsername(),
     password: container.getUserPassword(),
-    entities: [path.resolve('src/repositories/entities/index.{js,ts}')],
+    entities: [path.resolve('src/iam/infra/repositories/entities/index.{js,ts}')],
     migrations: [path.resolve('migrations/*.{js,ts}')]
   }
   connectionManager = MySQLConnectionManager.getInstance()

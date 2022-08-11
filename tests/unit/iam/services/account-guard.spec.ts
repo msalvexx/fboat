@@ -1,6 +1,6 @@
 import { UnauthorizedError, User } from '@/iam'
 import { AccountGuard } from '@/iam/service/guard'
-import { mockChangeAccountParams, mockChangePasswordParams, mockCreateAccountParams, mockUser } from '@/tests/mocks'
+import { mockChangeAccountParams, mockChangePasswordParams, mockCreateAccountParams, mockUser } from '@/tests/mocks/iam'
 
 const makeSut = (user: User = mockUser()): AccountGuard => new AccountGuard(undefined as any, mockUser())
 

@@ -1,5 +1,5 @@
-import { MySQLConnectionManager } from '@/repositories'
-import { startMySQLTestContainer, stopMySQLTestContainer } from '@/tests/configs/helpers.integration'
+import { MySQLConnectionManager } from '@/shared/infra'
+import { startMySQLTestContainer, stopMySQLTestContainer } from '@/tests/integration/configs/helpers.integration'
 
 import { StartedMySqlContainer } from 'testcontainers'
 

@@ -1,5 +1,5 @@
 import { PersistDataChangeError } from '@/iam'
-import { mockAccount, mockChangePasswordParams } from '../mocks'
+import { mockAccount, mockChangePasswordParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'
 
 describe('When change password', () => {

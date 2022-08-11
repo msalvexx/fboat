@@ -1,6 +1,6 @@
 import { Account, EmailAlreadyInUseError, PersistDataChangeError } from '@/iam'
-import { mockAccount, mockCreateAccountParams } from '@/tests/mocks'
-import { AccountServiceSut } from '@/tests/services/factory'
+import { mockAccount, mockCreateAccountParams } from '@/tests/mocks/iam'
+import { AccountServiceSut } from '@/tests/unit/iam/services/factory'
 
 describe('Db Create account', () => {
   test('Should return EmailAlreadyInUseError if email already in use', async () => {

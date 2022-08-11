@@ -1,5 +1,5 @@
 import { AccountService, AuthenticationService } from '@/iam/service'
-import { AccountRepositoryMock, CryptographyMock, HasherMock } from '@/tests/mocks'
+import { AccountRepositoryMock, CryptographyMock, HasherMock } from '@/tests/mocks/iam'
 
 export namespace AccountServiceSut {
   type Sut = {

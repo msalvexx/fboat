@@ -1,5 +1,5 @@
 import { UnauthorizedError } from '@/iam'
-import { mockAccount } from '@/tests/mocks'
+import { mockAccount } from '@/tests/mocks/iam'
 import { AuthenticationSut } from './factory'
 
 describe('When certifying token of user', () => {
