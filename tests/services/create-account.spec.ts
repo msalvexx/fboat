@@ -7,7 +7,7 @@ describe('Db Create account', () => {
     const { sut, repo } = AccountServiceSut.makeSut()
     const invalidEmail = 'test@mail.com'
     const params = mockCreateAccountParams(invalidEmail)
-    repo.readResult = mockAccount(invalidEmail)
+    repo.readResult = mockAccount({ user: { email: 'invalidEmail' } })
 
     const promise = sut.createAccount(params)
 
@@ -29,7 +29,7 @@ describe('Db Create account', () => {
 
     const account = await sut.createAccount(params) as Account
 
-    const expectedAccount = mockAccount('valid@mail.com', 'hashedPassword')
+    const expectedAccount = mockAccount({ user: { email: 'valid@mail.com', password: 'hashedPassword' } })
     expect(account.user.password).toStrictEqual(expectedAccount.user.password)
   })
 

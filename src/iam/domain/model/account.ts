@@ -1,54 +1,33 @@
-import { User } from '@/iam'
+import { User, PersonalData } from '@/iam'
 
-export namespace PersonalData {
+export namespace Account {
   export type Params = {
-    firstName: string
-    lastName: string
-    occupation: string
-    birthDate: Date
-  }
-}
-
-class PersonalData {
-  constructor (private readonly data: PersonalData.Params) {
-    data.birthDate.setMilliseconds(0)
-  }
-
-  get fullName (): string {
-    return `${this.data.firstName} ${this.data.lastName}`
-  }
-
-  get firstName (): string {
-    return this.data.firstName
-  }
-
-  get lastName (): string {
-    return this.data.lastName
-  }
-
-  get occupation (): string {
-    return this.data.occupation
-  }
-
-  get birthDate (): Date {
-    return this.data.birthDate
+    accountId: string
+    user: User.Params
+    personalData: PersonalData.Params
+    creationDate?: Date
+    updateDate?: Date
+    isActive?: boolean
   }
 }
 
 export class Account {
   private _personalData: PersonalData
   private _isActive: boolean = true
+  readonly accountId: string
+  readonly user: User
+  readonly updateDate: Date
+  readonly creationDate: Date
 
-  constructor (
-    readonly accountId: string,
-    readonly user: User,
-    personalData: PersonalData.Params,
-    readonly creationDate: Date = new Date(),
-    readonly updateDate: Date = new Date()
-  ) {
-    creationDate.setMilliseconds(0)
-    updateDate.setMilliseconds(0)
-    this.changePersonalData(personalData)
+  constructor (params: Account.Params) {
+    const now = new Date()
+    now.setMilliseconds(0)
+    this.accountId = params.accountId
+    this.user = new User(params.user)
+    this.creationDate = params.creationDate ?? now
+    this.updateDate = params.updateDate ?? now
+    this._isActive = params.isActive ?? true
+    this.changePersonalData(params.personalData)
   }
 
   changePersonalData (personalData: PersonalData.Params): void {

@@ -2,7 +2,7 @@ import { Account } from '@/iam'
 
 export namespace GetAccountByEmailRepository {
   export type Params = string
-  export type Result = Account | undefined
+  export type Result = Account.Params | undefined
 }
 
 export namespace SaveAccountRepository {

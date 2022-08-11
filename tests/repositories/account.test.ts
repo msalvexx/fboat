@@ -46,7 +46,23 @@ describe('AccountRepository', () => {
 
     const result = await sut.getByEmail(account.user.email)
 
-    expect(result).toStrictEqual(account)
+    expect(result).toStrictEqual({
+      accountId: account.accountId,
+      personalData: {
+        birthDate: account.personalData.birthDate,
+        firstName: account.personalData.firstName,
+        lastName: account.personalData.lastName,
+        occupation: account.personalData.occupation
+      },
+      creationDate: account.creationDate,
+      updateDate: account.updateDate,
+      isActive: account.isActive,
+      user: {
+        email: account.user.email,
+        password: account.user.password,
+        userId: account.user.userId
+      }
+    })
   })
 
   test('Should save account correctly on database', async () => {

@@ -5,17 +5,18 @@ import { v4 as uuidv4 } from 'uuid'
 type UserParam = {
   email: string
   password: string
+  roles?: Role[]
 }
 
-const createUser = (params: UserParam): User => {
+const createUser = (params: UserParam): User.Params => {
   const { email, password } = params
-  return new User(uuidv4(), email, password)
+  return { userId: uuidv4(), email, password }
 }
 
 export const createAccount = (params: CreateAccount.Params): Account => {
   const { email, password, ...personalData } = params
   const userParam = { email, password }
-  return new Account(uuidv4(), createUser(userParam), personalData)
+  return new Account({ accountId: uuidv4(), user: createUser(userParam), personalData })
 }
 
 const createRole = (roleName: string, permissions: Permission[]): Role => {

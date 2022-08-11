@@ -1,19 +1,45 @@
 import { Account, User, GetAccountByEmailRepository, PersistDataChangeError } from '@/iam'
 import { AccountRepository, SaveAccountRepository } from '@/iam/domain/protocols'
 
-export function mockUser (userId: string = '123', email: string = 'valid@mail.com', password: string = '123'): User {
-  return new User(userId, email, password)
+type UserParams = {
+  userId?: string
+  email?: string
+  password?: string
+}
+const defaultUser: UserParams = { userId: '123', email: 'valid@mail.com', password: '123' }
+export const mockUser = (params: UserParams = defaultUser): User => {
+  const userId: any = params.userId ?? defaultUser.userId
+  const email: any = params.email ?? defaultUser.email
+  const password: any = params.password ?? defaultUser.password
+  return new User({ userId, email, password })
 }
 
-export function mockAccount (email: string = 'valid@mail.com', password: string = '123', userId: string = '123'): Account {
-  const user = mockUser(userId, email, password)
-  const personalData = {
+type AccountParams = {
+  accountId?: string
+  personalData?: {
+    firstName?: string
+    lastName?: string
+    occupation?: string
+    birthDate?: Date
+  }
+  user?: UserParams
+}
+
+const defaultAccount: AccountParams = {
+  accountId: '123',
+  personalData: {
     firstName: 'any',
     lastName: 'any',
     occupation: 'any',
     birthDate: new Date()
-  }
-  return new Account('123', user, personalData)
+  },
+  user: defaultUser
+}
+export const mockAccount = (params: AccountParams = defaultAccount): Account => {
+  const accountId: any = params.accountId ?? defaultAccount.accountId
+  const personalData: any = params.personalData ?? defaultAccount.personalData
+  const user: any = params.user ?? defaultAccount.user
+  return new Account({ accountId, personalData, user })
 }
 
 export class AccountRepositoryMock implements AccountRepository {

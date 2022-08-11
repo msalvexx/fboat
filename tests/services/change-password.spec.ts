@@ -7,7 +7,7 @@ describe('When change password', () => {
     const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockChangePasswordParams()
     const hashedPassword = `hashed${params.newPassword}`
-    repo.readResult = mockAccount(params.email)
+    repo.readResult = mockAccount({ user: { email: params.email } })
     hasher.generateResult = hashedPassword
 
     await sut.changePassword(params)
@@ -18,7 +18,7 @@ describe('When change password', () => {
   test('Will return error if save fails', async () => {
     const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockChangePasswordParams()
-    repo.readResult = mockAccount(params.email)
+    repo.readResult = mockAccount({ user: { email: params.email } })
     repo.saveResult = false
     hasher.compareResult = true
 

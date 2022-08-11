@@ -1,7 +1,7 @@
 import { Permission } from '@/iam'
 
 export class Role {
-  permissions: Set<Permission> = new Set()
+  readonly permissions: Set<Permission> = new Set()
 
   constructor (readonly name: string) {}
 

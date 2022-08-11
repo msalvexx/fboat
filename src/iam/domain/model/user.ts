@@ -1,13 +1,28 @@
 import { Role, Permission } from '@/iam/domain/model'
 
-export class User {
-  readonly roles: Set<Role> = new Set()
+export namespace User {
+  export type Params = {
+    userId: string
+    email: string
+    password: string
+    roles?: Role[]
+  }
+}
 
-  constructor (
-    readonly userId: string,
-    readonly email: string,
-    private _password: string
-  ) {}
+export class User {
+  private _password: string
+  readonly roles: Set<Role> = new Set()
+  readonly userId: string
+  readonly email: string
+
+  constructor (params: User.Params) {
+    this.userId = params.userId
+    this.email = params.email
+    this._password = params.password
+    if (params.roles !== undefined) {
+      this.changeRoles(params.roles)
+    }
+  }
 
   changePassword (password: string): void {
     this._password = password
