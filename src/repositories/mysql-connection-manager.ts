@@ -99,6 +99,7 @@ export class MySQLConnectionManager {
       const repository = this.connection.getRepository(entity.name)
       await repository.clear()
     }
+    await this.connection.query('SET foreign_key_checks = 1')
   }
 
   getRepository<Entity> (entity: ObjectType<Entity>): Repository<Entity> {

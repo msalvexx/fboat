@@ -30,26 +30,26 @@ export class MySQLAccount {
     this.isActive = params.isActive
   }
 
-  @PrimaryGeneratedColumn({ name: 'id_int' })
+  @PrimaryGeneratedColumn({ name: 'id_int', type: 'int' })
     id!: number
 
-  @Column({ name: 'id_conta', unique: true })
+  @Column({ name: 'id_conta', type: 'varchar', unique: true })
     accountId!: string
 
   @OneToOne(() => MySQLUser, user => user.account, { cascade: ['insert', 'update'] })
   @JoinColumn({ name: "id_int_usuario" })
     user: MySQLUser
 
-  @Column({ name: 'nome' })
+  @Column({ name: 'nome', type: 'varchar' })
     firstName!: string
 
-  @Column({ name: 'sobrenome', nullable: true })
+  @Column({ name: 'sobrenome', type: 'varchar', nullable: true })
     lastName!: string
 
-  @Column({ name: 'profissao' })
+  @Column({ name: 'profissao', type: 'varchar' })
     occupation!: string
 
-  @Column({ name: 'data_nascimento', nullable: false })
+  @Column({ name: 'data_nascimento', type: 'varchar', nullable: false })
     birthDate!: Date
 
   @CreateDateColumn({ name: 'criado_em', type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })

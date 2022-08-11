@@ -3,6 +3,7 @@ import { MySQLAccount, MySQLUser } from '@/repositories/entities'
 import { MySQLConnectionManager } from './mysql-connection-manager'
 
 import { Repository } from 'typeorm'
+import { MySQLRole } from './entities/MySQLRole'
 
 export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository {
   private readonly userRepo: Repository<MySQLUser>
@@ -21,7 +22,8 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
       user: {
         userId: dbUser.userId,
         email: dbUser?.email,
-        password: dbUser?.password
+        password: dbUser?.password,
+        roles: dbUser?.roles.split(',').filter(x => x !== '').map(x => MySQLRole.getKeyByValue(x))
       },
       personalData: {
         birthDate: dbUser.account.birthDate,
@@ -46,9 +48,10 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
       lastName: account.personalData.lastName,
       occupation: account.personalData.occupation,
       user: {
+        userId: account.user.userId,
         email: account.user.email,
         password: account.user.password,
-        userId: account.user.userId
+        roles: account.user.roles.map(role => MySQLRole.getValueByKey(role.name)).join(',')
       }
     })
   }

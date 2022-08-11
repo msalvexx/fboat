@@ -1,5 +1,5 @@
-import { findRolesByName, PersistDataChangeError } from '@/iam'
-import { mockAccount, mockChangeAccountParams, mockUser } from '@/tests/mocks'
+import { PersistDataChangeError } from '@/iam'
+import { mockAccount, mockChangeAccountParams } from '@/tests/mocks'
 import { AccountServiceSut } from './factory'
 
 describe('When change account', () => {
@@ -10,9 +10,13 @@ describe('When change account', () => {
 
     await sut.changeAccount(params)
 
-    const user = mockUser({ email: params.email })
-    user.changeRoles(findRolesByName(['Writer']))
-    const expectedAccount = mockAccount({ user, personalData: params.personalData })
+    const expectedAccount = mockAccount({
+      user: {
+        email: params.email,
+        roles: ['Writer']
+      },
+      personalData: params.personalData
+    })
     expect(repo.account.personalData).toStrictEqual(expectedAccount.personalData)
     expect(repo.account.user.roles).toStrictEqual(expectedAccount.user.roles)
   })

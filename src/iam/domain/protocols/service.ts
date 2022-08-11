@@ -8,6 +8,7 @@ export namespace CreateAccount {
     password: string
     occupation: string
     birthDate: Date
+    roles: string[]
   }
 
   export type Result = Account | EmailAlreadyInUseError | PersistDataChangeError

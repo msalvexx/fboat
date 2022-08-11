@@ -1,67 +1,54 @@
-import { Role, User } from '@/iam'
+import { User } from '@/iam'
 
 interface Sut {
   sut: User
-  role: Role
+  roleName: string
 }
 
-const makeSut = (): Sut => ({
-  sut: new User({ userId: '123', email: 'user@mail.com', password: '123' }),
-  role: new Role('Author')
-})
+const makeSut = (): Sut => {
+  const roleName = 'Writer'
+  return {
+    sut: new User({ userId: '123', email: 'user@mail.com', password: '123', roles: [roleName] }),
+    roleName
+  }
+}
 
 describe('When add role to user', () => {
   test('Should add role if user not have role yet', () => {
-    const { sut, role } = makeSut()
+    const { sut, roleName } = makeSut()
 
-    sut.changeRoles([role])
+    sut.changeRoles([roleName])
 
-    expect(sut.hasRole(role)).toBeTruthy()
+    expect(sut.hasRole(roleName)).toBeTruthy()
   })
 
   test('User should has permission if user has role that contains permission', () => {
-    const { sut, role } = makeSut()
-    const role2 = new Role('Maintainer')
-    const permission = 'CreateArticle'
-    role.changePermissions([permission])
-    role2.changePermissions([permission])
+    const { sut } = makeSut()
 
-    sut.changeRoles([role, role2])
-
-    expect(sut.hasPermission(permission)).toBeTruthy()
+    expect(sut.hasPermission('CreateArticle')).toBeTruthy()
   })
 
   test('User should not has permission if user not has any role that contains permission', () => {
     const { sut } = makeSut()
 
-    expect(sut.hasPermission('CreateArticle')).toBeFalsy()
+    expect(sut.hasPermission('ReadFBoatData')).toBeFalsy()
   })
 
   test('User should has both permissions if user has roles that has permissions', () => {
-    const { sut, role } = makeSut()
-    const role2 = new Role('Maintainer')
-    const permission1 = 'CreateArticle'
-    const permission2 = 'DeleteArticle'
-    role.changePermissions([permission1])
-    role2.changePermissions([permission2])
+    const { sut } = makeSut()
 
-    sut.changeRoles([role, role2])
+    sut.changeRoles(['Administrator'])
 
     expect(sut.hasPermission('CreateArticle')).toBeTruthy()
-    expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
+    expect(sut.hasPermission('DeleteAccount')).toBeTruthy()
   })
 
   test('User can add multiple roles', () => {
-    const { sut, role } = makeSut()
-    const role2 = new Role('Maintainer')
-    const permission1 = 'CreateArticle'
-    const permission2 = 'DeleteArticle'
-    role.changePermissions([permission1])
-    role2.changePermissions([permission2])
+    const { sut, roleName } = makeSut()
 
-    sut.changeRoles([role, role2])
+    sut.changeRoles(['Administrator', roleName])
 
-    expect(sut.hasPermission('CreateArticle')).toBeTruthy()
-    expect(sut.hasPermission('DeleteArticle')).toBeTruthy()
+    expect(sut.hasRole('Administrator')).toBeTruthy()
+    expect(sut.hasRole(roleName)).toBeTruthy()
   })
 })

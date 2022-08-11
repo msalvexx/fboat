@@ -7,6 +7,7 @@ export class CreateUserTableMigration1660074324941 implements MigrationInterface
     id_usuario varchar(255) UNIQUE NOT NULL,
     email varchar(255) UNIQUE NOT NULL,
     senha varchar(255) NOT NULL,
+    funcoes varchar(255) NOT NULL DEFAULT '',
     PRIMARY KEY (id_int)
   )`
   private readonly createIndex: string = 'CREATE UNIQUE INDEX email_idx ON usuarios(email)'

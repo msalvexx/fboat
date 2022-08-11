@@ -1,4 +1,5 @@
 export * from './account'
+export * from './user'
 export * from './cryptography'
 export * from './hasher'
 export * from './params'

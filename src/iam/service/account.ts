@@ -1,4 +1,4 @@
-import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError, findRolesByName } from '@/iam/domain/model'
+import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError } from '@/iam/domain/model'
 import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher, GetAccount } from '@/iam/domain/protocols'
 
 export class AccountService implements AccountModifier, GetAccount {
@@ -27,8 +27,7 @@ export class AccountService implements AccountModifier, GetAccount {
     const retrievedAccount = await this.getAccountByEmail(email) as Account
     retrievedAccount.changePersonalData(params.personalData)
     retrievedAccount.changeAccountActivation(params.isActive)
-    const roles = findRolesByName(params.roles)
-    retrievedAccount.user.changeRoles(roles)
+    retrievedAccount.user.changeRoles(params.roles)
     await this.repo.save(retrievedAccount)
   }
 

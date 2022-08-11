@@ -6,6 +6,7 @@ export type UserParams = {
   userId: string
   email: string
   password: string
+  roles: string
   account: AccountParams
 }
 
@@ -19,20 +20,24 @@ export class MySQLUser {
     this.userId = params.userId
     this.email = params.email
     this.password = params.password
+    this.roles = params.roles
     this.account = new MySQLAccount(params.account)
   }
 
-  @PrimaryGeneratedColumn({ name: 'id_int' })
+  @PrimaryGeneratedColumn({ name: 'id_int', type: 'int' })
     id!: number
 
-  @Column({ name: 'id_usuario', unique: true })
+  @Column({ name: 'id_usuario', type: 'varchar', unique: true, nullable: false })
     userId!: string
 
-  @Column({ name: 'email', unique: true })
+  @Column({ name: 'email', type: 'varchar', unique: true, nullable: false })
     email!: string
 
-  @Column({ name: 'senha' })
+  @Column({ name: 'senha', type: 'varchar' })
     password!: string
+
+  @Column({ name: 'funcoes', type: 'varchar', nullable: true, default: '' })
+    roles!: string
 
   @OneToOne(() => MySQLAccount, account => account.user, { eager: true })
     account!: MySQLAccount

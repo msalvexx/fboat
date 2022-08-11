@@ -1,17 +1,17 @@
-import { Role, Permission } from '@/iam/domain/model'
+import { Role, Permission, findRolesByName, findRoleByName } from '@/iam/domain/model'
 
 export namespace User {
   export type Params = {
     userId: string
     email: string
     password: string
-    roles?: Role[]
+    roles?: string[]
   }
 }
 
 export class User {
+  private readonly _roles: Set<Role> = new Set()
   private _password: string
-  readonly roles: Set<Role> = new Set()
   readonly userId: string
   readonly email: string
 
@@ -19,7 +19,7 @@ export class User {
     this.userId = params.userId
     this.email = params.email
     this._password = params.password
-    if (params.roles !== undefined) {
+    if (params.roles !== undefined && params.roles.length !== 0) {
       this.changeRoles(params.roles)
     }
   }
@@ -32,21 +32,26 @@ export class User {
     return this._password
   }
 
-  changeRoles (roles: Role[]): void {
+  public get roles (): Role[] {
+    return Array.from(this._roles)
+  }
+
+  changeRoles (names: string[]): void {
     this.resetRoles()
-    roles.forEach(role => this.roles.add(role))
+    const rolesToAdd = findRolesByName(names)
+    rolesToAdd.forEach(role => this._roles.add(role))
   }
 
   resetRoles (): void {
-    this.roles.clear()
+    this._roles.clear()
   }
 
-  hasRole (role: Role): boolean {
-    return this.roles.has(role)
+  hasRole (roleName: string): boolean {
+    return this._roles.has(findRoleByName(roleName))
   }
 
   hasPermission (permission: Permission): boolean {
-    const permissions: Set<Permission> = new Set(Array.from(this.roles).flatMap(x => Array.from(x.permissions)))
+    const permissions: Set<Permission> = new Set(Array.from(this._roles).flatMap(x => Array.from(x.permissions)))
     return permissions.has(permission)
   }
 }

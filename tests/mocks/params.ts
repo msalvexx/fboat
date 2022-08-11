@@ -28,5 +28,6 @@ export const mockCreateAccountParams = (email: string = 'valid@mail.com'): Creat
   lastName: 'last',
   password: '123',
   occupation: 'any',
-  birthDate: new Date()
+  birthDate: new Date(),
+  roles: []
 })
