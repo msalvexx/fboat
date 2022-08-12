@@ -18,12 +18,12 @@ export class AccountGuard implements AccountModifier, GetAccount {
   }
 
   async changeAccount (params: ChangeAccount.Params): Promise<void> {
-    if (!this.loggedUser.hasPermission('ChangeAccount') && params.email !== this.loggedUser.email) throw new UnauthorizedError()
+    if (!this.loggedUser.hasPermission('ChangeAccount') && params.accountId !== this.loggedUser.email) throw new UnauthorizedError()
     await this.decoratee.changeAccount(params)
   }
 
   async changePassword (params: ChangePassword.Params): Promise<void> {
-    if (!this.loggedUser.hasPermission('ChangePassword') && params.email !== this.loggedUser.email) throw new UnauthorizedError()
+    if (!this.loggedUser.hasPermission('ChangePassword') && params.accountId !== this.loggedUser.email) throw new UnauthorizedError()
     await this.decoratee.changePassword(params)
   }
 }

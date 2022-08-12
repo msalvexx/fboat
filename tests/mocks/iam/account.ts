@@ -1,5 +1,5 @@
 import { Account, GetAccountByEmailRepository, PersistDataChangeError } from '@/iam'
-import { AccountRepository, SaveAccountRepository } from '@/iam/domain/protocols'
+import { AccountRepository, GetAccountByAccountId, SaveAccountRepository } from '@/iam/domain/protocols'
 import { MockUserParams, defaultUser, mockUserParams } from './user'
 
 type MockAccountParams = {
@@ -35,7 +35,7 @@ export class AccountRepositoryMock implements AccountRepository {
   account: Account
   readResult: any = undefined
   saveResult: boolean = true
-  saveCalls: number = 0
+  readByAccountIdResult: any = undefined
 
   async save (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
     this.account = account
@@ -44,5 +44,9 @@ export class AccountRepositoryMock implements AccountRepository {
 
   async getByEmail (email: string): Promise<GetAccountByEmailRepository.Result> {
     return this.readResult
+  }
+
+  async getByAccountId (accountId: string): Promise<GetAccountByAccountId.Result> {
+    return this.readByAccountIdResult
   }
 }

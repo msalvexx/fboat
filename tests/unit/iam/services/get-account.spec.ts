@@ -6,20 +6,19 @@ import { AccountServiceSut } from "./factory"
 describe('Get Account', () => {
   test('Should throw AccountNotFoundError if repository returns undefined', async () => {
     const { sut } = AccountServiceSut.makeSut()
-    const email = 'invalid@mail.com'
+    const accountId = 'invalidAccountId'
 
-    const promise = sut.getAccount(email)
+    const promise = sut.getAccount(accountId)
 
-    await expect(promise).rejects.toThrowError(new AccountNotFoundError(email))
+    await expect(promise).rejects.toThrowError(new AccountNotFoundError(accountId))
   })
 
   test('Should return an account correctly if account exists', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
-    const account = mockAccount()
-    repo.readResult = account
-    const email = 'valid@mail.com'
+    const account = mockAccount({ accountId: 'validAccountId' })
+    repo.readByAccountIdResult = account
 
-    const result = await sut.getAccount(email)
+    const result = await sut.getAccount(account.accountId)
 
     expect(result).toStrictEqual(account)
   })

@@ -13,8 +13,8 @@ export class PersistDataChangeError extends Error {
 }
 
 export class AccountNotFoundError extends Error {
-  constructor (email: string) {
-    super(`There is no account associated with this email: ${email}`)
+  constructor (accountId: string) {
+    super(`There is no account associated with this accountId: ${accountId}`)
     this.name = 'AccountNotFoundError'
   }
 }

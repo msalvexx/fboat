@@ -27,4 +27,4 @@ export interface GetAccountByAccountId {
   getByAccountId: (accountId: GetAccountByAccountId.Params) => Promise<GetAccountByAccountId.Result>
 }
 
-export type AccountRepository = SaveAccountRepository & GetAccountByEmailRepository
+export type AccountRepository = SaveAccountRepository & GetAccountByEmailRepository & GetAccountByAccountId

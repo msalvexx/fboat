@@ -1,7 +1,7 @@
 import { AuthenticateUser, ChangeAccount, ChangePassword, CreateAccount } from '@/iam/domain/protocols'
 
-export const mockChangeAccountParams = (email: string = 'valid@mail.com'): ChangeAccount.Params => ({
-  email,
+export const mockChangeAccountParams = (accountId: string = 'validAccountId'): ChangeAccount.Params => ({
+  accountId,
   personalData: {
     birthDate: new Date(1987, 6, 15),
     firstName: 'Jose',
@@ -17,9 +17,9 @@ export const mockAuthenticateUserParams = (email: string = 'valid@mail.com'): Au
   password: '123'
 })
 
-export const mockChangePasswordParams = (email: string = 'any-email@mail.com'): ChangePassword.Params => ({
+export const mockChangePasswordParams = (accountId: string = 'validAccountId'): ChangePassword.Params => ({
   newPassword: 'newPassword',
-  email
+  accountId
 })
 
 export const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccount.Params => ({

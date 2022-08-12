@@ -5,14 +5,14 @@ import { AccountServiceSut } from './factory'
 describe('When change account', () => {
   test('Will update roles and personal data correctly', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
-    repo.readResult = mockAccount({ user: { email: 'any-email@mail.com' } })
+    repo.readByAccountIdResult = mockAccount({ accountId: 'validAccountId' })
     const params = mockChangeAccountParams()
 
     await sut.changeAccount(params)
 
     const expectedAccount = mockAccount({
+      accountId: params.accountId,
       user: {
-        email: params.email,
         roles: ['Writer']
       },
       personalData: params.personalData
@@ -23,7 +23,7 @@ describe('When change account', () => {
 
   test('Will return error if save fails', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
-    repo.readResult = mockAccount({ user: { email: 'any-email@mail.com' } })
+    repo.readByAccountIdResult = mockAccount({ accountId: 'invalidAccountId' })
     repo.saveResult = false
     const params = mockChangeAccountParams()
 
