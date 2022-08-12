@@ -1,17 +1,40 @@
-import { Account, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam'
+import { Account, GetAccountByAccountId, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam'
 import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
 import { MySQLConnectionManager } from '@/shared/infra'
 
 import { Repository } from 'typeorm'
 import { MySQLRole } from './entities/MySQLRole'
 
-export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository {
+export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository, GetAccountByAccountId {
   private readonly userRepo: Repository<MySQLUser>
   private readonly accountRepo: Repository<MySQLAccount>
 
   constructor (connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.userRepo = connection.getRepository(MySQLUser)
     this.accountRepo = connection.getRepository(MySQLAccount)
+  }
+
+  async getByAccountId (accountId: GetAccountByAccountId.Params): Promise<GetAccountByAccountId.Result> {
+    const dbAccount = await this.accountRepo.findOne({ where: { accountId }, relations: { user: true } })
+    if (dbAccount === null) return undefined
+    return {
+      accountId: dbAccount.accountId,
+      user: {
+        userId: dbAccount.user.userId,
+        email: dbAccount.user.email,
+        password: dbAccount.user.password,
+        roles: dbAccount.user.roles.split(',').filter(x => x !== '').map(x => MySQLRole.getKeyByValue(x))
+      },
+      personalData: {
+        birthDate: dbAccount.birthDate,
+        firstName: dbAccount.firstName,
+        lastName: dbAccount.lastName,
+        occupation: dbAccount.occupation
+      },
+      creationDate: dbAccount.createdAt,
+      updateDate: dbAccount.updatedAt,
+      isActive: dbAccount.isActive
+    }
   }
 
   async getByEmail (email: string): Promise<GetAccountByEmailRepository.Result> {

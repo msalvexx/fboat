@@ -60,8 +60,14 @@ describe('AccountRepository', () => {
     }
   })
 
-  test('Should return null if account not found', async () => {
-    const result = await sut.getByEmail('valid@mail.com')
+  test('Should return undefined if inexistent email was provided', async () => {
+    const result = await sut.getByEmail('invalid@mail.com')
+
+    expect(result).toBeUndefined()
+  })
+
+  test('Should return undefined if inexistent accountId was provided', async () => {
+    const result = await sut.getByAccountId('invalid-account-id')
 
     expect(result).toBeUndefined()
   })
@@ -75,7 +81,7 @@ describe('AccountRepository', () => {
     expect(result).toStrictEqual(makeRepositoryResult(account))
   })
 
-  test('Should return a valid account with roles', async () => {
+  test('Should return a account with roles by email when an existent email id provided', async () => {
     const account = mockAccount({
       user: { roles: ['Writer', 'FBoatReader'] }
     })
@@ -83,6 +89,15 @@ describe('AccountRepository', () => {
     await saveAccountOnDatabase(account, roles)
 
     const result = await sut.getByEmail(account.user.email)
+
+    expect(result).toStrictEqual(makeRepositoryResult(account))
+  })
+
+  test('Should return a account when an existent accountId id provided', async () => {
+    const account = mockAccount()
+    await saveAccountOnDatabase(account)
+
+    const result = await sut.getByAccountId(account.accountId)
 
     expect(result).toStrictEqual(makeRepositoryResult(account))
   })
