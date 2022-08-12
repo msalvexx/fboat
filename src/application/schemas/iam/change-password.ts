@@ -1,5 +1,5 @@
 import { authorizationHeader } from './authorization'
-import { accountParamsSchema } from './get-account'
+import { accountParamsSchema } from './commons'
 
 import builder from 'fluent-json-schema'
 

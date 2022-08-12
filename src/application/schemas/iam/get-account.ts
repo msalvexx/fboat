@@ -1,10 +1,5 @@
 import { authorizationHeader } from './authorization'
-
-import builder from 'fluent-json-schema'
-
-export const accountParamsSchema = builder
-  .object()
-  .prop('email', builder.string().format(builder.FORMATS.EMAIL).required())
+import { accountParamsSchema } from './commons'
 
 export const getAccountSchema = {
   params: accountParamsSchema,

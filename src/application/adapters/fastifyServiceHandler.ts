@@ -1,8 +1,5 @@
-type Controller = (params: any) => any
-type RequestHandler = (request: any, response: any) => Promise<void>
-type Contract = (controler: Controller) => RequestHandler
+type ServiceHandler = (params: any) => Promise<any>
+type RequestHandler = (request: any, response: any) => Promise<any>
+type Contract = (handler: ServiceHandler) => RequestHandler
 
-export const fastifyHandler: Contract = controller => async (request: any, response: any) => {
-  const result = await controller(request.body)
-  response.send(result)
-}
+export const fastifyHandlerAdapter: Contract = handler => async (request: any, _: any) => await handler(request.body)

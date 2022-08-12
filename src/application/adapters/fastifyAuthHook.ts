@@ -1,14 +1,15 @@
-import { FastifyRequest, FastifyReply } from 'fastify'
+import { FastifyRequest, FastifyReply, HookHandlerDoneFunction } from 'fastify'
 import { makeAuthenticationService } from '@/application/factories'
 
 const authService = makeAuthenticationService()
 
-export const auth = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+export const auth = (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction): void => {
   const token = request.headers.authorization ?? ''
-  try {
-    const loggedUser = await authService.certificate(token)
+  authService.certificate(token).then(loggedUser => {
     request.body = { ...request.body as object, loggedUser }
-  } catch {
-    await reply.code(403)
-  }
+    done()
+  }).catch(async err => {
+    await reply.code(400)
+    done(err)
+  })
 }

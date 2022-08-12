@@ -1,18 +1,15 @@
-import { getAvailableRoleNames } from '@/iam'
 import { authorizationHeader } from './authorization'
+import { emailSchema, personalDataSchema, rolesSchema } from './commons'
 
 import builder from 'fluent-json-schema'
 
 const bodySchema = builder
   .object()
-  .prop('email', builder.string().format(builder.FORMATS.EMAIL))
+  .prop('email', emailSchema)
   .prop('password', builder.string())
-  .prop('firstName', builder.string())
-  .prop('lastName', builder.string())
-  .prop('occupation', builder.string())
-  .prop('birthDate', builder.raw({ type: 'string', format: 'date' }))
-  .prop('roles', builder.array().minItems(1).items(builder.enum(getAvailableRoleNames)))
-  .required(['email', 'firstName', 'lastName', 'password', 'occupation', 'birthDate', 'roles'])
+  .prop('roles', rolesSchema)
+  .definition('personalData', personalDataSchema)
+  .required(['email', 'password', 'roles', 'personalData'])
 
 export const createAccountSchema = {
   body: bodySchema,
