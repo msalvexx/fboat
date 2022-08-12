@@ -26,9 +26,10 @@
   "homepage": "https://github.com/msalvexx/fboat-backend#readme",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/getenv": "^1.0.0",
     "@types/jest": "^28.1.6",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/node": "^18.6.4",
+    "@types/node": "^18.7.2",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.32.0",
     "eslint": "^8.21.0",
@@ -45,6 +46,9 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "fastify": "^4.4.0",
+    "fluent-json-schema": "^3.1.0",
+    "getenv": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "typeorm": "^0.3.7",
