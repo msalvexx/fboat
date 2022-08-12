@@ -3,7 +3,7 @@ import { CreateAccount } from '@/iam/domain/protocols'
 import { newUuid } from '@/iam/infra/adapters'
 
 export const createAccount = (params: CreateAccount.Params): Account => {
-  const { email, password, roles, ...personalData } = params
+  const { email, password, roles, personalData } = params
   return new Account({
     accountId: newUuid(),
     user: {

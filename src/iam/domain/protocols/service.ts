@@ -1,17 +1,14 @@
-import { Account, EmailAlreadyInUseError, PersistDataChangeError, PersonalData } from '@/iam'
+import { Account, PersonalData } from '@/iam'
 
 export namespace CreateAccount {
   export type Params = {
     email: string
-    firstName: string
-    lastName: string
     password: string
-    occupation: string
-    birthDate: Date
+    personalData: PersonalData.Params
     roles: string[]
   }
 
-  export type Result = Account | EmailAlreadyInUseError | PersistDataChangeError
+  export type Result = Account
 }
 
 export interface CreateAccount {

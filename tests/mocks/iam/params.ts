@@ -24,10 +24,12 @@ export const mockChangePasswordParams = (accountId: string = 'validAccountId'): 
 
 export const mockCreateAccountParams = (email: string = 'valid@mail.com'): CreateAccount.Params => ({
   email,
-  firstName: 'first',
-  lastName: 'last',
   password: '123',
-  occupation: 'any',
-  birthDate: new Date(),
+  personalData: {
+    firstName: 'first',
+    lastName: 'last',
+    occupation: 'any',
+    birthDate: new Date()
+  },
   roles: []
 })
