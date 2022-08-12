@@ -16,10 +16,12 @@ export class CreateAccountTableMigration1660074348789 implements MigrationInterf
     PRIMARY KEY (id_int),
     FOREIGN KEY (id_int_usuario) REFERENCES usuarios(id_int)
   )`
+  private readonly createIndex: string = 'CREATE UNIQUE INDEX id_conta_idx ON contas(id_conta)'
   private readonly drop: string = 'DROP table contas'
 
   public async up (queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(this.create)
+    await queryRunner.query(this.createIndex)
   }
 
   public async down (queryRunner: QueryRunner): Promise<void> {
