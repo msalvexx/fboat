@@ -1,11 +1,11 @@
 import Fastify, { FastifyInstance } from 'fastify'
 
-import { auth } from '@/application/adapters/'
+import { mergeBody } from '@/application/adapters/'
 import iamRoutes from '@/application/routers/iam'
 import { Configs } from './env'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
-  server.addHook('preHandler', auth)
+  server.addHook('preHandler', mergeBody)
 }
 
 const setupRoutes = async (server: FastifyInstance): Promise<void> => {
