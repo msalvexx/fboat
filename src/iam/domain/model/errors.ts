@@ -1,4 +1,6 @@
 export class EmailAlreadyInUseError extends Error {
+  readonly statusCode: number = 400
+
   constructor (email: string) {
     super(`Email: ${email} is already in use`)
     this.name = 'EmailAlreadyInUseError'
@@ -6,20 +8,32 @@ export class EmailAlreadyInUseError extends Error {
 }
 
 export class PersistDataChangeError extends Error {
+  readonly statusCode: number = 500
+
   constructor (type: string) {
     super(`Failed to persist changes on ${type}`)
     this.name = 'PersistDataChangeError'
   }
 }
 
-export class AccountNotFoundError extends Error {
+export class ResourceNotFoundError extends Error {
+  readonly statusCode: number = 404
+
+  constructor (message: string = 'The resource was not found', name: string = 'ResourceNotFoundError') {
+    super(message)
+    this.name = 'ResourceNotFoundError'
+  }
+}
+
+export class AccountNotFoundError extends ResourceNotFoundError {
   constructor (accountId: string) {
-    super(`There is no account associated with this accountId: ${accountId}`)
-    this.name = 'AccountNotFoundError'
+    super(`There is no account associated with accountId: ${accountId}`, 'AccountNotFoundError')
   }
 }
 
 export class UnauthorizedError extends Error {
+  readonly statusCode: number = 401
+
   constructor () {
     super('Unauthorized')
     this.name = 'UnauthorizedError'
@@ -27,6 +41,8 @@ export class UnauthorizedError extends Error {
 }
 
 export class ConnectionNotFoundError extends Error {
+  readonly statusCode: number = 500
+
   constructor () {
     super('ConnectionNotFoundError')
     this.name = 'ConnectionNotFoundError'
@@ -34,6 +50,8 @@ export class ConnectionNotFoundError extends Error {
 }
 
 export class TransactionNotFoundError extends Error {
+  readonly statusCode: number = 500
+
   constructor () {
     super('TransactionNotFoundError')
     this.name = 'TransactionNotFoundError'

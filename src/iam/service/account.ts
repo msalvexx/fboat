@@ -7,8 +7,8 @@ export class AccountService implements AccountModifier, GetAccount {
     private readonly hasher: Hasher
   ) {}
 
-  async getAccount (accountId: GetAccount.Params): Promise<GetAccount.Result> {
-    return await this.getAccountByAccountId(accountId)
+  async getAccount (id: GetAccount.Params): Promise<GetAccount.Result> {
+    return await this.getAccountByAccountId(id)
   }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
@@ -21,8 +21,7 @@ export class AccountService implements AccountModifier, GetAccount {
   }
 
   async changeAccount (params: ChangeAccount.Params): Promise<ChangeAccount.Result> {
-    const { accountId } = params
-    const retrievedAccount = await this.getAccountByAccountId(accountId)
+    const retrievedAccount = await this.getAccountByAccountId(params.id)
     retrievedAccount.changePersonalData(params.personalData)
     retrievedAccount.changeAccountActivation(params.isActive)
     retrievedAccount.user.changeRoles(params.roles)
@@ -30,9 +29,8 @@ export class AccountService implements AccountModifier, GetAccount {
   }
 
   async changePassword (params: ChangePassword.Params): Promise<ChangePassword.Result> {
-    const { accountId: email, newPassword } = params
-    const retrievedAccount = await this.getAccountByAccountId(email)
-    const hashedPassword = await this.hasher.generate(newPassword)
+    const retrievedAccount = await this.getAccountByAccountId(params.id)
+    const hashedPassword = await this.hasher.generate(params.newPassword)
     retrievedAccount.user.changePassword(hashedPassword)
     await this.repo.save(retrievedAccount)
   }

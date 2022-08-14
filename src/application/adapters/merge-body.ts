@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply, HookHandlerDoneFunction } from 'fastify'
 
-export const mergeBody = (request: FastifyRequest, reply: FastifyReply, done: HookHandlerDoneFunction): void => {
+export const mergeBody = (request: FastifyRequest, _: FastifyReply, done: HookHandlerDoneFunction): void => {
   request.body = {
     ...request.body as any,
     ...request.headers,

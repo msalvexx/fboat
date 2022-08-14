@@ -1,3 +1,3 @@
-export * from './fastifyServiceHandler'
-export * from './fastifyAuthHook'
-export * from './fastifyMergeBody'
+export * from './service-handler'
+export * from './auth'
+export * from './merge-body'

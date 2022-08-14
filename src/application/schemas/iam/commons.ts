@@ -11,7 +11,7 @@ export const personalDataSchema = builder
 
 export const accountParamsSchema = builder
   .object()
-  .prop('accountId', builder.string().format('uuid').required())
+  .prop('id', builder.string().format('uuid').required())
 
 export const rolesSchema = builder.array().minItems(1).items(builder.enum(getAvailableRoleNames))
 export const emailSchema = builder.string().format(builder.FORMATS.EMAIL)

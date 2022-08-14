@@ -1,8 +1,8 @@
-import { UnauthorizedError, User } from '@/iam'
+import { UnauthorizedError } from '@/iam'
 import { AccountGuard } from '@/iam/service/guard'
-import { mockChangeAccountParams, mockChangePasswordParams, mockCreateAccountParams, mockUser } from '@/tests/mocks/iam'
+import { mockAccount, mockChangeAccountParams, mockChangePasswordParams, mockCreateAccountParams } from '@/tests/mocks/iam'
 
-const makeSut = (user: User = mockUser()): AccountGuard => new AccountGuard(undefined as any, mockUser())
+const makeSut = (): AccountGuard => new AccountGuard(undefined as any, mockAccount())
 
 describe('When validating permissions', () => {
   test('Will throw UnauthorizedError if not has permission to create account', async () => {
@@ -16,7 +16,7 @@ describe('When validating permissions', () => {
 
   test('Will throw UnauthorizedError if not has permission to change account', async () => {
     const sut = makeSut()
-    const params = mockChangeAccountParams('invalid@mail.com')
+    const params = mockChangeAccountParams('invalid-id')
 
     const promise = sut.changeAccount(params)
 
@@ -35,7 +35,7 @@ describe('When validating permissions', () => {
   test('Will throw UnauthorizedError if not has permission to get account', async () => {
     const sut = makeSut()
 
-    const promise = sut.getAccount('invalid@mail.com')
+    const promise = sut.getAccount('invalid-id')
 
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })

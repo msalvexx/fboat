@@ -17,7 +17,7 @@ export interface CreateAccount {
 
 export namespace ChangeAccount {
   export type Params = {
-    accountId: string
+    id: string
     roles: string[]
     personalData: PersonalData.Params
     isActive: boolean
@@ -32,7 +32,7 @@ export interface ChangeAccount {
 
 export namespace ChangePassword {
   export type Params = {
-    accountId: string
+    id: string
     newPassword: string
   }
 
@@ -49,7 +49,7 @@ export namespace GetAccount {
 }
 
 export interface GetAccount {
-  getAccount: (accountId: GetAccount.Params) => Promise<GetAccount.Result>
+  getAccount: (id: GetAccount.Params) => Promise<GetAccount.Result>
 }
 
 export type AccountModifier = CreateAccount & ChangeAccount & ChangePassword

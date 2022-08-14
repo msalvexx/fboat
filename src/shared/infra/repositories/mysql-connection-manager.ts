@@ -1,3 +1,4 @@
+import { EnvConfig } from '@/application/configs/env'
 import { ConnectionNotFoundError, TransactionNotFoundError } from '@/iam'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 
@@ -18,18 +19,13 @@ export namespace MySQLConnectionManager {
 
 export class MySQLConnectionManager {
   private static instance?: MySQLConnectionManager
-  private readonly defaultConfig: MySQLConnectionManager.Config = {
-    host: 'localhost',
-    port: 3306,
-    username: 'dev',
-    password: '1234',
-    database: 'test'
-  }
-
   private connection?: DataSource
   private query?: QueryRunner
+  private readonly config: MySQLConnectionManager.Config
 
-  private constructor () {}
+  private constructor () {
+    this.config = EnvConfig.getInstance().configs.db
+  }
 
   static getInstance (): MySQLConnectionManager {
     if (this.instance === undefined) {
@@ -38,21 +34,23 @@ export class MySQLConnectionManager {
     return this.instance
   }
 
-  async connect (config: MySQLConnectionManager.Config = this.defaultConfig): Promise<void> {
-    const datasource = new DataSource({
+  async connect (): Promise<void> {
+    if (await this.isConnected()) return
+    const config: any = {
       type: 'mysql',
-      url: config.connectionString,
-      connectTimeout: config.connectTimeout,
-      charset: config.charset,
-      host: config.host,
-      port: config.port,
-      database: config.database,
-      username: config.username,
-      password: config.password,
-      entities: config.entities,
-      migrations: config.migrations
-    })
-    if (!await this.isConnected()) this.connection = await datasource.initialize()
+      url: this.config.connectionString,
+      connectTimeout: this.config.connectTimeout,
+      charset: this.config.charset,
+      database: this.config.database,
+      host: this.config.host,
+      port: this.config.port,
+      username: this.config.username,
+      password: this.config.password,
+      entities: this.config.entities,
+      migrations: this.config.migrations
+    }
+    const datasource = new DataSource(config)
+    this.connection = await datasource.initialize()
   }
 
   async isConnected (): Promise<boolean> {
@@ -106,5 +104,10 @@ export class MySQLConnectionManager {
     if (this.connection === undefined) throw new ConnectionNotFoundError()
     if (this.query !== undefined) return this.query.manager.getRepository(entity)
     return this.connection.getRepository(entity)
+  }
+
+  async executeQuery (sql: string): Promise<void> {
+    if (this.connection === undefined) throw new ConnectionNotFoundError()
+    await this.connection?.query(sql)
   }
 }

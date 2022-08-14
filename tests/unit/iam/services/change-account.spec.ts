@@ -11,7 +11,7 @@ describe('When change account', () => {
     await sut.changeAccount(params)
 
     const expectedAccount = mockAccount({
-      accountId: params.accountId,
+      accountId: params.id,
       user: {
         roles: ['Writer']
       },

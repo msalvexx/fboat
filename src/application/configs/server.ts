@@ -1,10 +1,13 @@
 import Fastify, { FastifyInstance } from 'fastify'
 
-import { mergeBody } from '@/application/adapters/'
+import { EnvConfig } from './env'
+import { startDbConnection, stopDbConnection } from '@/application/factories'
+import { mergeBody } from '@/application/adapters'
 import iamRoutes from '@/application/routers/iam'
-import { Configs } from './env'
+import { MySQLConnectionManager } from '@/shared/infra'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
+  server.addHook('onClose', stopDbConnection)
   server.addHook('preHandler', mergeBody)
 }
 
@@ -12,21 +15,28 @@ const setupRoutes = async (server: FastifyInstance): Promise<void> => {
   await server.register(iamRoutes)
 }
 
-const server = Fastify()
-
-export const startApp = async (): Promise<void> => {
-  await setupHooks(server)
-  await setupRoutes(server)
-  const port = Configs.server.port
-  try {
-    const address = await server.listen({ port })
-    console.log(`Server running at ${address}`)
-  } catch (err) {
-    console.log('Error starting server:', err)
-  }
+type App = {
+  serverInstance: FastifyInstance
+  connectionManager: MySQLConnectionManager
 }
 
-export const closeApp = async (reason: string | Error): Promise<void> => {
-  await server.close()
-  console.log('Server was closed by reason: ', reason)
+export const buildApp = async (config: any = null): Promise<App> => {
+  const serverInstance = Fastify()
+  const connectionManager = await startDbConnection(config)
+  await setupHooks(serverInstance)
+  await setupRoutes(serverInstance)
+  return { serverInstance, connectionManager }
+}
+
+export const startApp = async (): Promise<FastifyInstance> => {
+  const { serverInstance } = await buildApp()
+  const port = EnvConfig.getInstance().configs.server.port
+  const address = await serverInstance.listen({ port })
+  console.log(`Server running at ${address}`)
+  return serverInstance
+}
+
+export const closeApp = async (serverInstance: FastifyInstance): Promise<void> => {
+  if (serverInstance === undefined) return
+  await serverInstance.close()
 }

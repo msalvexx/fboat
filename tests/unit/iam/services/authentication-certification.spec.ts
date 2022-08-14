@@ -15,8 +15,8 @@ describe('When certifying token of user', () => {
     const { sut, repo } = AuthenticationSut.makeSut()
     repo.readResult = mockAccount()
 
-    const user = await sut.certificate('validToken')
+    const account = await sut.certificate('validToken')
 
-    expect(user).toStrictEqual(mockAccount().user)
+    expect(account).toStrictEqual(mockAccount())
   })
 })

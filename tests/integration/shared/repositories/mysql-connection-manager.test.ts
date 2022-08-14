@@ -5,22 +5,14 @@ import { StartedMySqlContainer } from 'testcontainers'
 
 describe('MySQLConnectionManager', () => {
   let container: StartedMySqlContainer
-  let config: any
   let sut: MySQLConnectionManager
 
   beforeAll(async () => {
     container = await startMySQLTestContainer()
-    config = {
-      database: container.getDatabase(),
-      host: container.getHost(),
-      port: container.getPort(),
-      username: container.getUsername(),
-      password: container.getUserPassword()
-    }
     sut = MySQLConnectionManager.getInstance()
   })
 
-  afterAll(async () => await stopMySQLTestContainer())
+  afterAll(async () => await stopMySQLTestContainer(container))
 
   test('Should return same instance when getInstance is called', () => {
     const sut2 = MySQLConnectionManager.getInstance()
@@ -29,13 +21,13 @@ describe('MySQLConnectionManager', () => {
   })
 
   test('Should connect to database', async () => {
-    await sut.connect(config)
+    await sut.connect()
 
     await expect(sut.isConnected()).resolves.toBeTruthy()
   })
 
   test('Should disconnect to database', async () => {
-    await sut.connect(config)
+    await sut.connect()
     await sut.disconnect()
 
     await expect(sut.isConnected()).resolves.toBeFalsy()

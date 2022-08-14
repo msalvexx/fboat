@@ -1,4 +1,4 @@
-import { User } from '@/iam'
+import { Account } from '@/iam'
 
 export namespace AuthenticateUser {
   export type Params = {
@@ -19,7 +19,7 @@ export interface AuthenticateUser {
 export namespace AuthenticationCertifier {
   export type Params = string
 
-  export type Result = User | Error
+  export type Result = Account | Error
 }
 
 export interface AuthenticationCertifier {
