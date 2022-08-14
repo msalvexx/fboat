@@ -6,7 +6,7 @@ import { FastifyInstance } from 'fastify'
 import supertest from 'supertest'
 import { StartedMySqlContainer } from 'testcontainers'
 
-describe('/GET account/:id', () => {
+describe('GET /account/:id', () => {
   let serverInstance: FastifyInstance
   let container: StartedMySqlContainer
   let connectionManager: MySQLConnectionManager

@@ -3,7 +3,7 @@ import Fastify, { FastifyInstance } from 'fastify'
 import { EnvConfig } from './env'
 import { startDbConnection, stopDbConnection } from '@/application/factories'
 import { mergeBody } from '@/application/adapters'
-import iamRoutes from '@/application/routers/iam'
+import { iamRoutes, loginRoute } from '@/application/routes'
 import { MySQLConnectionManager } from '@/shared/infra'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
@@ -12,6 +12,7 @@ const setupHooks = async (server: FastifyInstance): Promise<void> => {
 }
 
 const setupRoutes = async (server: FastifyInstance): Promise<void> => {
+  await server.register(loginRoute)
   await server.register(iamRoutes)
 }
 

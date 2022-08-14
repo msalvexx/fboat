@@ -58,8 +58,8 @@ const generateTestData = async (connectionManager: MySQLConnectionManager): Prom
       INSERT INTO usuarios
         ( id_int, id_usuario, email, senha, funcoes )
       VALUES
-        (1, '0265bf42-67b2-46cb-933b-6c11400a22eb', 'admin@mail.com', 'admin@123', 'administrador'), 
-        (2, '5d4eae2e-38f7-442a-9490-a1cff7cc4189', 'writer@mail.com', 'writer@123', 'escritor,leitor-veleiro');`
+        (1, '0265bf42-67b2-46cb-933b-6c11400a22eb', 'admin@mail.com', '$2b$14$OHGCUZgJEQJjSISRzhvjTeJnOgY26Ctq0i8qVqJuW38Xez6GBzbEe', 'administrador'), 
+        (2, '5d4eae2e-38f7-442a-9490-a1cff7cc4189', 'writer@mail.com', '$2b$14$xrnNcfGmsll2g3AuEaK9ruMwIRdk.Uhhdn8MPtaPLxqQ/P8vCbJku', 'escritor,leitor-veleiro');`
     )
   await connectionManager
     .executeQuery(`
