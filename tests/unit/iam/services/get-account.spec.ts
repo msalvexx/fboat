@@ -20,6 +20,17 @@ describe('Get Account', () => {
 
     const result = await sut.getAccount(account.accountId)
 
-    expect(result).toStrictEqual(account)
+    expect(result).toStrictEqual({
+      accountId: account.accountId,
+      personalData: account.personalData,
+      user: {
+        userId: account.user.userId,
+        email: account.user.email,
+        roles: account.user.roles.map(x => x.name)
+      },
+      creationDate: account.creationDate,
+      updateDate: account.updateDate,
+      isActive: account.isActive
+    })
   })
 })

@@ -8,7 +8,19 @@ export class AccountService implements AccountModifier, GetAccount {
   ) {}
 
   async getAccount (id: GetAccount.Params): Promise<GetAccount.Result> {
-    return await this.getAccountByAccountId(id)
+    const account = await this.getAccountByAccountId(id)
+    return {
+      accountId: account.accountId,
+      personalData: account.personalData,
+      user: {
+        userId: account.user.userId,
+        email: account.user.email,
+        roles: account.user.roles.map(x => x.name)
+      },
+      creationDate: account.creationDate,
+      updateDate: account.updateDate,
+      isActive: account.isActive
+    }
   }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {

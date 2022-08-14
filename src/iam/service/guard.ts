@@ -7,7 +7,7 @@ export class AccountGuard implements AccountModifier, GetAccount {
     private readonly loggedAccount: Account
   ) {}
 
-  async getAccount (id: string): Promise<Account> {
+  async getAccount (id: string): Promise<GetAccount.Result> {
     if (!this.loggedAccount.user.hasPermission('GetAccount') && id !== this.loggedAccount.accountId) throw new UnauthorizedError()
     return await this.decoratee.getAccount(id)
   }

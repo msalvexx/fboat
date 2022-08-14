@@ -45,7 +45,7 @@ export interface ChangePassword {
 
 export namespace GetAccount {
   export type Params = string
-  export type Result = Account
+  export type Result = Account.Params
 }
 
 export interface GetAccount {

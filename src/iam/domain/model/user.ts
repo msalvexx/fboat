@@ -4,7 +4,7 @@ export namespace User {
   export type Params = {
     userId: string
     email: string
-    password: string
+    password?: string
     roles?: string[]
   }
 }
@@ -18,7 +18,7 @@ export class User {
   constructor (params: User.Params) {
     this.userId = params.userId
     this.email = params.email
-    this._password = params.password
+    this._password = params.password ?? ''
     if (params.roles !== undefined && params.roles.length !== 0) {
       this.changeRoles(params.roles)
     }
