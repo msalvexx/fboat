@@ -29,4 +29,15 @@ describe('/GET account/:id', () => {
     expect(status).toBe(404)
     expect(body.message).toBe(new AccountNotFoundError(invalidUid).message)
   })
+
+  test('Should returns 200 if account exists', async () => {
+    const validUid = '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85'
+
+    const { status, body } = await supertest(serverInstance.server)
+      .get(`/account/${validUid}`)
+      .set('Authorization', token)
+
+    expect(status).toBe(200)
+    expect(body.accountId).toBe(validUid)
+  })
 })
