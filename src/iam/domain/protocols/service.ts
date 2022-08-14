@@ -8,7 +8,7 @@ export namespace CreateAccount {
     roles: string[]
   }
 
-  export type Result = Account
+  export type Result = Account.Params
 }
 
 export interface CreateAccount {

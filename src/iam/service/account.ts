@@ -9,18 +9,7 @@ export class AccountService implements AccountModifier, GetAccount {
 
   async getAccount (id: GetAccount.Params): Promise<GetAccount.Result> {
     const account = await this.getAccountByAccountId(id)
-    return {
-      accountId: account.accountId,
-      personalData: account.personalData,
-      user: {
-        userId: account.user.userId,
-        email: account.user.email,
-        roles: account.user.roles.map(x => x.name)
-      },
-      creationDate: account.creationDate,
-      updateDate: account.updateDate,
-      isActive: account.isActive
-    }
+    return this.toAccountResult(account)
   }
 
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
@@ -29,7 +18,7 @@ export class AccountService implements AccountModifier, GetAccount {
     params.password = await this.hasher.generate(params.password)
     const newAccount = createAccount(params)
     await this.repo.save(newAccount)
-    return newAccount
+    return this.toAccountResult(newAccount)
   }
 
   async changeAccount (params: ChangeAccount.Params): Promise<ChangeAccount.Result> {
@@ -51,5 +40,20 @@ export class AccountService implements AccountModifier, GetAccount {
     const accountParams = await this.repo.getByAccountId(accountId)
     if (accountParams === undefined) throw new AccountNotFoundError(accountId)
     return new Account(accountParams)
+  }
+
+  private toAccountResult (account: Account): Account.Params {
+    return {
+      accountId: account.accountId,
+      personalData: account.personalData,
+      user: {
+        userId: account.user.userId,
+        email: account.user.email,
+        roles: account.user.roles.map(x => x.name)
+      },
+      creationDate: account.creationDate,
+      updateDate: account.updateDate,
+      isActive: account.isActive
+    }
   }
 }

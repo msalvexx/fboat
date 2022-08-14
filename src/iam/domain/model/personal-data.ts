@@ -17,7 +17,7 @@ export class PersonalData {
     this.firstName = params.firstName
     this.lastName = params.lastName
     this.occupation = params.occupation
-    this.birthDate = params.birthDate
+    this.birthDate = new Date(params.birthDate)
     this.birthDate.setMilliseconds(0)
   }
 
