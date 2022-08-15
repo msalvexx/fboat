@@ -5,7 +5,7 @@ import builder from 'fluent-json-schema'
 
 const bodySchema = builder
   .object()
-  .prop('password', builder.string().required())
+  .prop('newPassword', builder.string().required())
 
 export const changePasswordSchema = {
   params: accountParamsSchema,
