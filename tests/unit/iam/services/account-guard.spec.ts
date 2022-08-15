@@ -31,12 +31,4 @@ describe('When validating permissions', () => {
 
     await expect(promise).rejects.toThrowError(new UnauthorizedError())
   })
-
-  test('Will throw UnauthorizedError if not has permission to get account', async () => {
-    const sut = makeSut()
-
-    const promise = sut.getAccount('invalid-id')
-
-    await expect(promise).rejects.toThrowError(new UnauthorizedError())
-  })
 })

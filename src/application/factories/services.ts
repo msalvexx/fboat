@@ -7,7 +7,10 @@ import { makeAccountRepository } from '@/application/factories'
 type Service = AccountModifier & GetAccount
 
 const makeBcryptAdapter = (): BcryptAdapter => new BcryptAdapter(EnvConfig.getInstance().configs.bcrypt.salt)
-const makeJwtAdapter = (): JwtAdapter => new JwtAdapter(EnvConfig.getInstance().configs.jwt.secret)
+const makeJwtAdapter = (): JwtAdapter => new JwtAdapter(
+  EnvConfig.getInstance().configs.jwt.secret,
+  EnvConfig.getInstance().configs.jwt.expiresIn
+)
 
 export const makeAccountService = (): Service => new AccountService(
   makeAccountRepository(),

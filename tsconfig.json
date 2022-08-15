@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "outDir": "./dist",
+    "rootDirs": ["src", "tests"],
     "module": "CommonJS",
+    "sourceMap": true,
+    "forceConsistentCasingInFileNames": true,
     "target": "ES2022",
     "esModuleInterop": true,
     "allowJs": true,
     "strictNullChecks": true,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@/*": ["./src/*"],
-      "@/tests/*": ["./tests/*"]
+      "@/*": ["*"],
+      "@/tests/*": ["../tests/*"]
     },
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "removeComments": true
   },
   "include": ["src", "tests", "jest.config.ts", "jest.integration.config.ts", "migrations"],
   "exclude": []

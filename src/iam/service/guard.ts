@@ -8,7 +8,6 @@ export class AccountGuard implements AccountModifier, GetAccount {
   ) {}
 
   async getAccount (id: string): Promise<GetAccount.Result> {
-    if (!this.loggedAccount.user.hasPermission('GetAccount') && id !== this.loggedAccount.accountId) throw new UnauthorizedError()
     return await this.decoratee.getAccount(id)
   }
 
@@ -18,12 +17,12 @@ export class AccountGuard implements AccountModifier, GetAccount {
   }
 
   async changeAccount (params: ChangeAccount.Params): Promise<void> {
-    if (!this.loggedAccount.user.hasPermission('ChangeAccount') && params.id !== this.loggedAccount.accountId) throw new UnauthorizedError()
+    if (this.loggedAccount.accountId !== params.id && !this.loggedAccount.user.hasPermission('ChangeAccount')) throw new UnauthorizedError()
     await this.decoratee.changeAccount(params)
   }
 
   async changePassword (params: ChangePassword.Params): Promise<void> {
-    if (!this.loggedAccount.user.hasPermission('ChangePassword') && params.id !== this.loggedAccount.accountId) throw new UnauthorizedError()
+    if (this.loggedAccount.accountId !== params.id && !this.loggedAccount.user.hasPermission('ChangePassword')) throw new UnauthorizedError()
     await this.decoratee.changePassword(params)
   }
 }

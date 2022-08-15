@@ -27,7 +27,7 @@ export class Account {
     this.creationDate = params.creationDate ?? now
     this.updateDate = params.updateDate ?? now
     this._isActive = params.isActive ?? true
-    this.changePersonalData(params.personalData)
+    this._personalData = new PersonalData(params.personalData)
   }
 
   changePersonalData (personalData: PersonalData.Params): void {

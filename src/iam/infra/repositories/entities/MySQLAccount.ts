@@ -38,7 +38,7 @@ export class MySQLAccount {
 
   @OneToOne(() => MySQLUser, user => user.account, { cascade: ['insert', 'update'] })
   @JoinColumn({ name: "id_int_usuario" })
-    user: MySQLUser
+    user!: MySQLUser
 
   @Column({ name: 'nome', type: 'varchar' })
     firstName!: string

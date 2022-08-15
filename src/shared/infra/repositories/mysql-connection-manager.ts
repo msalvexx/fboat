@@ -1,4 +1,6 @@
+
 import { EnvConfig } from '@/application/configs/env'
+import defaultDatasource from '@/application/configs/ormconfig'
 import { ConnectionNotFoundError, TransactionNotFoundError } from '@/iam'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 
@@ -21,11 +23,6 @@ export class MySQLConnectionManager {
   private static instance?: MySQLConnectionManager
   private connection?: DataSource
   private query?: QueryRunner
-  private readonly config: MySQLConnectionManager.Config
-
-  private constructor () {
-    this.config = EnvConfig.getInstance().configs.db
-  }
 
   static getInstance (): MySQLConnectionManager {
     if (this.instance === undefined) {
@@ -34,22 +31,25 @@ export class MySQLConnectionManager {
     return this.instance
   }
 
-  async connect (): Promise<void> {
+  async connect (config: any = null): Promise<void> {
     if (await this.isConnected()) return
-    const config: any = {
-      type: 'mysql',
-      url: this.config.connectionString,
-      connectTimeout: this.config.connectTimeout,
-      charset: this.config.charset,
-      database: this.config.database,
-      host: this.config.host,
-      port: this.config.port,
-      username: this.config.username,
-      password: this.config.password,
-      entities: this.config.entities,
-      migrations: this.config.migrations
+    let datasource = defaultDatasource
+    if (config !== null) {
+      const dbConfig = EnvConfig.getInstance().configs.db
+      datasource = new DataSource({
+        type: 'mysql',
+        connectTimeout: dbConfig.connectTimeout,
+        charset: dbConfig.charset,
+        url: dbConfig.connectionString,
+        database: config.database,
+        host: config.host,
+        port: config.port,
+        username: config.username,
+        password: config.password,
+        entities: dbConfig.entities,
+        migrations: dbConfig.migrations
+      })
     }
-    const datasource = new DataSource(config)
     this.connection = await datasource.initialize()
   }
 
@@ -89,6 +89,11 @@ export class MySQLConnectionManager {
     await this.connection.runMigrations()
   }
 
+  async undoLastMigration (): Promise<void> {
+    if (this.connection === undefined) throw new ConnectionNotFoundError()
+    await this.connection.undoLastMigration({ transaction: 'all' })
+  }
+
   async truncateEntities (): Promise<void> {
     if (this.connection === undefined) throw new ConnectionNotFoundError()
     const entities = this.connection.entityMetadatas
@@ -97,6 +102,7 @@ export class MySQLConnectionManager {
       const repository = this.connection.getRepository(entity.name)
       await repository.clear()
     }
+    await this.connection.query('DELETE FROM migrations where id=3')
     await this.connection.query('SET foreign_key_checks = 1')
   }
 
