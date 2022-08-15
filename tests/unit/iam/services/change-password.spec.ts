@@ -12,14 +12,14 @@ describe('When change password', () => {
 
     await sut.changePassword(params)
 
-    expect(repo.account.user.password).toBe(hashedPassword)
+    expect(repo.updateAccount.user.password).toBe(hashedPassword)
   })
 
   test('Will return error if save fails', async () => {
     const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockChangePasswordParams()
     repo.readByAccountIdResult = mockAccount({ accountId: params.id })
-    repo.saveResult = false
+    repo.updateResult = false
     hasher.compareResult = true
 
     const promise = sut.changePassword(params)

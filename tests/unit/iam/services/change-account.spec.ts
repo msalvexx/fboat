@@ -17,14 +17,14 @@ describe('When change account', () => {
       },
       personalData: params.personalData
     })
-    expect(repo.account.personalData).toStrictEqual(expectedAccount.personalData)
-    expect(repo.account.user.roles).toStrictEqual(expectedAccount.user.roles)
+    expect(repo.updateAccount.personalData).toStrictEqual(expectedAccount.personalData)
+    expect(repo.updateAccount.user.roles).toStrictEqual(expectedAccount.user.roles)
   })
 
   test('Will return error if save fails', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
     repo.readByAccountIdResult = mockAccount({ accountId: 'invalidAccountId' })
-    repo.saveResult = false
+    repo.updateResult = false
     const params = mockChangeAccountParams()
 
     const promise = sut.changeAccount(params)

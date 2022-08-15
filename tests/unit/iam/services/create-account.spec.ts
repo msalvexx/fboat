@@ -20,23 +20,32 @@ describe('Db Create account', () => {
 
     const account = await sut.createAccount(params)
 
-    expect(repo.account).toStrictEqual(account)
+    expect(repo.insertAccount).toStrictEqual(mockAccount({
+      accountId: account.accountId,
+      personalData: params.personalData,
+      user: {
+        email: params.email,
+        password: params.password,
+        userId: account.user.userId,
+        roles: []
+      }
+    }))
   })
 
   test('Should hash password', async () => {
-    const { sut } = AccountServiceSut.makeSut()
+    const { sut, repo } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
 
-    const account = await sut.createAccount(params)
+    await sut.createAccount(params)
 
     const expectedAccount = mockAccount({ user: { email: 'valid@mail.com', password: 'hashedPassword' } })
-    expect(account.user.password).toStrictEqual(expectedAccount.user.password)
+    expect(repo.insertAccount.user.password).toStrictEqual(expectedAccount.user.password)
   })
 
   test('Should return PersistDataChangeError if save account on repository fails', async () => {
     const { sut, repo } = AccountServiceSut.makeSut()
     const params = mockCreateAccountParams()
-    repo.saveResult = false
+    repo.insertResult = false
 
     const promise = sut.createAccount(params)
 

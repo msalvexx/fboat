@@ -9,7 +9,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
   private readonly userRepo: Repository<MySQLUser>
   private readonly accountRepo: Repository<MySQLAccount>
 
-  constructor (connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
+  constructor (private readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.userRepo = connection.getRepository(MySQLUser)
     this.accountRepo = connection.getRepository(MySQLAccount)
   }
@@ -60,7 +60,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
     }
   }
 
-  async save (account: Account): Promise<void> {
+  async insert (account: Account): Promise<void> {
     await this.accountRepo.save({
       accountId: account.accountId,
       birthDate: account.personalData.birthDate,
@@ -77,5 +77,27 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
         roles: account.user.roles.map(role => MySQLRole.getValueByKey(role.name)).join(',')
       }
     })
+  }
+
+  async update (account: Account): Promise<void> {
+    await this.connection.startTransaction()
+    await this.accountRepo.update({
+      accountId: account.accountId
+    },
+    {
+      birthDate: account.personalData.birthDate,
+      updatedAt: account.updateDate,
+      firstName: account.personalData.firstName,
+      lastName: account.personalData.lastName,
+      isActive: account.isActive,
+      occupation: account.personalData.occupation
+    })
+    await this.userRepo.update({
+      userId: account.user.userId
+    }, {
+      password: account.user.password,
+      roles: account.user.roles.map(role => MySQLRole.getValueByKey(role.name)).join(',')
+    })
+    await this.connection.commit()
   }
 }

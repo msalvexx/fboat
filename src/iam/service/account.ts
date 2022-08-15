@@ -17,7 +17,7 @@ export class AccountService implements AccountModifier, GetAccount {
     if (await this.repo.getByEmail(email) !== undefined) throw new EmailAlreadyInUseError(email)
     params.password = await this.hasher.generate(params.password)
     const newAccount = createAccount(params)
-    await this.repo.save(newAccount)
+    await this.repo.insert(newAccount)
     return this.toAccountResult(newAccount)
   }
 
@@ -26,14 +26,14 @@ export class AccountService implements AccountModifier, GetAccount {
     retrievedAccount.changePersonalData(params.personalData)
     retrievedAccount.changeAccountActivation(params.isActive)
     retrievedAccount.user.changeRoles(params.roles)
-    await this.repo.save(retrievedAccount)
+    await this.repo.update(retrievedAccount)
   }
 
   async changePassword (params: ChangePassword.Params): Promise<ChangePassword.Result> {
     const retrievedAccount = await this.getAccountByAccountId(params.id)
     const hashedPassword = await this.hasher.generate(params.newPassword)
     retrievedAccount.user.changePassword(hashedPassword)
-    await this.repo.save(retrievedAccount)
+    await this.repo.update(retrievedAccount)
   }
 
   private async getAccountByAccountId (accountId: string): Promise<Account> {

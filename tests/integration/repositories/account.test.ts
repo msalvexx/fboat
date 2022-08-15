@@ -106,31 +106,66 @@ describe('AccountRepository', () => {
     expect(result).toStrictEqual(makeRepositoryResult(account))
   })
 
-  test('Should save account correctly on database', async () => {
+  test('Should insert account correctly on database', async () => {
     const account = mockAccount({
       user: { roles: ['Writer', 'FBoatReader'] }
     })
 
-    await sut.save(account)
+    await sut.insert(account)
 
     const retrievedUser = await userRepo.findOne({ where: { email: account.user.email } }) as any
     expect(retrievedUser).not.toBeNull()
     expect(retrievedUser).toStrictEqual(new MySQLUser({
       id: retrievedUser.id,
-      email: retrievedUser.email,
-      password: retrievedUser.password,
-      userId: retrievedUser.userId,
-      roles: retrievedUser.roles,
+      userId: account.user.userId,
+      email: account.user.email,
+      password: account.user.password,
+      roles: 'escritor,leitor-veleiro',
       account: {
         id: retrievedUser.account.id,
-        accountId: retrievedUser.account.accountId,
-        birthDate: retrievedUser.account.birthDate,
+        accountId: account.accountId,
+        birthDate: account.personalData.birthDate,
         createdAt: retrievedUser.account.createdAt,
         updatedAt: retrievedUser.account.updatedAt,
-        firstName: retrievedUser.account.firstName,
-        isActive: retrievedUser.account.isActive,
-        lastName: retrievedUser.account.lastName,
-        occupation: retrievedUser.account.occupation
+        firstName: account.personalData.firstName,
+        isActive: account.isActive,
+        lastName: account.personalData.lastName,
+        occupation: account.personalData.occupation
+      }
+    }))
+  })
+
+  test('Should update account correctly on database', async () => {
+    const account = mockAccount()
+    await saveAccountOnDatabase(account)
+    account.changePersonalData({
+      firstName: 'Jose',
+      lastName: 'Carlos Augusto',
+      birthDate: account.personalData.birthDate,
+      occupation: account.personalData.occupation
+    })
+    account.user.changeRoles(['FBoatController'])
+
+    await sut.update(account)
+
+    const retrievedUser = await userRepo.findOne({ where: { email: account.user.email } }) as any
+    expect(retrievedUser).not.toBeNull()
+    expect(retrievedUser).toStrictEqual(new MySQLUser({
+      id: retrievedUser.id,
+      userId: account.user.userId,
+      email: account.user.email,
+      password: account.user.password,
+      roles: 'controlador-veleiro',
+      account: {
+        id: retrievedUser.account.id,
+        accountId: account.accountId,
+        birthDate: account.personalData.birthDate,
+        createdAt: retrievedUser.account.createdAt,
+        updatedAt: retrievedUser.account.updatedAt,
+        firstName: account.personalData.firstName,
+        isActive: account.isActive,
+        lastName: account.personalData.lastName,
+        occupation: account.personalData.occupation
       }
     }))
   })

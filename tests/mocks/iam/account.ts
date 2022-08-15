@@ -32,14 +32,21 @@ export const mockAccount = (params: MockAccountParams = defaultAccount): Account
 }
 
 export class AccountRepositoryMock implements AccountRepository {
-  account: Account
+  updateAccount: Account
+  insertAccount: Account
   readResult: any = undefined
-  saveResult: boolean = true
+  insertResult: boolean = true
+  updateResult: boolean = true
   readByAccountIdResult: any = undefined
 
-  async save (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
-    this.account = account
-    if (!this.saveResult) throw new PersistDataChangeError(account.constructor.name)
+  async insert (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
+    this.insertAccount = account
+    if (!this.insertResult) throw new PersistDataChangeError(account.constructor.name)
+  }
+
+  async update (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
+    this.updateAccount = account
+    if (!this.updateResult) throw new PersistDataChangeError(account.constructor.name)
   }
 
   async getByEmail (email: string): Promise<GetAccountByEmailRepository.Result> {

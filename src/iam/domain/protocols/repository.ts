@@ -16,7 +16,8 @@ export namespace GetAccountByAccountId {
 }
 
 export interface SaveAccountRepository {
-  save: (account: SaveAccountRepository.Params) => Promise<SaveAccountRepository.Result>
+  insert: (account: SaveAccountRepository.Params) => Promise<SaveAccountRepository.Result>
+  update: (account: SaveAccountRepository.Params) => Promise<SaveAccountRepository.Result>
 }
 
 export interface GetAccountByEmailRepository {
