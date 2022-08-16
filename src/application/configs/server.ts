@@ -37,7 +37,8 @@ export const startApp = async (): Promise<FastifyInstance> => {
   return serverInstance
 }
 
-export const closeApp = async (serverInstance: FastifyInstance): Promise<void> => {
+export const closeApp = async (serverInstance: FastifyInstance, reason: string = 'unknown'): Promise<void> => {
+  console.log(`Server was closed by reason: ${reason} signal received`)
   if (serverInstance === undefined) return
   await serverInstance.close()
 }

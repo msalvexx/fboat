@@ -12,10 +12,8 @@ export class EnvConfig {
       port: getenv.int('DB_PORT', 3306),
       username: getenv('DB_USER', 'root'),
       password: getenv('DB_PASSWORD', ''),
-      entities: ['src/iam/infra/repositories/entities/index.{js,ts}'].map(x => path.resolve(x)),
-      migrations: [
-        ['test', 'dev'].includes(getenv('APP_ENV', 'dev')) ? 'migrations/**/*.{js,ts}' : 'migrations/production/*.{js,ts}'
-      ].map(x => path.resolve(x))
+      entities: [`${getenv('APP_ENV', 'dev') !== 'test' ? 'dist' : 'src'}/iam/infra/repositories/entities/index.{js,ts}`].map(x => path.resolve(x)),
+      migrations: getenv('APP_ENV', 'dev') === 'test' ? ['migrations/**/*.{js,ts}'].map(x => path.resolve(x)) : []
     },
     bcrypt: {
       salt: getenv.int('BCRYPT_SALT', 14)

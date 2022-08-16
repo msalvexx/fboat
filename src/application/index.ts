@@ -1,12 +1,14 @@
+import './configs/module-alias'
 import { startApp, closeApp } from '@/application/configs/server'
+
+import 'reflect-metadata'
 
 startApp()
   .then(server => {
-    console.log('Server is running')
-    process.on('SIGTERM', () => {
-      closeApp(server)
-        .then(() => console.log('Server was closed by reason: SIGTERM received'))
+    ['SIGINT', 'SIGTERM', 'SIGQUIT'].forEach(reason => process.on(reason, () => {
+      closeApp(server, reason)
+        .then(() => {})
         .catch(console.error)
-    })
+    }))
   })
   .catch(console.error)

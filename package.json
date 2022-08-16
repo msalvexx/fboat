@@ -7,6 +7,9 @@
     "test": "test"
   },
   "scripts": {
+    "start": "APP_ENV=dev node dist/application",
+    "build": "npm run clean && tsc -p tsconfig-build.json",
+    "clean": "rimraf dist",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --clear --inspect=0.0.0.0:9229 src/application",
     "test": "APP_ENV=test jest --passWithNoTests --runInBand --no-cache",
     "test:watch": "npm test -- --watch",
@@ -30,6 +33,7 @@
     "@types/getenv": "^1.0.0",
     "@types/jest": "^28.1.6",
     "@types/jsonwebtoken": "^8.5.8",
+    "@types/module-alias": "^2.0.1",
     "@types/node": "^18.7.2",
     "@types/supertest": "^2.0.12",
     "@types/uuid": "^8.3.4",
@@ -40,7 +44,7 @@
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^28.1.3",
-    "module-alias": "^2.2.2",
+    "rimraf": "^3.0.2",
     "supertest": "^6.2.4",
     "testcontainers": "^8.12.0",
     "ts-jest": "^28.0.7",
@@ -54,8 +58,13 @@
     "fluent-json-schema": "^3.1.0",
     "getenv": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.7",
     "uuid": "^8.3.2"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
