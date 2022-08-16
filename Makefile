@@ -19,9 +19,15 @@ test-watch:
 dev: start-deps
 	npm run dev
 
+build-app:
+	docker-compose build
+
+start-app: build-app start-deps
+	docker-compose up -d fboat-backend
+
 start-deps:
 	docker-compose up -d db
-	npm run typeorm migration:run -- -d src/application/configs/ormconfig.ts
+	APP_ENV=test npm run typeorm migration:run -- -d src/application/configs/ormconfig.ts
 
-stop-deps:
+stop-app:
 	docker-compose down
