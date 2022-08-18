@@ -9,8 +9,9 @@
   "scripts": {
     "start": "APP_ENV=dev node dist/application",
     "build": "npm run clean && tsc -p tsconfig-build.json",
+    "build:watch": "npm run clean && tsc -p tsconfig-build.json -w",
     "clean": "rimraf dist",
-    "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --clear --inspect=0.0.0.0:9229 src/application",
+    "dev": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/application",
     "test": "APP_ENV=test jest --passWithNoTests --runInBand --no-cache",
     "test:watch": "npm test -- --watch",
     "test:watch:changed": "npm test -- --watch --onlyChanged",
@@ -44,6 +45,7 @@
     "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^28.1.3",
+    "nodemon": "^2.0.19",
     "rimraf": "^3.0.2",
     "supertest": "^6.2.4",
     "testcontainers": "^8.12.0",
@@ -53,8 +55,10 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "@fastify/swagger": "^7.4.1",
     "bcrypt": "^5.0.1",
     "fastify": "^4.4.0",
+    "fastify-plugin": "^4.2.0",
     "fluent-json-schema": "^3.1.0",
     "getenv": "^1.0.0",
     "jsonwebtoken": "^8.5.1",

@@ -1,17 +1,27 @@
 import { authorizationHeader } from './authorization'
-import { emailSchema, personalDataSchema, rolesSchema } from './commons'
+import { emailSchema, rolesSchema } from './commons'
 
 import builder from 'fluent-json-schema'
 
 const bodySchema = builder
   .object()
+  .description('Create account object')
+  .definition('personalData', builder.object()
+    .id('#personalData')
+    .description('Personal data object')
+    .prop('firstName', builder.string())
+    .prop('lastName', builder.string())
+    .prop('occupation', builder.string())
+    .prop('birthDate', builder.raw({ type: 'string', format: 'date' }))
+    .required(['firstName', 'lastName', 'occupation', 'birthDate']))
+  .prop('personalData', builder.ref('#personalData'))
   .prop('email', emailSchema)
   .prop('password', builder.string())
   .prop('roles', rolesSchema)
-  .definition('personalData', personalDataSchema)
   .required(['email', 'password', 'roles', 'personalData'])
 
 export const createAccountSchema = {
-  body: bodySchema,
-  headers: authorizationHeader
+  description: 'Create account schema',
+  headers: authorizationHeader,
+  body: bodySchema
 }

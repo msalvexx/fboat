@@ -1,14 +1,21 @@
 import Fastify, { FastifyInstance } from 'fastify'
+import swagger from '@fastify/swagger'
 
 import { EnvConfig } from './env'
 import { startDbConnection, stopDbConnection } from '@/application/factories'
-import { mergeBody } from '@/application/adapters'
+import { mergeBody, swaggerConfig } from '@/application/adapters'
 import { iamRoutes, loginRoute } from '@/application/routes'
 import { MySQLConnectionManager } from '@/shared/infra'
+import { commonSchemas } from '@/application/schemas/iam/commons'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
   server.addHook('onClose', stopDbConnection)
   server.addHook('preHandler', mergeBody)
+}
+
+const setupPlugins = async (server: FastifyInstance): Promise<void> => {
+  server.addSchema(commonSchemas)
+  await server.register(swagger, swaggerConfig)
 }
 
 const setupRoutes = async (server: FastifyInstance): Promise<void> => {
@@ -25,6 +32,7 @@ export const buildApp = async (config: any = null): Promise<App> => {
   const serverInstance = Fastify()
   const connectionManager = await startDbConnection(config)
   await setupHooks(serverInstance)
+  await setupPlugins(serverInstance)
   await setupRoutes(serverInstance)
   return { serverInstance, connectionManager }
 }
@@ -34,11 +42,11 @@ export const startApp = async (): Promise<FastifyInstance> => {
   const port = EnvConfig.getInstance().configs.server.port
   const address = await serverInstance.listen({ port })
   console.log(`Server running at ${address}`)
+  serverInstance.swagger()
   return serverInstance
 }
 
-export const closeApp = async (serverInstance: FastifyInstance, reason: string = 'unknown'): Promise<void> => {
-  console.log(`Server was closed by reason: ${reason} signal received`)
+export const closeApp = async (serverInstance: FastifyInstance): Promise<void> => {
   if (serverInstance === undefined) return
   await serverInstance.close()
 }
