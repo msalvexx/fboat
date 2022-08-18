@@ -3,6 +3,8 @@ import builder from 'fluent-json-schema'
 
 export const personalDataSchema = builder
   .object()
+  .id('#personalData')
+  .description('Personal data object')
   .prop('firstName', builder.string())
   .prop('lastName', builder.string())
   .prop('occupation', builder.string())
@@ -11,7 +13,19 @@ export const personalDataSchema = builder
 
 export const accountParamsSchema = builder
   .object()
+  .description('AccountId parameter')
   .prop('id', builder.string().format('uuid').required())
+
+export const defaultResponseSchema = {
+  default: {
+    description: 'Successfull response',
+    type: 'boolean'
+  }
+}
 
 export const rolesSchema = builder.array().minItems(1).items(builder.enum(getAvailableRoleNames))
 export const emailSchema = builder.string().format(builder.FORMATS.EMAIL)
+export const commonSchemas = builder
+  .object()
+  .id('commons')
+  .definition('personalDataSchema', personalDataSchema)

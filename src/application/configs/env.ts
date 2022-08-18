@@ -23,6 +23,7 @@ export class EnvConfig {
       expiresIn: getenv('JWT_EXPIRES_IN', '6h')
     },
     server: {
+      host: getenv('SERVER_HOST', 'localhost'),
       port: getenv.int('SERVER_PORT', 3000)
     }
   }

@@ -6,7 +6,8 @@ import 'reflect-metadata'
 startApp()
   .then(server => ['SIGINT', 'SIGTERM', 'SIGQUIT']
     .forEach(reason => process.on(reason, () => {
-      closeApp(server, reason)
+      console.log(`Server was closed by reason: ${reason} signal received`)
+      closeApp(server)
         .then(() => process.exit())
         .catch(console.error)
     }))
