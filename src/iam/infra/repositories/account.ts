@@ -80,30 +80,22 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
   }
 
   async update (account: Account): Promise<void> {
-    await this.connection.startTransaction()
-    try {
-      await this.accountRepo.update({
-        accountId: account.accountId
-      },
-      {
-        birthDate: account.personalData.birthDate,
-        updatedAt: account.updateDate,
-        firstName: account.personalData.firstName,
-        lastName: account.personalData.lastName,
-        isActive: account.isActive,
-        occupation: account.personalData.occupation
-      })
-      await this.userRepo.update({
-        userId: account.user.userId
-      }, {
-        password: account.user.password,
-        roles: account.user.roles.map(role => MySQLRole.getValueByKey(role.name)).join(',')
-      })
-      await this.connection.commit()
-    } catch (e) {
-      await this.connection.rollback()
-    } finally {
-      await this.connection.closeTransaction()
-    }
+    await this.accountRepo.update({
+      accountId: account.accountId
+    },
+    {
+      birthDate: account.personalData.birthDate,
+      updatedAt: account.updateDate,
+      firstName: account.personalData.firstName,
+      lastName: account.personalData.lastName,
+      isActive: account.isActive,
+      occupation: account.personalData.occupation
+    })
+    await this.userRepo.update({
+      userId: account.user.userId
+    }, {
+      password: account.user.password,
+      roles: account.user.roles.map(role => MySQLRole.getValueByKey(role.name)).join(',')
+    })
   }
 }

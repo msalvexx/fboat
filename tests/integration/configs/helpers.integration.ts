@@ -42,7 +42,13 @@ export const stopTestDatabase = stopMySQLTestContainer
 export const startTestDatabase = async (): Promise<any> => {
   const container = await startMySQLTestContainer()
   const connectionManager = MySQLConnectionManager.getInstance()
-  await connectionManager.connect()
+  await connectionManager.connect({
+    database: container.getDatabase(),
+    host: container.getHost(),
+    port: container.getPort(),
+    username: container.getUsername(),
+    password: container.getUserPassword()
+  })
   await connectionManager.runMigrations()
   return { container, connectionManager }
 }
