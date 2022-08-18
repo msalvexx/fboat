@@ -10,6 +10,13 @@ describe('MySQLConnectionManager', () => {
   beforeAll(async () => {
     container = await startMySQLTestContainer()
     sut = MySQLConnectionManager.getInstance()
+    await sut.connect({
+      database: container.getDatabase(),
+      host: container.getHost(),
+      port: container.getPort(),
+      username: container.getUsername(),
+      password: container.getUserPassword()
+    })
   })
 
   afterAll(async () => await stopMySQLTestContainer(container))
@@ -21,13 +28,10 @@ describe('MySQLConnectionManager', () => {
   })
 
   test('Should connect to database', async () => {
-    await sut.connect()
-
     await expect(sut.isConnected()).resolves.toBeTruthy()
   })
 
   test('Should disconnect to database', async () => {
-    await sut.connect()
     await sut.disconnect()
 
     await expect(sut.isConnected()).resolves.toBeFalsy()

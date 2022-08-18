@@ -27,7 +27,7 @@ export class AuthenticationService implements Authenticator, AuthenticationCerti
       const { email } = await this.crypto.verify(params)
       const accountParams = await this.repo.getByEmail(email) as Account.Params
       return new Account(accountParams)
-    } catch {
+    } catch (e) {
       throw new UnauthorizedError()
     }
   }
