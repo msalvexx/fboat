@@ -1,12 +1,18 @@
+type AuthorResult = {
+  name: string
+  occupation: string
+}
+
 type ArticleResult = {
   title: string
-  author: string
+  author: AuthorResult
   summary: string
   content: string
   coverPhoto: string
   isPublished: boolean
+  creationDate: Date
   publishDate: Date
-  updateDate: Date
+  revisionDate: Date
 }
 
 type ArticleParams = {
@@ -26,7 +32,7 @@ export interface CreateArticle {
 
 export namespace UpdateArticle {
   export type Params = ArticleParams & {
-    author: string
+    authorId: string
     coverPhoto: string
     isPublished: boolean
   }
