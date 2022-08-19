@@ -2,7 +2,7 @@ type AuthorResult = {
   accountId: string
   name: string
   occupation: string
-  photo: string
+  photo: string | null
 }
 
 type AuthorParams = {

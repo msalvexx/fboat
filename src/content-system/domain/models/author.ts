@@ -3,8 +3,8 @@ export namespace Author {
     accountId: string
     name: string
     occupation: string
-    photo?: string
-    defaultPhoto: string
+    photo?: string | null
+    defaultPhoto: string | null
   }
 }
 
@@ -12,7 +12,7 @@ export class Author {
   readonly name: string
   readonly accountId: string
   readonly occupation: string
-  readonly photo: string
+  readonly photo: string | null
 
   constructor (params: Author.Params) {
     const { accountId, name, occupation, photo, defaultPhoto } = params
