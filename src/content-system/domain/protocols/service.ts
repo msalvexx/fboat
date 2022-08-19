@@ -1,7 +1,14 @@
 type AuthorResult = {
-  name: string
+  firstName: string
+  lastName: string
   occupation: string
   photo: string
+}
+
+type AuthorParams = {
+  firstName: string
+  lastName: string
+  occupation: string
 }
 
 type ArticleResult = {
@@ -20,6 +27,7 @@ type ArticleParams = {
   title: string
   content: string
   summary: string
+  author: AuthorParams
 }
 
 export namespace CreateArticle {
