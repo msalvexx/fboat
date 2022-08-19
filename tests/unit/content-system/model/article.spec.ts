@@ -2,7 +2,7 @@ import { Article } from '@/content-system/domain/models'
 
 describe('Article', () => {
   let sut: Article
-  const params: Article.Params = {
+  let params: Article.Params = {
     articleId: '123',
     title: 'Any Title',
     author: {
@@ -60,5 +60,13 @@ describe('Article', () => {
 
   test('Should return a default slug if slug was not set', () => {
     expect(sut.slug).toBe('any-title')
+  })
+
+  test('Should return the slug that it wat set', () => {
+    params = { ...params, slug: 'new-slug' }
+
+    sut = new Article(params)
+
+    expect(sut.slug).toBe('new-slug')
   })
 })
