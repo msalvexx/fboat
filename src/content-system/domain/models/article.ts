@@ -12,6 +12,7 @@ export namespace Article {
     creationDate?: Date
     publishDate?: Date
     revisionDate?: Date
+    slug?: string
   }
 }
 
@@ -26,9 +27,10 @@ export class Article {
   private _revisionDate: Date
   readonly creationDate: Date
   private _publishDate?: Date
+  readonly slug: string
 
   constructor (params: Article.Params) {
-    const { articleId, title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate } = params
+    const { articleId, title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate, slug } = params
     const now = new Date()
     now.setMilliseconds(0)
     this.articleId = articleId
@@ -41,6 +43,7 @@ export class Article {
     this._revisionDate = revisionDate ?? now
     this._publishDate = publishDate
     this._coverPhoto = coverPhoto
+    this.slug = slug ?? title.toLowerCase().replace(' ', '-')
   }
 
   changeArticle (params: Partial<Article.Params>): void {

@@ -2,21 +2,22 @@ import { Article } from '@/content-system/domain/models'
 
 describe('Article', () => {
   let sut: Article
+  const params: Article.Params = {
+    articleId: '123',
+    title: 'Any Title',
+    author: {
+      accountId: '123',
+      name: 'any name',
+      occupation: 'any occupation',
+      defaultPhoto: 'default photo'
+    },
+    content: '<html></html>',
+    summary: 'any summary',
+    coverPhoto: 'photo'
+  }
 
   beforeEach(() => {
-    sut = new Article({
-      articleId: '123',
-      title: 'any title',
-      author: {
-        accountId: '123',
-        name: 'any name',
-        occupation: 'any occupation',
-        defaultPhoto: 'default photo'
-      },
-      content: '<html></html>',
-      summary: 'any summary',
-      coverPhoto: 'photo'
-    })
+    sut = new Article(params)
   })
 
   test('Should create article in unpublished state', () => {
@@ -55,5 +56,9 @@ describe('Article', () => {
     })
 
     expect(sut.author.photo).toBe('new photo')
+  })
+
+  test('Should return a default slug if slug was not set', () => {
+    expect(sut.slug).toBe('any-title')
   })
 })
