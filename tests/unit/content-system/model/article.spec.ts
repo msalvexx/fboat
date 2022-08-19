@@ -155,4 +155,18 @@ describe('Article', () => {
   test('Should return default photo if no photo is provided', () => {
     expect(sut.author.photo).toBe('default photo')
   })
+
+  test('Should return a new photo if photo is set', () => {
+    sut.changeArticle({
+      author: {
+        accountId: '123',
+        defaultPhoto: 'default photo',
+        name: 'any name',
+        occupation: 'any occupation',
+        photo: 'new photo'
+      }
+    })
+
+    expect(sut.author.photo).toBe('new photo')
+  })
 })
