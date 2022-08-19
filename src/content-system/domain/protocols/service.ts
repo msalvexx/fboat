@@ -1,6 +1,7 @@
 type AuthorResult = {
   name: string
   occupation: string
+  photo: string
 }
 
 type ArticleResult = {
