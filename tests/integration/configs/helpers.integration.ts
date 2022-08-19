@@ -1,5 +1,5 @@
-import { EnvConfig } from '@/application/configs/env'
-import { buildApp, closeApp } from '@/application/configs/server'
+import { EnvConfig } from '@/shared/application/configs/env'
+import { buildApp, closeApp } from '@/shared/application/configs/server'
 import { MySQLConnectionManager } from '@/shared/infra/repositories'
 import { StartedMySqlContainer, MySqlContainer } from 'testcontainers'
 import jwt from 'jsonwebtoken'

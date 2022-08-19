@@ -1,5 +1,5 @@
-import { EnvConfig } from '@/application/configs/env'
-import defaultDatasource from '@/application/configs/ormconfig'
+import { EnvConfig } from '@/shared/application/configs/env'
+import defaultDatasource from '@/shared/application/configs/ormconfig'
 import { ConnectionNotFoundError, TransactionNotFoundError } from '@/iam'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 

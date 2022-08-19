@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply, HookHandlerDoneFunction } from 'fastify'
-import { makeAuthenticationService } from '@/application/factories'
+import { makeAuthenticationService } from '@/shared/application/factories'
 
 export const auth = (request: FastifyRequest, _: FastifyReply, done: HookHandlerDoneFunction): void => {
   const authService = makeAuthenticationService()

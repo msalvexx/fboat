@@ -1,8 +1,8 @@
 import { AccountModifier, GetAccount } from '@/iam'
 import { BcryptAdapter, JwtAdapter } from '@/iam/infra/adapters'
 import { AccountService, AuthenticationService } from '@/iam/service'
-import { EnvConfig } from '@/application/configs/env'
-import { makeAccountRepository } from '@/application/factories'
+import { EnvConfig } from '@/shared/application/configs/env'
+import { makeAccountRepository } from '@/shared/application/factories'
 
 type Service = AccountModifier & GetAccount
 

@@ -1,5 +1,5 @@
 import './configs/module-alias'
-import { startApp, closeApp } from '@/application/configs/server'
+import { startApp, closeApp } from '@/shared/application/configs/server'
 
 import 'reflect-metadata'
 
