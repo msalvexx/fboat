@@ -3,6 +3,8 @@ export namespace Author {
     accountId: string
     name: string
     occupation: string
+    photo?: string
+    defaultPhoto: string
   }
 }
 
@@ -10,12 +12,14 @@ class Author {
   readonly name: string
   readonly accountId: string
   readonly occupation: string
+  readonly photo: string
 
   constructor (params: Author.Params) {
-    const { accountId, name, occupation } = params
+    const { accountId, name, occupation, photo, defaultPhoto } = params
     this.accountId = accountId
     this.name = name
     this.occupation = occupation
+    this.photo = photo ?? defaultPhoto
   }
 }
 
@@ -27,8 +31,7 @@ export namespace Article {
     summary: string
     content: string
     isPublished?: boolean
-    coverPhoto?: string
-    defaultCoverPhoto: string
+    coverPhoto: string
     creationDate?: Date
     publishDate?: Date
     revisionDate?: Date
@@ -42,14 +45,13 @@ class Article {
   private _summary: string
   private _content: string
   private _isPublished: boolean
-  private _coverPhoto?: string
-  private readonly defaultCoverPhoto: string
+  private _coverPhoto: string
   private _revisionDate: Date
   readonly creationDate: Date
   private _publishDate?: Date
 
   constructor (params: Article.Params) {
-    const { title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate, defaultCoverPhoto } = params
+    const { title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate } = params
     const now = new Date()
     now.setMilliseconds(0)
     this._title = title
@@ -61,7 +63,6 @@ class Article {
     this._revisionDate = revisionDate ?? now
     this._publishDate = publishDate
     this._coverPhoto = coverPhoto
-    this.defaultCoverPhoto = defaultCoverPhoto
   }
 
   changeArticle (params: Partial<Article.Params>): void {
@@ -100,7 +101,7 @@ class Article {
   }
 
   get coverPhoto (): string {
-    return this._coverPhoto ?? this.defaultCoverPhoto
+    return this._coverPhoto
   }
 
   get publishDate (): Date | undefined {
@@ -122,12 +123,12 @@ describe('Article', () => {
       author: {
         accountId: '123',
         name: 'any name',
-        occupation: 'any occupation'
+        occupation: 'any occupation',
+        defaultPhoto: 'default photo'
       },
       content: '<html></html>',
       summary: 'any summary',
-      coverPhoto: 'any',
-      defaultCoverPhoto: 'defaultPhoto'
+      coverPhoto: 'photo'
     })
   })
 
@@ -149,5 +150,9 @@ describe('Article', () => {
     expect(sut.publishDate).toBe(sut.revisionDate)
     expect(sut.coverPhoto).toBe('any photo')
     expect(sut.content).toBe('other content')
+  })
+
+  test('Should return default photo if no photo is provided', () => {
+    expect(sut.author.photo).toBe('default photo')
   })
 })
