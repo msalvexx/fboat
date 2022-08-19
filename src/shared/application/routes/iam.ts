@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { makeAccountService } from '@/shared/application/factories/services'
+import { makeAccountService } from '@/shared/application/factories/account/services'
 import { auth, fastifyHandlerPostPutAdapter as postPutAdapt, fastifyHandlerGetDeleteAdapter as getDeleteAdapt } from '@/shared/application/adapters'
 import { changeAccountSchema, changePasswordSchema, createAccountSchema, getAccountSchema } from '@/shared/application/schemas/iam'
 

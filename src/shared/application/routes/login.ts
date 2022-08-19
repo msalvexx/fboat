@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { makeAuthenticationService } from '@/shared/application/factories/services'
+import { makeAuthenticationService } from '@/shared/application/factories/account/services'
 import { fastifyHandlerPostPutAdapter as adapt } from '@/shared/application/adapters'
 import { loginSchema } from '@/shared/application/schemas/iam'
 
