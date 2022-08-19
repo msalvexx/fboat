@@ -1,13 +1,13 @@
 type AuthorResult = {
-  firstName: string
-  lastName: string
+  accountId: string
+  name: string
   occupation: string
   photo: string
 }
 
 type AuthorParams = {
-  firstName: string
-  lastName: string
+  accountId: string
+  name: string
   occupation: string
 }
 
@@ -19,7 +19,7 @@ type ArticleResult = {
   coverPhoto: string
   isPublished: boolean
   creationDate: Date
-  publishDate: Date
+  publishDate?: Date
   revisionDate: Date
 }
 
@@ -28,6 +28,7 @@ type ArticleParams = {
   content: string
   summary: string
   author: AuthorParams
+  coverPhoto: string
 }
 
 export namespace CreateArticle {

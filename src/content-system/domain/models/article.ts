@@ -89,7 +89,7 @@ export class Article {
     return this._publishDate
   }
 
-  get revisionDate (): Date | undefined {
+  get revisionDate (): Date {
     return this._revisionDate
   }
 }
