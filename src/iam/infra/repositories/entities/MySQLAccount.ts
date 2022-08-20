@@ -1,8 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm'
+import { Entity, Column, OneToOne, JoinColumn, CreateDateColumn, UpdateDateColumn, PrimaryColumn } from 'typeorm'
 import { MySQLUser } from './MySQLUser'
 
 export type AccountParams = {
-  id: number
   accountId: string
   firstName: string
   lastName: string
@@ -19,7 +18,6 @@ export class MySQLAccount {
   constructor (params: AccountParams)
   constructor (params?: AccountParams) {
     if (params === undefined) return
-    this.id = params.id
     this.accountId = params.accountId
     this.firstName = params.firstName
     this.lastName = params.lastName
@@ -30,14 +28,11 @@ export class MySQLAccount {
     this.isActive = params.isActive
   }
 
-  @PrimaryGeneratedColumn({ name: 'id_int', type: 'int' })
-    id!: number
-
-  @Column({ name: 'id_conta', type: 'varchar', unique: true })
+  @PrimaryColumn({ name: 'id_conta', type: 'varchar', unique: true })
     accountId!: string
 
   @OneToOne(() => MySQLUser, user => user.account, { cascade: ['insert', 'update'] })
-  @JoinColumn({ name: "id_int_usuario" })
+  @JoinColumn({ name: "id_usuario" })
     user!: MySQLUser
 
   @Column({ name: 'nome', type: 'varchar' })
