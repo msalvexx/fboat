@@ -9,7 +9,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
   private readonly userRepo: Repository<MySQLUser>
   private readonly accountRepo: Repository<MySQLAccount>
 
-  constructor (private readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
+  constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.userRepo = connection.getRepository(MySQLUser)
     this.accountRepo = connection.getRepository(MySQLAccount)
   }

@@ -116,13 +116,11 @@ describe('AccountRepository', () => {
     const retrievedUser = await userRepo.findOne({ where: { email: account.user.email } }) as any
     expect(retrievedUser).not.toBeNull()
     expect(retrievedUser).toStrictEqual(new MySQLUser({
-      id: retrievedUser.id,
       userId: account.user.userId,
       email: account.user.email,
       password: account.user.password,
       roles: 'escritor,leitor-veleiro',
       account: {
-        id: retrievedUser.account.id,
         accountId: account.accountId,
         birthDate: account.personalData.birthDate,
         createdAt: retrievedUser.account.createdAt,
@@ -151,13 +149,11 @@ describe('AccountRepository', () => {
     const retrievedUser = await userRepo.findOne({ where: { email: account.user.email } }) as any
     expect(retrievedUser).not.toBeNull()
     expect(retrievedUser).toStrictEqual(new MySQLUser({
-      id: retrievedUser.id,
       userId: account.user.userId,
       email: account.user.email,
       password: account.user.password,
       roles: 'controlador-veleiro',
       account: {
-        id: retrievedUser.account.id,
         accountId: account.accountId,
         birthDate: account.personalData.birthDate,
         createdAt: retrievedUser.account.createdAt,
