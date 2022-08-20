@@ -39,12 +39,40 @@ describe('ArticleRepository', () => {
     await sut.save(params)
 
     const retrievedArticle = await repository.findOne({ where: { articleId: '123' } })
+    expect(retrievedArticle).toBeDefined()
     expect(retrievedArticle?.accountId).toBe(params.author.accountId)
     expect(retrievedArticle?.content).toBe(params.content)
     expect(retrievedArticle?.photo).toBe(params.coverPhoto)
     expect(retrievedArticle?.summary).toBe(params.summary)
     expect(retrievedArticle?.title).toBe(params.title)
     expect(retrievedArticle?.isPublished).toBe(params.isPublished)
+    expect(retrievedArticle?.slug).toBe(params.slug)
+  })
+
+  test('Can update article successfully', async () => {
+    await repository.save({
+      articleId: params.articleId,
+      accountId: params.author.accountId,
+      title: params.title,
+      summary: params.summary,
+      content: params.content,
+      slug: params.slug,
+      photo: params.coverPhoto,
+      isPublished: params.isPublished,
+      publishDate: params.publishDate,
+      creationDate: params.creationDate,
+      revisionDate: params.revisionDate
+    })
+    params.changeArticle({
+      title: 'other title',
+      slug: 'other-title'
+    })
+
+    await sut.save(params)
+
+    const retrievedArticle = await repository.findOne({ where: { articleId: '123' } })
+    expect(retrievedArticle).toBeDefined()
+    expect(retrievedArticle?.title).toBe(params.title)
     expect(retrievedArticle?.slug).toBe(params.slug)
   })
 })
