@@ -10,6 +10,21 @@ describe('ArticleRepository', () => {
   let connectionManager: MySQLConnectionManager
   let container: StartedMySqlContainer
   let repository: Repository<MySQLArticle>
+  const params: Article = new Article({
+    articleId: '123',
+    author: {
+      accountId: '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85',
+      name: 'any name',
+      occupation: 'any occupation',
+      defaultPhoto: 'any photo'
+    },
+    content: '<html></html>',
+    coverPhoto: 'any cover',
+    summary: 'any summary',
+    title: 'any title',
+    isPublished: false,
+    slug: 'any-title'
+  })
 
   beforeAll(async () => {
     ({ container, connectionManager } = await startTestDatabase())
@@ -21,22 +36,6 @@ describe('ArticleRepository', () => {
   afterAll(async () => await stopMySQLTestContainer(container))
 
   test('Can create article successfully', async () => {
-    const params: Article = new Article({
-      articleId: '123',
-      author: {
-        accountId: '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85',
-        name: 'any name',
-        occupation: 'any occupation',
-        defaultPhoto: 'any photo'
-      },
-      content: '<html></html>',
-      coverPhoto: 'any cover',
-      summary: 'any summary',
-      title: 'any title',
-      isPublished: false,
-      slug: 'any-title'
-    })
-
     await sut.save(params)
 
     const retrievedArticle = await repository.findOne({ where: { articleId: '123' } })
