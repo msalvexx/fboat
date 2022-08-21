@@ -51,4 +51,13 @@ describe('Db Create account', () => {
 
     await expect(promise).rejects.toThrowError(new PersistDataChangeError('Account'))
   })
+
+  test('Should call default photo with author name', async () => {
+    const { sut, defaultPhotoServiceMock } = AccountServiceSut.makeSut()
+    const params = mockCreateAccountParams()
+
+    await sut.createAccount(params)
+
+    expect(defaultPhotoServiceMock.params).toStrictEqual('name other')
+  })
 })

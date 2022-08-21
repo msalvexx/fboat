@@ -48,6 +48,7 @@ describe('AccountRepository', () => {
   const makeRepositoryResult = (account: Account): GetAccountByEmailRepository.Result => ({
     accountId: account.accountId,
     personalData: {
+      photo: account.personalData.photo,
       birthDate: account.personalData.birthDate,
       firstName: account.personalData.firstName,
       lastName: account.personalData.lastName,
@@ -121,6 +122,7 @@ describe('AccountRepository', () => {
       password: account.user.password,
       roles: 'escritor,leitor-veleiro',
       account: {
+        photo: account.personalData.photo,
         accountId: account.accountId,
         birthDate: account.personalData.birthDate,
         createdAt: retrievedUser.account.createdAt,
@@ -154,6 +156,7 @@ describe('AccountRepository', () => {
       password: account.user.password,
       roles: 'controlador-veleiro',
       account: {
+        photo: account.personalData.photo,
         accountId: account.accountId,
         birthDate: account.personalData.birthDate,
         createdAt: retrievedUser.account.createdAt,

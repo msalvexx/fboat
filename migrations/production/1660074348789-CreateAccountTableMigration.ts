@@ -8,6 +8,7 @@ export class CreateAccountTableMigration1660074348789 implements MigrationInterf
     nome varchar(255) NOT NULL,
     sobrenome varchar(255) NOT NULL,
     profissao varchar(100) NOT NULL,
+    foto varchar(255),
     data_nascimento DATETIME NOT NULL,
     criado_em DATETIME DEFAULT CURRENT_TIMESTAMP(),
     atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP(),

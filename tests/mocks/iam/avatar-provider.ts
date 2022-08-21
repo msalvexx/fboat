@@ -1,4 +1,4 @@
-import { AvatarPhotoProvider } from '@/content-system/domain/protocols'
+import { AvatarPhotoProvider } from '@/iam/domain/protocols'
 
 export class AvatarPhotoProviderMock implements AvatarPhotoProvider {
   error: boolean = false

@@ -1,4 +1,4 @@
-import { AvatarPhotoProvider } from '@/content-system/domain'
+import { AvatarPhotoProvider } from '@/iam/domain'
 
 import { HttpGetClient } from '@/shared/protocols'
 

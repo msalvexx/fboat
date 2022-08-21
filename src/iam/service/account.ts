@@ -1,10 +1,11 @@
 import { Account, AccountNotFoundError, createAccount, EmailAlreadyInUseError } from '@/iam/domain/model'
-import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher, GetAccount } from '@/iam/domain/protocols'
+import { AccountRepository, CreateAccount, AccountModifier, ChangeAccount, ChangePassword, Hasher, GetAccount, AvatarPhotoProvider } from '@/iam/domain/protocols'
 
 export class AccountService implements AccountModifier, GetAccount {
   constructor (
     private readonly repo: AccountRepository,
-    private readonly hasher: Hasher
+    private readonly hasher: Hasher,
+    private readonly avatarProvider: AvatarPhotoProvider
   ) {}
 
   async getAccount (id: GetAccount.Params): Promise<GetAccount.Result> {
@@ -15,7 +16,10 @@ export class AccountService implements AccountModifier, GetAccount {
   async createAccount (params: CreateAccount.Params): Promise<CreateAccount.Result> {
     const { email } = params
     if (await this.repo.getByEmail(email) !== undefined) throw new EmailAlreadyInUseError(email)
-    params.password = await this.hasher.generate(params.password)
+    const fullName = `${params.personalData.firstName} ${params.personalData.lastName}`
+    const [password, defaultPhoto] = await Promise.all([this.hasher.generate(params.password), this.avatarProvider.get(fullName)])
+    params.password = password
+    params.personalData.defaultPhoto = defaultPhoto
     const newAccount = createAccount(params)
     await this.repo.insert(newAccount)
     return this.toAccountResult(newAccount)

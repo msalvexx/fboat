@@ -10,10 +10,10 @@ export class CreateTestDataMigration1660588408599 implements MigrationInterface 
   `
   private readonly createAccounts: string = `
   INSERT INTO contas
-    (id_conta, id_usuario, nome, sobrenome, profissao, data_nascimento)
+    (id_conta, id_usuario, nome, sobrenome, profissao, foto, data_nascimento)
   VALUES
-    ('c77f7d99-c956-4dd2-a63f-b7a1ca6f28aa', '0265bf42-67b2-46cb-933b-6c11400a22eb', 'Danilo', 'Borba da Conceição', 'Professor Universitário', '1978-07-05 00:00:00'),
-    ('8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', '5d4eae2e-38f7-442a-9490-a1cff7cc4189', 'Paula', 'Passos Menezes', 'Engenheira Elétrica', '1988-12-23 00:00:00');
+    ('c77f7d99-c956-4dd2-a63f-b7a1ca6f28aa', '0265bf42-67b2-46cb-933b-6c11400a22eb', 'Danilo', 'Borba da Conceição', 'Professor Universitário', 'https://ui-avatars.com/api/?name=Danilo+Borba', '1978-07-05 00:00:00'),
+    ('8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', '5d4eae2e-38f7-442a-9490-a1cff7cc4189', 'Paula', 'Passos Menezes', 'Engenheira Elétrica', 'https://ui-avatars.com/api/?name=Paula+Passos', '1988-12-23 00:00:00');
   `
 
   public async up (queryRunner: QueryRunner): Promise<void> {

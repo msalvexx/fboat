@@ -5,6 +5,7 @@ import { MockUserParams, defaultUser, mockUserParams } from './user'
 type MockAccountParams = {
   accountId?: string
   personalData?: {
+    photo?: string | null | undefined
     firstName?: string
     lastName?: string
     occupation?: string
@@ -16,6 +17,7 @@ type MockAccountParams = {
 const defaultAccount: MockAccountParams = {
   accountId: '123',
   personalData: {
+    photo: null,
     firstName: 'any',
     lastName: 'any',
     occupation: 'any',

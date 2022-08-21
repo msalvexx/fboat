@@ -26,6 +26,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
         roles: dbAccount.user.roles.split(',').filter(x => x !== '').map(x => MySQLRole.getKeyByValue(x))
       },
       personalData: {
+        photo: dbAccount.photo,
         birthDate: dbAccount.birthDate,
         firstName: dbAccount.firstName,
         lastName: dbAccount.lastName,
@@ -49,6 +50,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
         roles: dbUser?.roles.split(',').filter(x => x !== '').map(x => MySQLRole.getKeyByValue(x))
       },
       personalData: {
+        photo: dbUser.account.photo,
         birthDate: dbUser.account.birthDate,
         firstName: dbUser.account.firstName,
         lastName: dbUser.account.lastName,
@@ -67,6 +69,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
       createdAt: account.creationDate,
       updatedAt: account.updateDate,
       firstName: account.personalData.firstName,
+      photo: account.personalData.photo,
       isActive: account.isActive,
       lastName: account.personalData.lastName,
       occupation: account.personalData.occupation,
@@ -86,6 +89,7 @@ export class MySQLAccountRepository implements GetAccountByEmailRepository, Save
     {
       birthDate: account.personalData.birthDate,
       updatedAt: account.updateDate,
+      photo: account.personalData.photo,
       firstName: account.personalData.firstName,
       lastName: account.personalData.lastName,
       isActive: account.isActive,

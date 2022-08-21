@@ -6,6 +6,7 @@ export type AccountParams = {
   firstName: string
   lastName: string
   occupation: string
+  photo: string | null | undefined
   birthDate: Date
   createdAt: Date
   updatedAt: Date
@@ -22,6 +23,7 @@ export class MySQLAccount {
     this.firstName = params.firstName
     this.lastName = params.lastName
     this.occupation = params.occupation
+    this.photo = params.photo
     this.birthDate = params.birthDate
     this.createdAt = params.createdAt
     this.updatedAt = params.updatedAt
@@ -43,6 +45,9 @@ export class MySQLAccount {
 
   @Column({ name: 'profissao', type: 'varchar' })
     occupation!: string
+
+  @Column({ name: 'foto', type: 'varchar' })
+    photo!: string | undefined | null
 
   @Column({ name: 'data_nascimento', type: 'varchar', nullable: false })
     birthDate!: Date
