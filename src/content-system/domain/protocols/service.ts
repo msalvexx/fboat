@@ -53,3 +53,11 @@ export namespace UpdateArticle {
 export interface UpdateArticle {
   save: (params: UpdateArticle.Params) => Promise<UpdateArticle.Result>
 }
+
+export namespace GetArticle {
+  export type Result = ArticleResult
+}
+
+export interface GetArticle {
+  get: (idOrSlug: string) => Promise<GetArticle.Result>
+}

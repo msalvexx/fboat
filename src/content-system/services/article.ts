@@ -1,10 +1,11 @@
-import { AvatarPhotoProvider, CreateArticle, SaveArticleRepository } from '@/content-system/domain'
+import { AvatarPhotoProvider, CreateArticle, GetArticle, GetArticleRepository, SaveArticleRepository } from '@/content-system/domain'
 import { createArticle } from '@/content-system/domain/models/factory'
+import { ResourceNotFoundError } from '@/iam'
 
-export class ArticleService implements CreateArticle {
+export class ArticleService implements CreateArticle, GetArticle {
   constructor (
     private readonly avatarPhotoProvider: AvatarPhotoProvider,
-    private readonly repository: SaveArticleRepository
+    private readonly repository: SaveArticleRepository & GetArticleRepository
   ) {}
 
   async create (params: CreateArticle.Params): Promise<CreateArticle.Result> {
@@ -21,5 +22,11 @@ export class ArticleService implements CreateArticle {
       summary: article.summary,
       title: article.title
     }
+  }
+
+  async get (idOrSlug: string): Promise<GetArticle.Result> {
+    const articleParams = await this.repository.get(idOrSlug)
+    if (articleParams === undefined) throw new ResourceNotFoundError()
+    return null as any
   }
 }

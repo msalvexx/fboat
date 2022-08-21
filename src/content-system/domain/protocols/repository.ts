@@ -8,3 +8,12 @@ export namespace SaveArticleRepository {
 export interface SaveArticleRepository {
   save: (params: SaveArticleRepository.Params) => Promise<SaveArticleRepository.Result>
 }
+
+export namespace GetArticleRepository {
+  export type Params = string
+  export type Result = Article.Params | undefined
+}
+
+export interface GetArticleRepository {
+  get: (id: GetArticleRepository.Params) => Promise<GetArticleRepository.Result>
+}

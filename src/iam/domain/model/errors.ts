@@ -19,15 +19,15 @@ export class PersistDataChangeError extends Error {
 export class ResourceNotFoundError extends Error {
   readonly statusCode: number = 404
 
-  constructor (message: string = 'The resource was not found', name: string = 'ResourceNotFoundError') {
+  constructor (name: string = 'ResourceNotFoundError', message: string = 'The resource was not found') {
     super(message)
-    this.name = 'ResourceNotFoundError'
+    this.name = name
   }
 }
 
 export class AccountNotFoundError extends ResourceNotFoundError {
   constructor (accountId: string) {
-    super(`There is no account associated with accountId: ${accountId}`, 'AccountNotFoundError')
+    super('AccountNotFoundError', `There is no account associated with accountId: ${accountId}`)
   }
 }
 
