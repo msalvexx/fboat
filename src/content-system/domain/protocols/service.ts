@@ -16,7 +16,7 @@ type ArticleParams = {
   slug?: string
 }
 
-type ArticleResult = Article
+export type ArticleResult = Article.Params
 
 export namespace CreateArticle {
   export type Params = ArticleParams

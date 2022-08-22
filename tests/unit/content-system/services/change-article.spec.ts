@@ -1,5 +1,4 @@
 import { mockArticleParams } from '@/tests/mocks/content-system'
-import { Article } from '@/content-system'
 import { ResourceNotFoundError } from '@/iam'
 import { ArticleServiceSut } from './factory'
 
@@ -37,10 +36,11 @@ describe('Change Article', () => {
       ...changes
     })
 
-    expect(result).toStrictEqual(new Article({
-      ...params,
-      ...changes,
-      publishDate
-    }))
+    expect(result.articleId).toBeDefined()
+    expect(result.author.accountId).toBeDefined()
+    expect(result.summary).toBe(changes.summary)
+    expect(result.title).toBe(changes.title)
+    expect(result.isPublished).toBe(changes.isPublished)
+    expect(result.publishDate).toStrictEqual(publishDate)
   })
 })
