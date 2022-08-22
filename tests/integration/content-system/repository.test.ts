@@ -16,7 +16,7 @@ describe('ArticleRepository', () => {
       accountId: '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85',
       name: 'any name',
       occupation: 'any occupation',
-      defaultPhoto: 'any photo'
+      photo: 'any photo'
     },
     content: '<html></html>',
     coverPhoto: 'any cover',
