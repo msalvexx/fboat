@@ -1,12 +1,15 @@
+import { mockArticleParams } from '@/tests/mocks/content-system'
+import { Article } from '@/content-system'
 import { ResourceNotFoundError } from '@/iam'
 import { ArticleServiceSut } from './factory'
+
+import MockDate from 'mockdate'
 
 describe('Change Article', () => {
   let sut: ArticleServiceSut.Sut
 
-  beforeEach(() => {
-    sut = ArticleServiceSut.makeSut()
-  })
+  beforeEach(() => (sut = ArticleServiceSut.makeSut()))
+  afterEach(() => MockDate.reset())
 
   test('Should throw ArticleNotFound if article was not found', async () => {
     const { articleService } = sut
@@ -14,5 +17,30 @@ describe('Change Article', () => {
     const promise = articleService.change({ id: 'invalid-id' })
 
     await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
+  })
+
+  test('Should modify the article found', async () => {
+    const { articleService, repository } = sut
+    const params = mockArticleParams()
+    repository.getResult = params
+    const changes = {
+      isPublished: true,
+      summary: 'new summary',
+      title: 'hello pudim'
+    }
+    const publishDate = new Date()
+    publishDate.setMilliseconds(0)
+    MockDate.set(publishDate)
+
+    const result = await articleService.change({
+      id: 'valid-id',
+      ...changes
+    })
+
+    expect(result).toStrictEqual(new Article({
+      ...params,
+      ...changes,
+      publishDate
+    }))
   })
 })

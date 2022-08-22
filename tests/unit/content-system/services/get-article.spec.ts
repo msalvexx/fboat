@@ -1,3 +1,4 @@
+import { mockArticleParams } from '@/../tests/mocks/content-system'
 import { Article } from '@/content-system'
 import { ResourceNotFoundError } from '@/iam'
 import { ArticleServiceSut } from './factory'
@@ -5,9 +6,7 @@ import { ArticleServiceSut } from './factory'
 describe('Get Article', () => {
   let sut: ArticleServiceSut.Sut
 
-  beforeEach(() => {
-    sut = ArticleServiceSut.makeSut()
-  })
+  beforeEach(() => (sut = ArticleServiceSut.makeSut()))
 
   test('Should throw ArticleNotFound if article was not found', async () => {
     const { articleService } = sut
@@ -19,20 +18,7 @@ describe('Get Article', () => {
 
   test('Should return a valid article if the article was found', async () => {
     const { articleService, repository } = sut
-    const params = {
-      articleId: 'any id',
-      content: 'any content',
-      summary: 'any summary',
-      title: 'any title',
-      coverPhoto: 'any photo',
-      author: {
-        accountId: '123',
-        name: 'name other',
-        occupation: 'any occupation',
-        photo: 'any photo',
-        defaultPhoto: null
-      }
-    }
+    const params = mockArticleParams()
     repository.getResult = params
 
     const result = await articleService.get('valid id')

@@ -25,9 +25,9 @@ export class Article {
   private _isPublished: boolean
   private _coverPhoto: string
   private _revisionDate: Date
-  readonly creationDate: Date
+  private _slug: string
   private _publishDate?: Date
-  readonly slug: string
+  readonly creationDate: Date
 
   constructor (params: Article.Params) {
     const { articleId, title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate, slug } = params
@@ -43,14 +43,19 @@ export class Article {
     this._revisionDate = revisionDate ?? now
     this._publishDate = publishDate
     this._coverPhoto = coverPhoto
-    this.slug = slug ?? title.toLowerCase().replace(' ', '-')
+    this.changeSlug(slug, title)
+  }
+
+  private changeSlug (slug: string | undefined, title: string | undefined): void {
+    this._slug = slug ?? title?.toLowerCase().replace(' ', '-') ?? this._slug
   }
 
   changeArticle (params: Partial<Article.Params>): void {
-    const { title, author, summary, content, isPublished, coverPhoto } = params
+    const { title, slug, author, summary, content, isPublished, coverPhoto } = params
     const now = new Date()
     now.setMilliseconds(0)
     this._title = title ?? this._title
+    this.changeSlug(slug, title)
     this._author = author !== undefined ? new Author(author) : this._author
     this._summary = summary ?? this._summary
     this._content = content ?? this._content
@@ -83,6 +88,10 @@ export class Article {
 
   get coverPhoto (): string {
     return this._coverPhoto
+  }
+
+  get slug (): string {
+    return this._slug
   }
 
   get publishDate (): Date | undefined {

@@ -13,6 +13,7 @@ type ArticleParams = {
   summary: string
   author: AuthorParams
   coverPhoto: string
+  slug?: string
 }
 
 type ArticleResult = Article

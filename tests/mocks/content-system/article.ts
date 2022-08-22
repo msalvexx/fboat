@@ -1,4 +1,18 @@
-import { GetArticleRepository, SaveArticleRepository } from '@/content-system'
+import { Article, GetArticleRepository, SaveArticleRepository } from '@/content-system'
+
+export const mockArticleParams = (): Article.Params => ({
+  articleId: 'any id',
+  content: 'any content',
+  summary: 'any summary',
+  title: 'any title',
+  coverPhoto: 'any photo',
+  author: {
+    accountId: '123',
+    name: 'name other',
+    occupation: 'any occupation',
+    photo: 'any photo'
+  }
+})
 
 export class ArticleRepositoryMock implements SaveArticleRepository, GetArticleRepository {
   params: SaveArticleRepository.Params

@@ -16,7 +16,7 @@ export class ArticleService implements CreateArticle, GetArticle, UpdateArticle 
   async change (params: UpdateArticle.Params): Promise<Article> {
     const article = await this.getArticle(params.id)
     article.changeArticle(params)
-    return null as any
+    return article
   }
 
   async get (idOrSlug: string): Promise<GetArticle.Result> {
