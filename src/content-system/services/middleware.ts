@@ -12,3 +12,14 @@ export const accountToAuthorHandler: Middleware = handler => async (params: any)
   }
   return await handler(params)
 }
+
+export const authorIdHandler: Middleware = handler => async (params: any) => {
+  if ('authorId' in params) {
+    params.author = params.author ?? {}
+    params.author = {
+      ...params.author,
+      accountId: params.authorId
+    }
+  }
+  return await handler(params)
+}

@@ -1,11 +1,5 @@
 import { authorizationHeader } from '@/shared/application/schemas/iam/authorization'
-
-import builder from 'fluent-json-schema'
-
-const paramsSchema = builder
-  .object()
-  .description('article id or slug')
-  .prop('id', builder.string().required())
+import { paramsSchema } from './commons'
 
 export const getArticleSchema = {
   description: 'Get article schema',
