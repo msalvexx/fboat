@@ -27,4 +27,15 @@ describe('GET /article/:id', () => {
     expect(status).toBe(404)
     expect(body.message).toBe(new ResourceNotFoundError().message)
   })
+
+  test('Should returns 200 if article exists', async () => {
+    const validSlug = 'artigo-1'
+
+    const { status, body } = await supertest(serverInstance.server)
+      .get(`/article/${validSlug}`)
+      .set('Authorization', token)
+
+    expect(status).toBe(200)
+    expect(body.slug).toBe(validSlug)
+  })
 })
