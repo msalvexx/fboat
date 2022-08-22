@@ -4,20 +4,18 @@ import { refreshDatabase, startTestServer, stopTestServer, createTestToken } fro
 
 import { FastifyInstance } from 'fastify'
 import supertest from 'supertest'
-import { StartedMySqlContainer } from 'testcontainers'
 
 describe('GET /account/:id', () => {
   let serverInstance: FastifyInstance
-  let container: StartedMySqlContainer
   let connectionManager: MySQLConnectionManager
   let token: string
 
   beforeAll(async () => {
-    ({ container, serverInstance, connectionManager } = await startTestServer())
+    ({ serverInstance, connectionManager } = await startTestServer())
     token = createTestToken()
   })
   beforeEach(async () => await refreshDatabase(connectionManager))
-  afterAll(async () => await stopTestServer({ container, serverInstance }))
+  afterAll(async () => await stopTestServer({ serverInstance }))
 
   test('Should returns 404 if account not exists', async () => {
     const invalidUid = '9c7eaaf2-887b-4750-840a-2908aaf01349'

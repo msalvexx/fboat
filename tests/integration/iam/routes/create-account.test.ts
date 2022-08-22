@@ -3,20 +3,18 @@ import { refreshDatabase, startTestServer, stopTestServer, createTestToken } fro
 
 import { FastifyInstance } from 'fastify'
 import supertest from 'supertest'
-import { StartedMySqlContainer } from 'testcontainers'
 
 describe('POST /account', () => {
   let serverInstance: FastifyInstance
-  let container: StartedMySqlContainer
   let connectionManager: MySQLConnectionManager
   let token: string
 
   beforeAll(async () => {
-    ({ container, serverInstance, connectionManager } = await startTestServer())
+    ({ serverInstance, connectionManager } = await startTestServer())
     token = createTestToken()
   })
   beforeEach(async () => await refreshDatabase(connectionManager))
-  afterAll(async () => await stopTestServer({ container, serverInstance }))
+  afterAll(async () => await stopTestServer({ serverInstance }))
 
   test('Should create a new account', async () => {
     const email = 'newaccount@mail.com'

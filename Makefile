@@ -8,26 +8,28 @@ test:
 	@make test-integration
 
 test-unit:
-	npm run test
+	@npm run test
 
-test-integration:
-	npm run test:integration
+test-integration: stop-app start-deps
+	@npm run test:integration
+	@make stop-app
 
 test-watch:
-	npm test:watch
+	@npm test:watch
 
 dev: start-deps
-	npm run dev
+	@npm run dev
 
 build-app:
-	docker-compose build
+	@docker-compose build
 
 start-app: build-app start-deps
-	docker-compose up -d fboat-backend
+	@docker-compose up -d fboat-backend
 
 start-deps:
-	docker-compose up -d db
-	APP_ENV=test npm run typeorm migration:run -- -d src/application/configs/ormconfig.ts
+	@docker-compose up -d db
+	@echo 'Waiting to run migrations...'
+	@APP_ENV=test npm run typeorm migration:run -- -d src/shared/application/configs/ormconfig.ts
 
 stop-app:
-	docker-compose down
+	@docker-compose down

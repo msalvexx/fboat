@@ -4,15 +4,13 @@ import { refreshDatabase, startTestServer, stopTestServer } from '@/tests/integr
 
 import { FastifyInstance } from 'fastify'
 import supertest from 'supertest'
-import { StartedMySqlContainer } from 'testcontainers'
 
 describe('POST /login', () => {
   let serverInstance: FastifyInstance
-  let container: StartedMySqlContainer
   let connectionManager: MySQLConnectionManager
 
-  beforeAll(async () => ({ container, serverInstance, connectionManager } = await startTestServer()))
-  afterAll(async () => await stopTestServer({ container, serverInstance }))
+  beforeAll(async () => ({ serverInstance, connectionManager } = await startTestServer()))
+  afterAll(async () => await stopTestServer({ serverInstance }))
   beforeEach(async () => await refreshDatabase(connectionManager))
 
   test('Should return 401 if authentication fail', async () => {

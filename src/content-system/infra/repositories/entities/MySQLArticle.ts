@@ -1,4 +1,4 @@
-import { MySQLAccount } from '@/iam/infra/repositories/entities'
+import { MySQLAccount } from '../../../../iam/infra/repositories/entities'
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
 
 export type ArticleParams = {

@@ -1,6 +1,5 @@
-import { stopMySQLTestContainer, refreshDatabase, startTestDatabase } from '@/tests/integration/configs/helpers.integration'
+import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
 import { MySQLConnectionManager } from '@/shared/infra'
-import { StartedMySqlContainer } from 'testcontainers'
 import { MySQLArticle, MySQLArticleRepository } from '@/content-system/infra'
 import { Repository } from 'typeorm'
 import { Article } from '@/content-system'
@@ -8,7 +7,6 @@ import { Article } from '@/content-system'
 describe('ArticleRepository', () => {
   let sut: MySQLArticleRepository
   let connectionManager: MySQLConnectionManager
-  let container: StartedMySqlContainer
   let repository: Repository<MySQLArticle>
   const params: Article = new Article({
     articleId: '123',
@@ -27,13 +25,13 @@ describe('ArticleRepository', () => {
   })
 
   beforeAll(async () => {
-    ({ container, connectionManager } = await startTestDatabase())
+    connectionManager = await getConnectionManager()
     repository = connectionManager.getRepository(MySQLArticle)
     sut = new MySQLArticleRepository(connectionManager)
   })
 
   beforeEach(async () => await refreshDatabase(connectionManager))
-  afterAll(async () => await stopMySQLTestContainer(container))
+  afterAll(async () => await connectionManager.disconnect())
 
   test('Can create article successfully', async () => {
     await sut.save(params)

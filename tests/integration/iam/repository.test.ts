@@ -2,29 +2,27 @@ import { MySQLAccountRepository } from '@/iam/infra/repositories'
 import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
 
 import { mockAccount } from '@/tests/mocks/iam'
-import { stopMySQLTestContainer, refreshDatabase, startTestDatabase } from '@/tests/integration/configs/helpers.integration'
+import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
 import { Repository } from 'typeorm'
 import { MySQLRole } from '@/iam/infra/repositories/entities/MySQLRole'
 import { Account, GetAccountByEmailRepository } from '@/iam'
 import { MySQLConnectionManager } from '@/shared/infra'
-import { StartedMySqlContainer } from 'testcontainers'
 
 describe('AccountRepository', () => {
   let sut: MySQLAccountRepository
   let accountRepo: Repository<MySQLAccount>
   let userRepo: Repository<MySQLUser>
   let connectionManager: MySQLConnectionManager
-  let container: StartedMySqlContainer
 
   beforeAll(async () => {
-    ({ container, connectionManager } = await startTestDatabase())
+    connectionManager = await getConnectionManager()
     accountRepo = connectionManager.getRepository(MySQLAccount)
     userRepo = connectionManager.getRepository(MySQLUser)
     sut = new MySQLAccountRepository(connectionManager)
   })
 
   beforeEach(async () => await refreshDatabase(connectionManager))
-  afterAll(async () => await stopMySQLTestContainer(container))
+  afterAll(async () => await connectionManager.disconnect())
 
   const saveAccountOnDatabase = async (account: Account, roles: string = ''): Promise<void> => {
     await accountRepo.save({
