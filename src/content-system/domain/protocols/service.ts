@@ -1,26 +1,9 @@
-type AuthorResult = {
-  accountId: string
-  name: string
-  occupation: string
-  photo: string | null
-}
+import { Article } from "@/content-system"
 
 type AuthorParams = {
   accountId: string
   name: string
   occupation: string
-}
-
-type ArticleResult = {
-  title: string
-  author: AuthorResult
-  summary: string
-  content: string
-  coverPhoto: string
-  isPublished: boolean
-  creationDate: Date
-  publishDate?: Date
-  revisionDate: Date
 }
 
 type ArticleParams = {
@@ -30,6 +13,8 @@ type ArticleParams = {
   author: AuthorParams
   coverPhoto: string
 }
+
+type ArticleResult = Article
 
 export namespace CreateArticle {
   export type Params = ArticleParams
