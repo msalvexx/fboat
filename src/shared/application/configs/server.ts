@@ -4,7 +4,7 @@ import swagger from '@fastify/swagger'
 import { EnvConfig } from './env'
 import { startDbConnection, stopDbConnection } from '@/shared/application/factories'
 import { mergeBody, swaggerConfig } from '@/shared/application/adapters'
-import { iamRoutes, loginRoute } from '@/shared/application/routes'
+import { iamRoutes, loginRoute, contentSystemRoutes } from '@/shared/application/routes'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { commonSchemas } from '@/shared/application/schemas/iam/commons'
 
@@ -21,6 +21,7 @@ const setupPlugins = async (server: FastifyInstance): Promise<void> => {
 const setupRoutes = async (server: FastifyInstance): Promise<void> => {
   await server.register(loginRoute)
   await server.register(iamRoutes)
+  await server.register(contentSystemRoutes)
 }
 
 type App = {
