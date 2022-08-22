@@ -33,4 +33,21 @@ describe('Create Article', () => {
     expect(repository.params.slug).toBe('any-title')
     expect(repository.params.isPublished).toBe(false)
   })
+
+  test('Should return the article created', async () => {
+    const { articleService } = sut
+
+    const result = await articleService.create(params)
+
+    expect(result.articleId).toBeDefined()
+    expect(result.author.accountId).toBeDefined()
+    expect(result.author.name).toBe('name other')
+    expect(result.author.occupation).toBe('any occupation')
+    expect(result.content).toBe('any content')
+    expect(result.summary).toBe('any summary')
+    expect(result.title).toBe('any title')
+    expect(result.coverPhoto).toBe('any photo')
+    expect(result.slug).toBe('any-title')
+    expect(result.isPublished).toBe(false)
+  })
 })
