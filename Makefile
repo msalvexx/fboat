@@ -28,7 +28,7 @@ start-app: build-app start-deps
 
 start-deps:
 	@docker-compose up -d db
-	@echo 'Waiting to run migrations...'
+	@echo 'Waiting migrations to run...'
 	@APP_ENV=test npm run typeorm migration:run -- -d src/shared/application/configs/ormconfig.ts
 
 stop-app:

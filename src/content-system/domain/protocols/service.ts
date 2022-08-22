@@ -1,4 +1,4 @@
-import { Article } from "@/content-system"
+import { Article } from '@/content-system'
 
 type AuthorParams = {
   accountId: string
