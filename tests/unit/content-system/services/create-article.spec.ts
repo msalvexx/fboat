@@ -11,7 +11,8 @@ describe('Create Article', () => {
     author: {
       accountId: '123',
       name: 'name other',
-      occupation: 'any occupation'
+      occupation: 'any occupation',
+      photo: 'any photo'
     }
   }
 

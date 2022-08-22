@@ -10,7 +10,7 @@ export const createArticle = (params: CreateArticle.Params): Article => {
       accountId: params.author.accountId,
       name: params.author.name,
       occupation: params.author.occupation,
-      defaultPhoto: null
+      photo: params.author.photo
     }
   })
 }

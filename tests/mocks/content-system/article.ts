@@ -1,6 +1,6 @@
 import { GetArticleRepository, SaveArticleRepository } from '@/content-system'
 
-export class SaveArticleRepositoryMock implements SaveArticleRepository, GetArticleRepository {
+export class ArticleRepositoryMock implements SaveArticleRepository, GetArticleRepository {
   params: SaveArticleRepository.Params
   getResult: any = undefined
 

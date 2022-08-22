@@ -3,8 +3,7 @@ export namespace Author {
     accountId: string
     name: string
     occupation: string
-    photo?: string | null
-    defaultPhoto: string | null
+    photo: string | null
   }
 }
 
@@ -15,10 +14,10 @@ export class Author {
   readonly photo: string | null
 
   constructor (params: Author.Params) {
-    const { accountId, name, occupation, photo, defaultPhoto } = params
+    const { accountId, name, occupation, photo } = params
     this.accountId = accountId
     this.name = name
     this.occupation = occupation
-    this.photo = photo ?? defaultPhoto
+    this.photo = photo
   }
 }

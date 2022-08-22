@@ -4,6 +4,7 @@ type AuthorParams = {
   accountId: string
   name: string
   occupation: string
+  photo: string
 }
 
 type ArticleParams = {
@@ -26,17 +27,13 @@ export interface CreateArticle {
 }
 
 export namespace UpdateArticle {
-  export type Params = ArticleParams & {
-    authorId: string
-    coverPhoto: string
-    isPublished: boolean
-  }
+  export type Params = Partial<ArticleParams & { isPublished: boolean }> & { id: string }
 
   export type Result = ArticleResult
 }
 
 export interface UpdateArticle {
-  save: (params: UpdateArticle.Params) => Promise<UpdateArticle.Result>
+  change: (params: UpdateArticle.Params) => Promise<UpdateArticle.Result>
 }
 
 export namespace GetArticle {
