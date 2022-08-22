@@ -1,6 +1,5 @@
-import { AvatarPhotoProviderMock } from '@/../tests/mocks/content-system'
 import { AccountService, AuthenticationService } from '@/iam/service'
-import { AccountRepositoryMock, CryptographyMock, HasherMock } from '@/tests/mocks/iam'
+import { AccountRepositoryMock, CryptographyMock, HasherMock, AvatarPhotoProviderMock } from '@/tests/mocks/iam'
 
 export namespace AccountServiceSut {
   type Sut = {
@@ -15,7 +14,7 @@ export namespace AccountServiceSut {
     const hasher = new HasherMock()
     const defaultPhotoServiceMock = new AvatarPhotoProviderMock()
     return {
-      sut: new AccountService(repo, hasher),
+      sut: new AccountService(repo, hasher, defaultPhotoServiceMock),
       repo,
       hasher,
       defaultPhotoServiceMock

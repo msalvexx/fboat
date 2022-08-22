@@ -58,6 +58,6 @@ describe('Db Create account', () => {
 
     await sut.createAccount(params)
 
-    expect(defaultPhotoServiceMock.params).toStrictEqual('name other')
+    expect(defaultPhotoServiceMock.params).toStrictEqual('first last')
   })
 })

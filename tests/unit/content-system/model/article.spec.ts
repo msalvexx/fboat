@@ -9,7 +9,7 @@ describe('Article', () => {
       accountId: '123',
       name: 'any name',
       occupation: 'any occupation',
-      defaultPhoto: 'default photo'
+      photo: 'any photo'
     },
     content: '<html></html>',
     summary: 'any summary',
@@ -40,15 +40,10 @@ describe('Article', () => {
     expect(sut.content).toBe('other content')
   })
 
-  test('Should return default photo if no photo is provided', () => {
-    expect(sut.author.photo).toBe('default photo')
-  })
-
   test('Should return a new photo if photo is set', () => {
     sut.changeArticle({
       author: {
         accountId: '123',
-        defaultPhoto: 'default photo',
         name: 'any name',
         occupation: 'any occupation',
         photo: 'new photo'
