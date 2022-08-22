@@ -6,7 +6,7 @@ export type AccountParams = {
   firstName: string
   lastName: string
   occupation: string
-  photo: string | null | undefined
+  photo: string | null
   birthDate: Date
   createdAt: Date
   updatedAt: Date
@@ -47,7 +47,7 @@ export class MySQLAccount {
     occupation!: string
 
   @Column({ name: 'foto', type: 'varchar' })
-    photo!: string | undefined | null
+    photo!: string | null
 
   @Column({ name: 'data_nascimento', type: 'varchar', nullable: false })
     birthDate!: Date

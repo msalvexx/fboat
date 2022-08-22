@@ -101,7 +101,7 @@ export class MySQLConnectionManager {
       const repository = this.connection.getRepository(entity.name)
       await repository.clear()
     }
-    await this.connection.query("DELETE FROM migrations where name='CreateTestDataMigration1660588408599'")
+    await this.connection.query("DELETE FROM migrations where name like 'CreateTestDataMigration%'")
     await this.connection.query('SET foreign_key_checks = 1')
   }
 

@@ -75,4 +75,15 @@ describe('ArticleRepository', () => {
     expect(retrievedArticle?.title).toBe(params.title)
     expect(retrievedArticle?.slug).toBe(params.slug)
   })
+
+  test('Will return undefined if article was not found', async () => expect(await sut.get('invalid-id')).toBeUndefined())
+  test('Will return a valid article if a valid slug was provided', async () => expect(await sut.get('artigo-1')).toBeDefined())
+  test('Will return a valid article if a valid article id was provided', async () => expect(await sut.get('6b1eec7e-ac93-4fb6-8924-0327a750b1e6')).toBeDefined())
+  test('Will return the attributes correctly', async () => {
+    const retrievedArticle = await sut.get('artigo-1')
+
+    expect(retrievedArticle?.slug).toBe('artigo-1')
+    expect(retrievedArticle?.author.name).toBe('Paula Passos Menezes')
+    expect(retrievedArticle?.author.occupation).toBe('Engenheira Elétrica')
+  })
 })

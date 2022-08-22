@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm"
 
-export class CreateArticleTableMigration1661011138480 implements MigrationInterface {
+export class CreateArticleTableMigration1660588408599 implements MigrationInterface {
   private readonly create: string = `
     CREATE TABLE artigos (
     id_artigo varchar(255) UNIQUE NOT NULL,
-    id_conta varchar(255),
+    id_conta varchar(255) NOT NULL,
     slug varchar(255) UNIQUE NOT NULL,
     titulo varchar(255) NOT NULL,
     foto varchar(255) NOT NULL,
