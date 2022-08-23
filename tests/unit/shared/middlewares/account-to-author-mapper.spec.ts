@@ -28,4 +28,12 @@ describe('Account to Author Mapper Handler', () => {
       }
     })
   })
+
+  test('Should call super handler without author if no loggedAccount is provided', async () => {
+    const params = { any: 'result' }
+
+    await sut.handle(params)
+
+    expect(spy.params).not.toMatchObject({ author: expect.anything() })
+  })
 })
