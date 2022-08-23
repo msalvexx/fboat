@@ -1,4 +1,4 @@
-import { AuthenticationCertifierMock } from '@/tests/mocks/iam'
+import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'
 import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
 import { UnauthorizedError } from '@/iam'
 import { AuthenticationHandler } from '@/shared/middlewares/authentication'
@@ -21,5 +21,11 @@ describe('Authentication Handler', () => {
     const promise = sut.handle({})
 
     await expect(promise).rejects.toThrow(new UnauthorizedError())
+  })
+
+  test('Should add logged account on parameters on success authentication', async () => {
+    await sut.handle({})
+
+    expect(spy.params).toStrictEqual({ loggedAccount: mockAccount() })
   })
 })
