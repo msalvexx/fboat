@@ -10,5 +10,6 @@ export class AuthorizationHandler extends AbstractHandler {
     if (!('loggedAccount' in params)) throw new UnauthorizedError()
     const loggedUser: User = params.loggedAccount.user
     if (!loggedUser.hasPermission(this.permission)) throw new UnauthorizedError()
+    return await super.handle(params)
   }
 }
