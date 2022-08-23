@@ -1,4 +1,4 @@
-import { Account } from '@/iam'
+import { Account } from '@/iam/domain/model'
 
 export namespace GetAccountByEmailRepository {
   export type Params = string

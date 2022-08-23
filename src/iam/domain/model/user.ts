@@ -1,4 +1,4 @@
-import { Role, Permission, findRolesByName, findRoleByName } from '@/iam/domain/model'
+import { Role, Permission, findRolesByName, findRoleByName } from './'
 
 export namespace User {
   export type Params = {

@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@/iam'
+import { UnauthorizedError } from '@/iam/domain/model'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { refreshDatabase, startTestServer, stopTestServer } from '@/tests/integration/configs/helpers.integration'
 
@@ -32,6 +32,7 @@ describe('POST /login', () => {
         email: 'writer@mail.com',
         password: 'writer@123'
       })
+
     expect(status).toBe(200)
     expect(body.token).toBeDefined()
     expect(body.personName).toBe('Paula Passos Menezes')

@@ -1,4 +1,4 @@
-import { Permission } from '@/iam'
+import { Permission } from './'
 
 export class Role {
   readonly permissions: Set<Permission> = new Set()

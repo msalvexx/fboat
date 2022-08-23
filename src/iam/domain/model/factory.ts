@@ -1,4 +1,4 @@
-import { Account, AdminPermission, FBoatControllerPermission, FBoatReaderPermission, WriterPermission, Permission, Role } from '@/iam/domain/model'
+import { Account, AdminPermission, FBoatControllerPermission, FBoatReaderPermission, WriterPermission, Permission, Role } from './'
 import { CreateAccount } from '@/iam/domain/protocols'
 import { newUuid } from '@/shared/infra/gateways'
 

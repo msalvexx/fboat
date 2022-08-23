@@ -1,4 +1,4 @@
-import { Account, GetAccountByAccountId, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam'
+import { Account, GetAccountByAccountId, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam/domain'
 import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
 import { MySQLConnectionManager } from '@/shared/infra'
 

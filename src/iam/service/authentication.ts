@@ -1,5 +1,5 @@
-import { GetAccountByEmailRepository, Cryptography, Hasher, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@/iam/domain/protocols'
-import { Account, UnauthorizedError } from '@/iam'
+import { GetAccountByEmailRepository, Cryptography, Hasher, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@/iam/domain'
+import { Account, UnauthorizedError } from '@/iam/domain/model'
 
 export class AuthenticationService implements Authenticator, AuthenticationCertifier {
   constructor (

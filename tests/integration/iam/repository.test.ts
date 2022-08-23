@@ -5,7 +5,7 @@ import { mockAccount } from '@/tests/mocks/iam'
 import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
 import { Repository } from 'typeorm'
 import { MySQLRole } from '@/iam/infra/repositories/entities/MySQLRole'
-import { Account, GetAccountByEmailRepository } from '@/iam'
+import { Account, GetAccountByEmailRepository } from '@/iam/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
 
 describe('AccountRepository', () => {

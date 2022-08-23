@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/iam'
+import { ResourceNotFoundError } from '@/iam/domain/model'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { refreshDatabase, startTestServer, stopTestServer, createTestToken } from '@/tests/integration/configs/helpers.integration'
 
