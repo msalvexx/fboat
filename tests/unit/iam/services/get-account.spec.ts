@@ -1,4 +1,4 @@
-import { AccountNotFoundError } from "@/iam"
+import { AccountNotFoundError } from '@/iam/domain/model'
 
 import { mockAccount } from "@/tests/mocks/iam"
 import { AccountServiceSut } from "./factory"

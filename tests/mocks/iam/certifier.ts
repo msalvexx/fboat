@@ -1,4 +1,4 @@
-import { AuthenticationCertifier, UnauthorizedError } from '@/iam/domain/model'
+import { AuthenticationCertifier, UnauthorizedError } from '@/iam/domain'
 import { mockAccount } from './account'
 
 export class AuthenticationCertifierMock implements AuthenticationCertifier {

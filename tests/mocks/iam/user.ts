@@ -1,4 +1,4 @@
-import { User } from "@/iam"
+import { User } from '@/iam/domain/model'
 
 export type MockUserParams = {
   userId?: string
