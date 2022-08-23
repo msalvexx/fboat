@@ -1,8 +1,8 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { makeAuthenticationService } from '@/shared/application/factories/iam/services'
-import { fastifyHandlerPostPutAdapter as adapt } from '@/shared/application/adapters'
-import { loginSchema } from '@/shared/application/schemas/iam'
+import { makeAuthenticationService } from '@/main/factories/iam/services'
+import { fastifyHandlerPostPutAdapter as adapt } from '@/main/adapters'
+import { loginSchema } from '@/shared/schemas/iam'
 
 export const loginRoute = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
   const authService = makeAuthenticationService()

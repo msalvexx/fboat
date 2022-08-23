@@ -1,4 +1,4 @@
-import { authorizationHeader } from '@/shared/application/schemas/iam/authorization'
+import { authorizationHeader } from '@/shared/schemas/iam/authorization'
 import { paramsSchema } from './commons'
 
 import builder from 'fluent-json-schema'

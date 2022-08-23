@@ -1,8 +1,9 @@
 import { AccountModifier, GetAccount } from '@/iam'
 import { BcryptAdapter, JwtAdapter, UiAvatarPhotoProvider } from '@/iam/infra/adapters'
 import { AccountService, AuthenticationService } from '@/iam/service'
-import { EnvConfig } from '@/shared/application/configs/env'
-import { makeAccountRepository } from '@/shared/application/factories'
+
+import { EnvConfig } from '@/main/configs/env'
+import { makeAccountRepository } from '@/main/factories'
 import { AxiosHttpClient } from '@/shared/infra/adapters'
 
 type Service = AccountModifier & GetAccount

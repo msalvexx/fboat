@@ -1,6 +1,7 @@
 import { SwaggerOptions } from '@fastify/swagger'
-import { personalDataSchema } from '@/shared/application/schemas/iam/commons'
-import { EnvConfig } from '@/shared/application/configs/env'
+
+import { personalDataSchema } from '@/shared/schemas/iam/commons'
+import { EnvConfig } from '@/main/configs/env'
 
 type ServerType = { host: string, port: string }
 const { host, port }: ServerType = EnvConfig.getInstance().configs.server

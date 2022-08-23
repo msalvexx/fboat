@@ -1,10 +1,9 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
 import { accountToAuthorHandler, authorIdHandler } from '@/content-system/services'
-import { getArticleSchema, createArticleSchema } from '@/shared/application/schemas/content-system'
-import { makeArticleService } from '@/shared/application/factories/content-system'
-import { auth, fastifyHandlerGetDeleteAdapter as getDeleteAdapt, fastifyHandlerPostPutAdapter as postPutAdapt } from '@/shared/application/adapters'
-import { changeArticleSchema } from '../schemas/content-system/change-article'
+import { getArticleSchema, createArticleSchema, changeArticleSchema } from '@/shared/schemas/content-system'
+import { makeArticleService } from '@/main/factories/content-system'
+import { auth, fastifyHandlerGetDeleteAdapter as getDeleteAdapt, fastifyHandlerPostPutAdapter as postPutAdapt } from '@/main/adapters'
 
 export const contentSystemRoutes = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
   const articleService = makeArticleService()

@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply, HookHandlerDoneFunction } from 'fastify'
-import { makeAuthenticationService } from '@/shared/application/factories'
+import { makeAuthenticationService } from '@/main/factories'
 
 export const auth = (request: FastifyRequest, _: FastifyReply, done: HookHandlerDoneFunction): void => {
   const authService = makeAuthenticationService()
@@ -9,7 +9,5 @@ export const auth = (request: FastifyRequest, _: FastifyReply, done: HookHandler
       request.body = { ...request.body as object, loggedAccount }
       done()
     })
-    .catch(err => {
-      done(err)
-    })
+    .catch(err => done(err))
 }
