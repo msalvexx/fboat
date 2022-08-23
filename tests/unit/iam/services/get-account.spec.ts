@@ -8,7 +8,7 @@ describe('Get Account', () => {
     const { sut } = AccountServiceSut.makeSut()
     const accountId = 'invalidAccountId'
 
-    const promise = sut.getAccount(accountId)
+    const promise = sut.getAccount({ accountId })
 
     await expect(promise).rejects.toThrowError(new AccountNotFoundError(accountId))
   })
@@ -18,7 +18,7 @@ describe('Get Account', () => {
     const account = mockAccount({ accountId: 'validAccountId' })
     repo.readByAccountIdResult = account
 
-    const result = await sut.getAccount(account.accountId)
+    const result = await sut.getAccount({ accountId: account.accountId })
 
     expect(result).toStrictEqual({
       accountId: account.accountId,

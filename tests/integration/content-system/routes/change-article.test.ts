@@ -16,7 +16,7 @@ describe('PUT /article', () => {
   beforeEach(async () => await refreshDatabase(connectionManager))
   afterAll(async () => await stopTestServer({ serverInstance }))
 
-  test('Should create a new article', async () => {
+  test('Should change an article', async () => {
     const validSlug = 'artigo-1'
     const { status, body } = await supertest(serverInstance.server)
       .put(`/article/${validSlug}`)

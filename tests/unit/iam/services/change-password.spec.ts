@@ -1,4 +1,4 @@
-import { PersistDataChangeError } from '@/iam'
+import { PersistDataChangeError } from '@/iam/domain/model'
 import { mockAccount, mockChangePasswordParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'
 
@@ -7,7 +7,7 @@ describe('When change password', () => {
     const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockChangePasswordParams()
     const hashedPassword = `hashed${params.newPassword}`
-    repo.readByAccountIdResult = mockAccount({ accountId: params.id })
+    repo.readByAccountIdResult = mockAccount({ accountId: params.accountId })
     hasher.generateResult = hashedPassword
 
     await sut.changePassword(params)
@@ -18,7 +18,7 @@ describe('When change password', () => {
   test('Will return error if save fails', async () => {
     const { sut, repo, hasher } = AccountServiceSut.makeSut()
     const params = mockChangePasswordParams()
-    repo.readByAccountIdResult = mockAccount({ accountId: params.id })
+    repo.readByAccountIdResult = mockAccount({ accountId: params.accountId })
     repo.updateResult = false
     hasher.compareResult = true
 

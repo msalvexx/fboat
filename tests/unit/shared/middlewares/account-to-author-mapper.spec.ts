@@ -1,6 +1,6 @@
 import { mockAccount } from '@/tests/mocks/iam'
 import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
-import { AccountToAuthorMapperHandler } from '@/shared/middlewares/acount-author-mapper'
+import { AccountToAuthorMapperHandler } from '@/shared/handlers/acount-author-mapper'
 
 describe('Account to Author Mapper Handler', () => {
   let sut: AccountToAuthorMapperHandler

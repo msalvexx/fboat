@@ -1,6 +1,6 @@
 import { mockAccount } from '@/tests/mocks/iam'
-import { UnauthorizedError } from '@/iam'
-import { AuthorizationHandler } from '@/shared/middlewares/authorization'
+import { ForbiddenError, UnauthorizedError } from '@/iam/domain/model'
+import { AuthorizationHandler } from '@/shared/handlers/authorization'
 import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
 
 describe('Authorization Handler', () => {
@@ -22,7 +22,7 @@ describe('Authorization Handler', () => {
   test('Should throws if request not contains permission', async () => {
     const promise = sut.handle({ loggedAccount: mockAccount() })
 
-    await expect(promise).rejects.toThrow(new UnauthorizedError())
+    await expect(promise).rejects.toThrow(new ForbiddenError())
   })
 
   test('Should call super handler', async () => {

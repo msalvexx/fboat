@@ -40,6 +40,15 @@ export class UnauthorizedError extends Error {
   }
 }
 
+export class ForbiddenError extends Error {
+  readonly statusCode: number = 403
+
+  constructor () {
+    super('Forbidden')
+    this.name = 'ForbiddenError'
+  }
+}
+
 export class ConnectionNotFoundError extends Error {
   readonly statusCode: number = 500
 

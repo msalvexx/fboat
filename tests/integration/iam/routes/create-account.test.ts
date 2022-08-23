@@ -32,6 +32,7 @@ describe('POST /account', () => {
         },
         roles: ['FBoatReader']
       })
+
     expect(status).toBe(200)
     expect(body.user.email).toBe(email)
   })

@@ -1,4 +1,4 @@
-import { PersistDataChangeError } from '@/iam'
+import { PersistDataChangeError } from '@/iam/domain/model'
 import { mockAccount, mockChangeAccountParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'
 
@@ -11,7 +11,7 @@ describe('When change account', () => {
     await sut.changeAccount(params)
 
     const expectedAccount = mockAccount({
-      accountId: params.id,
+      accountId: params.accountId,
       user: {
         roles: ['Writer']
       },

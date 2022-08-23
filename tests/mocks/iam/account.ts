@@ -1,5 +1,5 @@
-import { Account, GetAccountByEmailRepository, PersistDataChangeError } from '@/iam'
-import { AccountRepository, GetAccountByAccountId, SaveAccountRepository } from '@/iam/domain/protocols'
+import { Account, PersistDataChangeError } from '@/iam/domain/model'
+import { GetAccountByEmailRepository, AccountRepository, GetAccountByAccountId, SaveAccountRepository } from '@/iam/domain/protocols'
 import { MockUserParams, defaultUser, mockUserParams } from './user'
 
 type MockAccountParams = {

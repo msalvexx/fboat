@@ -1,6 +1,5 @@
 import { SwaggerOptions } from '@fastify/swagger'
 
-import { personalDataSchema } from '@/shared/infra/gateways/schemas/iam/commons'
 import { EnvConfig } from '@/main/configs/env'
 
 type ServerType = { host: string, port: string }
@@ -14,9 +13,6 @@ export const swaggerConfig: SwaggerOptions = {
       title: 'F-Boat API',
       description: 'A Swagger API documentation of F-Boat API',
       version: '0.1.0'
-    },
-    definitions: {
-      personalData: personalDataSchema.valueOf()
     },
     host: `${host}:${port}`,
     schemes: ['http'],

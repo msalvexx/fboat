@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@/iam'
+import { UnauthorizedError } from '@/iam/domain/model'
 
 import { AuthenticationSut } from '@/tests/unit/iam/services/factory'
 import { mockAuthenticateUserParams, mockAccount } from '@/tests/mocks/iam'

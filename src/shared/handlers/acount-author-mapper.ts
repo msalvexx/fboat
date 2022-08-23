@@ -1,6 +1,6 @@
 import { Author } from '@/content-system'
-import { Account } from '@/iam'
-import { AbstractHandler } from "."
+import { Account } from '@/iam/domain/model'
+import { AbstractHandler } from './handler'
 
 export class AccountToAuthorMapperHandler extends AbstractHandler {
   override async handle (params: any): Promise<any> {

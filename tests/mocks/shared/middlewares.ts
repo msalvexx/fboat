@@ -1,4 +1,4 @@
-import { AbstractHandler } from '@/shared/middlewares'
+import { AbstractHandler } from '@/shared/handlers'
 
 export class HandlerSpy extends AbstractHandler {
   params: any

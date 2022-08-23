@@ -1,4 +1,4 @@
-import { Role } from '@/iam'
+import { Role } from '@/iam/domain/model'
 
 describe('When add permission to role', () => {
   test('Should add one permission to role', () => {

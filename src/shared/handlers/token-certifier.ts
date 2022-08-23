@@ -1,7 +1,7 @@
-import { AuthenticationCertifier } from '@/iam'
-import { AbstractHandler } from '.'
+import { AuthenticationCertifier } from '@/iam/domain/protocols'
+import { AbstractHandler } from './handler'
 
-export class AuthenticationHandler extends AbstractHandler {
+export class TokenCertifierHandler extends AbstractHandler {
   constructor (private readonly authService: AuthenticationCertifier) {
     super()
   }

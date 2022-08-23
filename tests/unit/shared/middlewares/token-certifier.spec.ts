@@ -1,16 +1,16 @@
 import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'
 import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
-import { UnauthorizedError } from '@/iam'
-import { AuthenticationHandler } from '@/shared/middlewares/authentication'
+import { UnauthorizedError } from '@/iam/domain/model'
+import { TokenCertifierHandler } from '@/shared/handlers/token-certifier'
 
 describe('Authentication Handler', () => {
-  let sut: AuthenticationHandler
+  let sut: TokenCertifierHandler
   let service: AuthenticationCertifierMock
   let spy: HandlerSpy
 
   beforeEach(() => {
     service = new AuthenticationCertifierMock()
-    sut = new AuthenticationHandler(service)
+    sut = new TokenCertifierHandler(service)
     spy = new HandlerSpy()
     sut.setNext(spy)
   })

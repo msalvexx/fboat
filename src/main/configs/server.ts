@@ -1,12 +1,11 @@
 import Fastify, { FastifyInstance } from 'fastify'
 import swagger from '@fastify/swagger'
 
+import { MySQLConnectionManager } from '@/shared/infra'
 import { EnvConfig } from './env'
 import { startDbConnection, stopDbConnection } from '@/main/factories'
 import { mergeBody, swaggerConfig } from '@/main/adapters'
 import { iamRoutes, loginRoute, contentSystemRoutes } from '@/main/routes'
-import { MySQLConnectionManager } from '@/shared/infra'
-import { commonSchemas } from '@/shared/infra/gateways/schemas/iam/commons'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
   server.addHook('onClose', stopDbConnection)
@@ -14,7 +13,6 @@ const setupHooks = async (server: FastifyInstance): Promise<void> => {
 }
 
 const setupPlugins = async (server: FastifyInstance): Promise<void> => {
-  server.addSchema(commonSchemas)
   await server.register(swagger, swaggerConfig)
 }
 
