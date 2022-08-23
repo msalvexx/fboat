@@ -1,6 +1,6 @@
 import { Article, ArticleResult, CreateArticle, GetArticle, GetArticleRepository, SaveArticleRepository, UpdateArticle } from '@/content-system/domain'
 import { createArticle } from '@/content-system/domain/models/factory'
-import { ResourceNotFoundError } from '@/iam'
+import { ResourceNotFoundError } from '@/iam/domain/model'
 
 export class ArticleService implements CreateArticle, GetArticle, UpdateArticle {
   constructor (
@@ -13,13 +13,13 @@ export class ArticleService implements CreateArticle, GetArticle, UpdateArticle 
     return this.toArticleResult(article)
   }
 
-  async change (params: UpdateArticle.Params): Promise<UpdateArticle.Result> {
-    const article = await this.getArticle(params.id)
+  async change ({ idOrSlug, ...params }: UpdateArticle.Params): Promise<UpdateArticle.Result> {
+    const article = await this.getArticle(idOrSlug)
     article.changeArticle(params)
     return this.toArticleResult(article)
   }
 
-  async get (idOrSlug: string): Promise<GetArticle.Result> {
+  async get ({ idOrSlug }: GetArticle.Params): Promise<GetArticle.Result> {
     return this.toArticleResult(await this.getArticle(idOrSlug))
   }
 

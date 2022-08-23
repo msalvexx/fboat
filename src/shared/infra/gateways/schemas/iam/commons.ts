@@ -1,4 +1,3 @@
-import { getAvailableRoleNames } from '@/iam'
 import builder from 'fluent-json-schema'
 
 export const personalDataSchema = builder
@@ -14,7 +13,7 @@ export const personalDataSchema = builder
 export const accountParamsSchema = builder
   .object()
   .description('AccountId parameter')
-  .prop('id', builder.string().format('uuid').required())
+  .prop('accountId', builder.string().format('uuid').required())
 
 export const defaultResponseSchema = {
   default: {
@@ -23,7 +22,7 @@ export const defaultResponseSchema = {
   }
 }
 
-export const rolesSchema = builder.array().minItems(1).items(builder.enum(getAvailableRoleNames))
+export const rolesSchema = builder.array().minItems(1)
 export const emailSchema = builder.string().format(builder.FORMATS.EMAIL)
 export const commonSchemas = builder
   .object()

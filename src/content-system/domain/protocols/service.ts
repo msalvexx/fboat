@@ -28,7 +28,7 @@ export interface CreateArticle {
 }
 
 export namespace UpdateArticle {
-  export type Params = Partial<ArticleParams & { isPublished: boolean }> & { id: string }
+  export type Params = Partial<ArticleParams & { isPublished: boolean }> & { idOrSlug: string }
 
   export type Result = ArticleResult
 }
@@ -38,9 +38,10 @@ export interface UpdateArticle {
 }
 
 export namespace GetArticle {
+  export type Params = { idOrSlug: string }
   export type Result = ArticleResult
 }
 
 export interface GetArticle {
-  get: (idOrSlug: string) => Promise<GetArticle.Result>
+  get: (idOrSlug: GetArticle.Params) => Promise<GetArticle.Result>
 }

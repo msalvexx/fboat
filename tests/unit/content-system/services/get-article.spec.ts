@@ -1,5 +1,5 @@
-import { mockArticleParams } from '@/../tests/mocks/content-system'
-import { ResourceNotFoundError } from '@/iam'
+import { mockArticleParams } from '@/tests/mocks/content-system'
+import { ResourceNotFoundError } from '@/iam/domain/model'
 import { ArticleServiceSut } from './factory'
 
 describe('Get Article', () => {
@@ -10,7 +10,7 @@ describe('Get Article', () => {
   test('Should throw ArticleNotFound if article was not found', async () => {
     const { articleService } = sut
 
-    const promise = articleService.get('invalid-id')
+    const promise = articleService.get({ idOrSlug: 'invalid-id' })
 
     await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
   })
@@ -20,7 +20,7 @@ describe('Get Article', () => {
     const params = mockArticleParams()
     repository.getResult = params
 
-    const result = await articleService.get('valid id')
+    const result = await articleService.get({ idOrSlug: 'valid id' })
 
     expect(result.articleId).toBeDefined()
     expect(result.author.accountId).toBeDefined()

@@ -1,4 +1,4 @@
-import { Account, PersonalData } from '@/iam'
+import { Account, PersonalData } from '@/iam/domain/model'
 
 export namespace CreateAccount {
   export type Params = {
@@ -17,7 +17,7 @@ export interface CreateAccount {
 
 export namespace ChangeAccount {
   export type Params = {
-    id: string
+    accountId: string
     roles: string[]
     personalData: PersonalData.Params
     isActive: boolean
@@ -32,7 +32,7 @@ export interface ChangeAccount {
 
 export namespace ChangePassword {
   export type Params = {
-    id: string
+    accountId: string
     newPassword: string
   }
 
@@ -44,12 +44,12 @@ export interface ChangePassword {
 }
 
 export namespace GetAccount {
-  export type Params = string
+  export type Params = { accountId: string }
   export type Result = Account.Params
 }
 
 export interface GetAccount {
-  getAccount: (id: GetAccount.Params) => Promise<GetAccount.Result>
+  getAccount: (params: GetAccount.Params) => Promise<GetAccount.Result>
 }
 
 export type AccountModifier = CreateAccount & ChangeAccount & ChangePassword

@@ -1,5 +1,5 @@
 import { mockArticleParams } from '@/tests/mocks/content-system'
-import { ResourceNotFoundError } from '@/iam'
+import { ResourceNotFoundError } from '@/iam/domain/model'
 import { ArticleServiceSut } from './factory'
 
 import MockDate from 'mockdate'
@@ -13,7 +13,7 @@ describe('Change Article', () => {
   test('Should throw ArticleNotFound if article was not found', async () => {
     const { articleService } = sut
 
-    const promise = articleService.change({ id: 'invalid-id' })
+    const promise = articleService.change({ idOrSlug: 'invalid-id' })
 
     await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
   })
@@ -32,7 +32,7 @@ describe('Change Article', () => {
     MockDate.set(publishDate)
 
     const result = await articleService.change({
-      id: 'valid-id',
+      idOrSlug: 'valid-id',
       ...changes
     })
 
