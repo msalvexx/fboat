@@ -1,3 +1,5 @@
+import { ResourceNotFoundError } from '@/shared/domain/model'
+
 export class EmailAlreadyInUseError extends Error {
   readonly statusCode: number = 400
 
@@ -13,15 +15,6 @@ export class PersistDataChangeError extends Error {
   constructor (type: string) {
     super(`Failed to persist changes on ${type}`)
     this.name = 'PersistDataChangeError'
-  }
-}
-
-export class ResourceNotFoundError extends Error {
-  readonly statusCode: number = 404
-
-  constructor (name: string = 'ResourceNotFoundError', message: string = 'The resource was not found') {
-    super(message)
-    this.name = name
   }
 }
 
@@ -46,23 +39,5 @@ export class ForbiddenError extends Error {
   constructor () {
     super('Forbidden')
     this.name = 'ForbiddenError'
-  }
-}
-
-export class ConnectionNotFoundError extends Error {
-  readonly statusCode: number = 500
-
-  constructor () {
-    super('ConnectionNotFoundError')
-    this.name = 'ConnectionNotFoundError'
-  }
-}
-
-export class TransactionNotFoundError extends Error {
-  readonly statusCode: number = 500
-
-  constructor () {
-    super('TransactionNotFoundError')
-    this.name = 'TransactionNotFoundError'
   }
 }

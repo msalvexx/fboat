@@ -1,4 +1,5 @@
 import { PersistDataChangeError } from '@/iam/domain/model'
+
 import { mockAccount, mockChangePasswordParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'
 

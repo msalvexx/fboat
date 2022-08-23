@@ -1,4 +1,5 @@
 import { AccountService, AuthenticationService } from '@/iam/service'
+
 import { AccountRepositoryMock, CryptographyMock, HasherMock, AvatarPhotoProviderMock } from '@/tests/mocks/iam'
 
 export namespace AccountServiceSut {

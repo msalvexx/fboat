@@ -1,4 +1,5 @@
 import { UnauthorizedError } from '@/iam/domain/model'
+
 import { mockAccount } from '@/tests/mocks/iam'
 import { AuthenticationSut } from './factory'
 

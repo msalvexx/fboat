@@ -1,12 +1,12 @@
-import { MySQLAccountRepository } from '@/iam/infra/repositories'
-import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
-
-import { mockAccount } from '@/tests/mocks/iam'
-import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
-import { Repository } from 'typeorm'
-import { MySQLRole } from '@/iam/infra/repositories/entities/MySQLRole'
 import { Account, GetAccountByEmailRepository } from '@/iam/domain'
+import { MySQLAccountRepository } from '@/iam/infra/repositories'
+import { MySQLAccount, MySQLUser, MySQLRole } from '@/iam/infra/repositories/entities'
 import { MySQLConnectionManager } from '@/shared/infra'
+
+import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
+import { mockAccount } from '@/tests/mocks/iam'
+
+import { Repository } from 'typeorm'
 
 describe('AccountRepository', () => {
   let sut: MySQLAccountRepository

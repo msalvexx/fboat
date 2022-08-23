@@ -1,5 +1,6 @@
 import { UnauthorizedError } from '@/iam/domain/model'
 import { MySQLConnectionManager } from '@/shared/infra'
+
 import { refreshDatabase, startTestServer, stopTestServer } from '@/tests/integration/configs/helpers.integration'
 
 import { FastifyInstance } from 'fastify'

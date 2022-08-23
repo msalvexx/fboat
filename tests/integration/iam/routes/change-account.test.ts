@@ -1,5 +1,6 @@
 import { MySQLAccount } from '@/iam/infra/repositories/entities'
 import { MySQLConnectionManager } from '@/shared/infra'
+
 import { refreshDatabase, startTestServer, stopTestServer, createTestToken } from '@/tests/integration/configs/helpers.integration'
 
 import { FastifyInstance } from 'fastify'

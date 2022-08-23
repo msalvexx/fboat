@@ -1,7 +1,8 @@
-import { mockAccount } from '@/tests/mocks/iam'
 import { ForbiddenError, UnauthorizedError } from '@/iam/domain/model'
 import { AuthorizationHandler } from '@/shared/handlers/authorization'
-import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
+
+import { HandlerSpy } from '@/tests/mocks/shared'
+import { mockAccount } from '@/tests/mocks/iam'
 
 describe('Authorization Handler', () => {
   let sut: AuthorizationHandler

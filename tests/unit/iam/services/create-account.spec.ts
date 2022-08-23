@@ -1,4 +1,5 @@
 import { EmailAlreadyInUseError, PersistDataChangeError } from '@/iam/domain/model'
+
 import { mockAccount, mockCreateAccountParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from '@/tests/unit/iam/services/factory'
 

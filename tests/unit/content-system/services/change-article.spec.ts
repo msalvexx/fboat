@@ -1,5 +1,5 @@
+import { ResourceNotFoundError } from '@/shared/domain/model'
 import { mockArticleParams } from '@/tests/mocks/content-system'
-import { ResourceNotFoundError } from '@/iam/domain/model'
 import { ArticleServiceSut } from './factory'
 
 import MockDate from 'mockdate'

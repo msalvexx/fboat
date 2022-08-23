@@ -1,6 +1,6 @@
 import { EnvConfig } from '@/main/configs/env'
 import defaultDatasource from '@/main/configs/ormconfig'
-import { ConnectionNotFoundError, TransactionNotFoundError } from '@/iam/domain/model'
+import { ConnectionNotFoundError, TransactionNotFoundError } from '@/shared/domain/model'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 
 export namespace MySQLConnectionManager {

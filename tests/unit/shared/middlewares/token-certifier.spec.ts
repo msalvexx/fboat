@@ -1,7 +1,8 @@
-import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'
-import { HandlerSpy } from '@/tests/mocks/shared/middlewares'
 import { UnauthorizedError } from '@/iam/domain/model'
 import { TokenCertifierHandler } from '@/shared/handlers/token-certifier'
+
+import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'
+import { HandlerSpy } from '@/tests/mocks/shared'
 
 describe('Authentication Handler', () => {
   let sut: TokenCertifierHandler
