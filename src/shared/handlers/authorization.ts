@@ -9,7 +9,6 @@ export class AuthorizationHandler extends AbstractHandler {
   override async handle (params: any): Promise<any> {
     if (!('loggedAccount' in params)) throw new UnauthorizedError()
     const loggedUser: User = params.loggedAccount.user
-    console.log(loggedUser)
     if (!loggedUser.hasPermission(this.permission)) throw new ForbiddenError()
     return await super.handle(params)
   }
