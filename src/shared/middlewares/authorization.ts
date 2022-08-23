@@ -1,4 +1,4 @@
-import { Permission, UnauthorizedError } from '@/iam'
+import { User, Permission, UnauthorizedError } from '@/iam'
 import { AbstractHandler } from "."
 
 export class AuthorizationHandler extends AbstractHandler {
@@ -8,5 +8,7 @@ export class AuthorizationHandler extends AbstractHandler {
 
   override async handle (params: any): Promise<any> {
     if (!('loggedAccount' in params)) throw new UnauthorizedError()
+    const loggedUser: User = params.loggedAccount.user
+    if (!loggedUser.hasPermission(this.permission)) throw new UnauthorizedError()
   }
 }
