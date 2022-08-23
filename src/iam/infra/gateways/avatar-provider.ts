@@ -1,6 +1,6 @@
 import { AvatarPhotoProvider } from '@/iam/domain'
 
-import { HttpGetClient } from '@/shared/protocols'
+import { HttpGetClient } from '@/shared/domain/protocols'
 
 export class UiAvatarPhotoProvider implements AvatarPhotoProvider {
   private readonly baseUrl = 'https://ui-avatars.com/api'

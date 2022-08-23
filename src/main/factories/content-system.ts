@@ -1,6 +1,6 @@
 import { MySQLArticleRepository } from '@/content-system/infra'
 import { ArticleService } from '@/content-system/services'
-import { Handler } from '@/shared/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/middleware'
 import { makeAccountToAuthorMapperHandler, makeAuthorizationHandler, makeServiceHandler, makeTokenCertifierHandler } from './shared'
 
 const makeArticleRepository = (): MySQLArticleRepository => new MySQLArticleRepository()

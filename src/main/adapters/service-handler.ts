@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { Handler } from '@/shared/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/middleware'
 
 type RequestHandler = (request: FastifyRequest, response: FastifyReply) => Promise<any>
 type Contract = (service: Handler) => RequestHandler

@@ -1,4 +1,4 @@
-import { Handler } from '@/shared/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/middleware'
 
 export abstract class AbstractHandler implements Handler {
   private nextHandler: Handler

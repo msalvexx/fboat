@@ -3,7 +3,7 @@ import { AccountService, AuthenticationService } from '@/iam/service'
 import { MySQLAccountRepository } from '@/iam/infra/repositories'
 import { BcryptAdapter, JwtAdapter, UiAvatarPhotoProvider } from '@/iam/infra/gateways'
 import { AxiosHttpClient } from '@/shared/infra/gateways'
-import { Handler } from '@/shared/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/middleware'
 
 import { EnvConfig } from '@/main/configs/env'
 import { makeAuthorizationHandler, makeServiceHandler, makeTokenCertifierHandler } from '@/main/factories/shared'

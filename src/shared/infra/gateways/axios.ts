@@ -1,4 +1,4 @@
-import { HttpGetClient } from '@/shared/protocols'
+import { HttpGetClient } from '@/shared/domain/protocols'
 
 import axios from 'axios'
 
