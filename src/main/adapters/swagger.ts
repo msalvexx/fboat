@@ -1,6 +1,6 @@
 import { SwaggerOptions } from '@fastify/swagger'
 
-import { personalDataSchema } from '@/shared/schemas/iam/commons'
+import { personalDataSchema } from '@/shared/infra/gateways/schemas/iam/commons'
 import { EnvConfig } from '@/main/configs/env'
 
 type ServerType = { host: string, port: string }

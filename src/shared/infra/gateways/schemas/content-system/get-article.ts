@@ -1,4 +1,4 @@
-import { authorizationHeader } from '@/shared/schemas/iam/authorization'
+import { authorizationHeader } from '@/shared/infra/gateways/schemas/iam/authorization'
 import { paramsSchema } from './commons'
 
 export const getArticleSchema = {

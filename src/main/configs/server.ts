@@ -6,7 +6,7 @@ import { startDbConnection, stopDbConnection } from '@/main/factories'
 import { mergeBody, swaggerConfig } from '@/main/adapters'
 import { iamRoutes, loginRoute, contentSystemRoutes } from '@/main/routes'
 import { MySQLConnectionManager } from '@/shared/infra'
-import { commonSchemas } from '@/shared/schemas/iam/commons'
+import { commonSchemas } from '@/shared/infra/gateways/schemas/iam/commons'
 
 const setupHooks = async (server: FastifyInstance): Promise<void> => {
   server.addHook('onClose', stopDbConnection)

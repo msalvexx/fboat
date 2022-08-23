@@ -1,7 +1,7 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
 import { accountToAuthorHandler, authorIdHandler } from '@/content-system/services'
-import { getArticleSchema, createArticleSchema, changeArticleSchema } from '@/shared/schemas/content-system'
+import { getArticleSchema, createArticleSchema, changeArticleSchema } from '@/shared/infra/gateways/schemas/content-system'
 import { makeArticleService } from '@/main/factories/content-system'
 import { auth, fastifyHandlerGetDeleteAdapter as getDeleteAdapt, fastifyHandlerPostPutAdapter as postPutAdapt } from '@/main/adapters'
 

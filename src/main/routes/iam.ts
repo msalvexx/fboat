@@ -2,7 +2,7 @@ import { FastifyInstance, RouteOptions } from 'fastify'
 
 import { makeAccountService } from '@/main/factories/iam/services'
 import { auth, fastifyHandlerPostPutAdapter as postPutAdapt, fastifyHandlerGetDeleteAdapter as getDeleteAdapt } from '@/main/adapters'
-import { changeAccountSchema, changePasswordSchema, createAccountSchema, getAccountSchema } from '@/shared/schemas/iam'
+import { changeAccountSchema, changePasswordSchema, createAccountSchema, getAccountSchema } from '@/shared/infra/gateways/schemas/iam'
 
 export const iamRoutes = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
   const accountService = makeAccountService()
