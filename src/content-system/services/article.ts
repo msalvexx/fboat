@@ -1,5 +1,4 @@
-import { Article, ArticleResult, CreateArticle, GetArticle, GetArticleRepository, SaveArticleRepository, UpdateArticle } from '@/content-system/domain'
-import { createArticle } from '@/content-system/domain/models/factory'
+import { Article, ArticleResult, CreateArticle, GetArticle, GetArticleRepository, SaveArticleRepository, UpdateArticle, createArticle } from '@/content-system/domain'
 import { ResourceNotFoundError } from '@/shared/domain/model'
 
 export class ArticleService implements CreateArticle, GetArticle, UpdateArticle {

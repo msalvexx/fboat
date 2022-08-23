@@ -1,4 +1,4 @@
-import { Article } from '@/content-system'
+import { Article } from '@/content-system/domain'
 
 export namespace SaveArticleRepository {
   export type Params = Article

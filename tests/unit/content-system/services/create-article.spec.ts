@@ -1,4 +1,4 @@
-import { CreateArticle } from '@/content-system'
+import { CreateArticle } from '@/content-system/domain'
 import { ArticleServiceSut } from './factory'
 
 describe('Create Article', () => {

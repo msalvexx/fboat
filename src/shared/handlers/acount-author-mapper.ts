@@ -1,4 +1,4 @@
-import { Author } from '@/content-system'
+import { Author } from '@/content-system/domain'
 import { Account } from '@/iam/domain/model'
 import { AbstractHandler } from './handler'
 

@@ -1,4 +1,4 @@
-import { GetArticleRepository, SaveArticleRepository } from '@/content-system/domain'
+import { GetArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { MySQLArticle } from '@/content-system/infra/repositories'
 
@@ -12,6 +12,8 @@ export class MySQLArticleRepository implements SaveArticleRepository, GetArticle
   }
 
   async save (params: SaveArticleRepository.Params): Promise<SaveArticleRepository.Result> {
+    const articleBySlug = await this.repo.findOne({ where: { slug: params.slug } })
+    if (articleBySlug !== null && articleBySlug.articleId !== params.articleId) throw new SlugAlreadyInUseError(params.slug)
     const retrievedArticle = await this.repo.findOne({ where: { articleId: params.articleId } })
     const data = {
       accountId: params.author.accountId,

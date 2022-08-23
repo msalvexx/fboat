@@ -22,7 +22,10 @@ describe('AccountRepository', () => {
   })
 
   beforeEach(async () => await refreshDatabase(connectionManager))
-  afterAll(async () => await connectionManager.disconnect())
+  afterAll(async () => {
+    await refreshDatabase(connectionManager)
+    await connectionManager.disconnect()
+  })
 
   const saveAccountOnDatabase = async (account: Account, roles: string = ''): Promise<void> => {
     await accountRepo.save({

@@ -1,4 +1,4 @@
-import { Article, GetArticleRepository, SaveArticleRepository } from '@/content-system'
+import { Article, GetArticleRepository, SaveArticleRepository } from '@/content-system/domain'
 
 export const mockArticleParams = (): Article.Params => ({
   articleId: 'any id',
@@ -12,6 +12,22 @@ export const mockArticleParams = (): Article.Params => ({
     occupation: 'any occupation',
     photo: 'any photo'
   }
+})
+
+export const mockArticle = (): Article => new Article({
+  articleId: '123',
+  author: {
+    accountId: '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85',
+    name: 'any name',
+    occupation: 'any occupation',
+    photo: 'any photo'
+  },
+  content: '<html></html>',
+  coverPhoto: 'any cover',
+  summary: 'any summary',
+  title: 'any title',
+  isPublished: false,
+  slug: 'any-title'
 })
 
 export class ArticleRepositoryMock implements SaveArticleRepository, GetArticleRepository {
