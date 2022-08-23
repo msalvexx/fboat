@@ -1,5 +1,5 @@
 import { mockArticleParams } from '@/tests/mocks/content-system'
-import { ResourceNotFoundError } from '@/iam/domain/model'
+import { ResourceNotFoundError } from '@/shared/domain/model'
 import { ArticleServiceSut } from './factory'
 
 describe('Get Article', () => {

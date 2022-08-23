@@ -6,7 +6,7 @@ import { AxiosHttpClient } from '@/shared/infra/gateways'
 import { Handler } from '@/shared/domain/protocols/middleware'
 
 import { EnvConfig } from '@/main/configs/env'
-import { makeAuthorizationHandler, makeServiceHandler, makeTokenCertifierHandler } from '@/main/factories/shared'
+import { HandlerBuilder } from './builder'
 
 type Service = AccountModifier & GetAccount
 
@@ -32,42 +32,42 @@ export const makeAuthenticationService = (): AuthenticationService => new Authen
 
 export const makeLogin = (): Handler => {
   const service = makeAuthenticationService()
-  return makeServiceHandler(service.authenticate, service)
+  return HandlerBuilder
+    .of(service)
+    .service(service.authenticate)
 }
 
 export const makeGetAccount = (): Handler => {
   const service = makeAccountService()
-  const handler = makeTokenCertifierHandler()
-  handler.setNext(makeServiceHandler(service.getAccount, service))
-  return handler
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .service(service.getAccount)
 }
 
 export const makeCreateAccount = (): Handler => {
   const service = makeAccountService()
-  const handler1 = makeTokenCertifierHandler()
-  const handler2 = makeAuthorizationHandler('CreateAccount')
-  const handler3 = makeServiceHandler(service.createAccount, service)
-  handler1.setNext(handler2)
-  handler2.setNext(handler3)
-  return handler1
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .authorization('CreateAccount')
+    .service(service.createAccount)
 }
 
 export const makeChangeAccount = (): Handler => {
   const service = makeAccountService()
-  const handler1 = makeTokenCertifierHandler()
-  const handler2 = makeAuthorizationHandler('ChangeAccount')
-  const handler3 = makeServiceHandler(service.changeAccount, service)
-  handler1.setNext(handler2)
-  handler2.setNext(handler3)
-  return handler1
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .authorization('ChangeAccount')
+    .service(service.changeAccount)
 }
 
 export const makeChangePassword = (): Handler => {
   const service = makeAccountService()
-  const handler1 = makeTokenCertifierHandler()
-  const handler2 = makeAuthorizationHandler('ChangePassword')
-  const handler3 = makeServiceHandler(service.changePassword, service)
-  handler1.setNext(handler2)
-  handler2.setNext(handler3)
-  return handler1
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .authorization('ChangePassword')
+    .service(service.changePassword)
 }
