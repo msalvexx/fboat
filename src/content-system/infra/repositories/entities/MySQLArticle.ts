@@ -8,6 +8,7 @@ export type ArticleParams = {
   title: string
   summary: string
   content: string
+  isFeatured: boolean
   isPublished: boolean
   publishDate: Date
   revisionDate: Date
@@ -28,6 +29,7 @@ export class MySQLArticle {
     this.summary = params.summary
     this.content = params.content
     this.isPublished = params.isPublished
+    this.isFeatured = params.isFeatured
     this.publishDate = params.publishDate
     this.revisionDate = params.revisionDate
     this.creationDate = params.creationDate
@@ -55,6 +57,9 @@ export class MySQLArticle {
 
   @Column({ name: 'conteudo', type: 'varchar' })
     content!: string
+
+  @Column({ name: 'destacado', default: false })
+    isFeatured!: boolean
 
   @Column({ name: 'publicado', default: false })
     isPublished!: boolean

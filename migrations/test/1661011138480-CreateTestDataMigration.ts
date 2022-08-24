@@ -17,10 +17,10 @@ export class CreateTestDataMigration1661011138480 implements MigrationInterface 
   `
   private readonly createArticles: string = `
   INSERT INTO artigos
-    (id_artigo, id_conta, slug, titulo, foto, resumo, conteudo, publicado, revisado_em, criado_em, publicado_em)
+    (id_artigo, id_conta, slug, titulo, foto, resumo, conteudo, destacado, publicado, revisado_em, criado_em, publicado_em)
   VALUES
-    ('6b1eec7e-ac93-4fb6-8924-0327a750b1e6', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-1', 'Artigo 1', 'foto 1', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAxPC9kaXY+PC9odG1sPg==', 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00'),
-    ('74ed31a1-2877-4763-8c53-9956645e5f2c', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-2', 'Artigo 2', 'foto 2', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAyPC9kaXY+PC9odG1sPg==', 0, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
+    ('6b1eec7e-ac93-4fb6-8924-0327a750b1e6', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-1', 'Artigo 1', 'foto 1', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAxPC9kaXY+PC9odG1sPg==', 1, 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00'),
+    ('74ed31a1-2877-4763-8c53-9956645e5f2c', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-2', 'Artigo 2', 'foto 2', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAyPC9kaXY+PC9odG1sPg==', 0, 0, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
   `
 
   public async up (queryRunner: QueryRunner): Promise<void> {

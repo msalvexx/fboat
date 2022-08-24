@@ -28,7 +28,12 @@ export interface CreateArticle {
 }
 
 export namespace UpdateArticle {
-  export type Params = Partial<ArticleParams & { isPublished: boolean }> & { idOrSlug: string }
+  type AdditionalFields = {
+    isPublished: boolean
+    isFeatured: boolean
+  }
+
+  export type Params = Partial<ArticleParams & AdditionalFields> & { idOrSlug: string }
 
   export type Result = ArticleResult
 }

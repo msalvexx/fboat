@@ -7,6 +7,7 @@ export namespace Article {
     title: string
     summary: string
     content: string
+    isFeatured?: boolean
     isPublished?: boolean
     coverPhoto: string
     creationDate?: Date
@@ -22,6 +23,7 @@ export class Article {
   private _title: string
   private _summary: string
   private _content: string
+  private _isFeatured: boolean
   private _isPublished: boolean
   private _coverPhoto: string
   private _revisionDate: Date
@@ -30,7 +32,7 @@ export class Article {
   readonly creationDate: Date
 
   constructor (params: Article.Params) {
-    const { articleId, title, author, summary, content, isPublished, coverPhoto, creationDate, publishDate, revisionDate, slug } = params
+    const { articleId, title, author, summary, content, isFeatured, isPublished, coverPhoto, creationDate, publishDate, revisionDate, slug } = params
     const now = new Date()
     now.setMilliseconds(0)
     this.articleId = articleId
@@ -38,6 +40,7 @@ export class Article {
     this._author = new Author(author)
     this._summary = summary
     this._content = content
+    this._isFeatured = isFeatured ?? false
     this._isPublished = isPublished ?? false
     this.creationDate = creationDate ?? now
     this._revisionDate = revisionDate ?? now
@@ -51,12 +54,13 @@ export class Article {
   }
 
   changeArticle (params: Partial<Article.Params>): void {
-    const { title, slug, author, summary, content, isPublished, coverPhoto } = params
+    const { title, slug, author, summary, content, isFeatured, isPublished, coverPhoto } = params
     const now = new Date()
     now.setMilliseconds(0)
     this._title = title ?? this._title
     this.changeSlug(slug, title)
     this._author = author !== undefined ? new Author(author) : this._author
+    this._isFeatured = isFeatured ?? this._isFeatured
     this._summary = summary ?? this._summary
     this._content = content ?? this._content
     this._coverPhoto = coverPhoto ?? this._coverPhoto
@@ -84,6 +88,10 @@ export class Article {
 
   get isPublished (): boolean {
     return this._isPublished
+  }
+
+  get isFeatured (): boolean {
+    return this._isFeatured
   }
 
   get coverPhoto (): string {

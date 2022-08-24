@@ -10,6 +10,8 @@ const bodySchema = builder
   .prop('title', builder.string())
   .prop('content', builder.string().contentMediaType('text/html'))
   .prop('summary', builder.string())
+  .prop('isFeatured', builder.boolean())
+  .prop('isPublished', builder.boolean())
   .prop('coverPhoto', builder.string())
   .prop('slug', builder.string())
 
