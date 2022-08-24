@@ -17,3 +17,33 @@ export namespace GetArticleRepository {
 export interface GetArticleRepository {
   get: (id: GetArticleRepository.Params) => Promise<GetArticleRepository.Result>
 }
+
+export namespace ListArticlesRepository {
+  export type Page = { size: number, number: number }
+
+  export type Params = Partial<{
+    pageSize: number
+    pageNumber: number
+    mostRecent: boolean
+    authorId: string
+    isFeatured: boolean
+    isPublished: boolean
+  }>
+
+  export type Result = {
+    items: Array<Partial<Article.Params>>
+    page: Page
+  }
+
+  export const Default = {
+    isFeatured: false,
+    isPublished: true,
+    mostRecent: true,
+    pageNumber: 1,
+    pageSize: 10
+  }
+}
+
+export interface ListArticlesRepository {
+  fetchPage: (params: ListArticlesRepository.Params) => Promise<ListArticlesRepository.Result>
+}

@@ -1,16 +1,58 @@
-import { AuthorNotFoundError, GetArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
+import { AuthorNotFoundError, GetArticleRepository, ListArticlesRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { MySQLArticle, MySQLAuthor } from '@/content-system/infra/repositories'
 
 import { Repository } from 'typeorm'
 
-export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository {
+export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository, ListArticlesRepository {
   private readonly repo: Repository<MySQLArticle>
   private readonly authorRepo: Repository<MySQLAuthor>
 
   constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.repo = connection.getRepository(MySQLArticle)
     this.authorRepo = connection.getRepository(MySQLAuthor)
+  }
+
+  async fetchPage (params: ListArticlesRepository.Params = ListArticlesRepository.Default): Promise<ListArticlesRepository.Result> {
+    const size = params.pageSize ?? ListArticlesRepository.Default.pageSize
+    const number = params.pageNumber ?? ListArticlesRepository.Default.pageNumber
+    const isFeatured = params.isFeatured ?? ListArticlesRepository.Default.isFeatured
+    const isPublished = params.isPublished ?? ListArticlesRepository.Default.isPublished
+    const mostRecent = params.mostRecent ?? ListArticlesRepository.Default.mostRecent
+    const articles = await this.repo.find({
+      where: {
+        isFeatured,
+        isPublished,
+        ...(params.authorId && { accountId: params.authorId })
+      },
+      order: {
+        ...(mostRecent && { publishDate: 'desc' })
+      },
+      take: size,
+      skip: number - 1
+    })
+    return {
+      items: articles.map(x => ({
+        articleId: x.articleId,
+        author: {
+          accountId: x.account.accountId,
+          name: `${x.account.firstName} ${x.account.lastName}`,
+          occupation: x.account.occupation,
+          photo: x.account.photo
+        },
+        coverPhoto: x.photo,
+        slug: x.slug,
+        title: x.title,
+        summary: x.summary,
+        publishDate: x.publishDate,
+        isFeatured: x.isFeatured,
+        isPublished: x.isPublished
+      })),
+      page: {
+        number,
+        size
+      }
+    }
   }
 
   async save (params: SaveArticleRepository.Params): Promise<SaveArticleRepository.Result> {

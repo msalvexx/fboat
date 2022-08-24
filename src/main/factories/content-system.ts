@@ -10,7 +10,6 @@ export const makeGetArticle = (): Handler => {
   const service = makeArticleService()
   return HandlerBuilder
     .of(service)
-    .tokenCertifier()
     .service(service.get)
 }
 
@@ -32,4 +31,11 @@ export const makeChangeArticle = (): Handler => {
     .authorization('ChangeArticle')
     .accountToAuthor()
     .service(service.change)
+}
+
+export const makeListArticles = (): Handler => {
+  const repository = makeArticleRepository()
+  return HandlerBuilder
+    .of(repository)
+    .service(repository.fetchPage)
 }

@@ -115,4 +115,34 @@ describe('ArticleRepository', () => {
       expect(retrievedArticle?.author.occupation).toBe('Engenheira Elétrica')
     })
   })
+
+  describe('fetchPage', () => {
+    test('Will fetch the correct page ', async () => {
+      const articles = await sut.fetchPage({
+        pageSize: 1,
+        pageNumber: 2
+      })
+
+      expect(articles.page.size).toBe(1)
+      expect(articles.page.number).toBe(2)
+      expect(articles.items.length).toBe(1)
+      expect(articles.items.at(0)?.articleId).toBe('74ed31a1-2877-4763-8c53-9956645e5f2c')
+    })
+
+    test('Will filter articles by isFeatured', async () => {
+      const articles = await sut.fetchPage({
+        isFeatured: false
+      })
+
+      expect(articles.items.length).toBe(2)
+    })
+
+    test('Will filter articles by author', async () => {
+      const articles = await sut.fetchPage({
+        authorId: 'c77f7d99-c956-4dd2-a63f-b7a1ca6f28aa'
+      })
+
+      expect(articles.items.length).toBe(0)
+    })
+  })
 })

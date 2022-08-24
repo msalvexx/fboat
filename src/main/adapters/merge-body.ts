@@ -4,6 +4,7 @@ export const mergeBody = (request: FastifyRequest, _: FastifyReply, done: HookHa
   request.body = {
     ...request.body as any,
     ...request.headers,
+    ...request.query as any,
     ...request.params as any
   }
   done()
