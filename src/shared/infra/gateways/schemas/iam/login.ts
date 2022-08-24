@@ -1,4 +1,4 @@
-import { emailSchema } from './commons'
+import { emailSchema, tags } from './commons'
 import builder from 'fluent-json-schema'
 
 const bodySchema = builder
@@ -10,5 +10,6 @@ const bodySchema = builder
 
 export const loginSchema = {
   description: 'Login schema',
-  body: bodySchema
+  body: bodySchema,
+  tags
 }

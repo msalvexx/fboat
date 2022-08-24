@@ -1,4 +1,5 @@
 import { ListArticlesRepository } from '@/content-system/domain'
+import { tags } from './commons'
 import builder from 'fluent-json-schema'
 
 const querystring = builder
@@ -12,5 +13,6 @@ const querystring = builder
 
 export const listArticleSchema = {
   description: 'List articles schema',
-  querystring
+  querystring,
+  tags
 }

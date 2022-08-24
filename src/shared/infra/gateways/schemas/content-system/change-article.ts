@@ -1,5 +1,5 @@
 import { authorizationHeader } from '@/shared/infra/gateways/schemas/iam/authorization'
-import { paramsSchema } from './commons'
+import { paramsSchema, tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
@@ -19,5 +19,6 @@ export const changeArticleSchema = {
   description: 'Change article schema',
   body: bodySchema,
   params: paramsSchema,
-  headers: authorizationHeader
+  headers: authorizationHeader,
+  tags
 }

@@ -28,3 +28,5 @@ export const commonSchemas = builder
   .object()
   .id('commons')
   .definition('personalDataSchema', personalDataSchema)
+
+export const tags = ['iam']

@@ -24,6 +24,10 @@ export const swaggerConfig: SwaggerOptions = {
         name: 'Authorization',
         in: 'header'
       }
-    }
+    },
+    tags: [
+      { name: 'iam', description: 'API`s to manage access and identities' },
+      { name: 'content-system', description: 'API`s to manage articles' }
+    ]
   }
 }

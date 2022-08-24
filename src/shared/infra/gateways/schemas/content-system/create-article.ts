@@ -1,4 +1,5 @@
 import { authorizationHeader } from '@/shared/infra/gateways/schemas/iam/authorization'
+import { tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
@@ -14,5 +15,6 @@ const bodySchema = builder
 export const createArticleSchema = {
   description: 'Get article schema',
   body: bodySchema,
-  headers: authorizationHeader
+  headers: authorizationHeader,
+  tags
 }

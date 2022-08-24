@@ -1,5 +1,5 @@
 import { authorizationHeader } from './authorization'
-import { accountParamsSchema, defaultResponseSchema } from './commons'
+import { accountParamsSchema, defaultResponseSchema, tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
@@ -13,5 +13,6 @@ export const changePasswordSchema = {
   params: accountParamsSchema,
   headers: authorizationHeader,
   body: bodySchema,
-  response: defaultResponseSchema
+  response: defaultResponseSchema,
+  tags
 }
