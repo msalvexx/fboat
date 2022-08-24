@@ -1,13 +1,14 @@
+import { ListArticlesRepository } from '@/content-system/domain'
 import builder from 'fluent-json-schema'
 
 const querystring = builder
   .object()
-  .prop('pageNumber', builder.integer())
-  .prop('pageSize', builder.integer())
-  .prop('mostRecent', builder.boolean())
+  .prop('pageNumber', builder.integer().default(ListArticlesRepository.Default.pageNumber))
+  .prop('pageSize', builder.integer().default(ListArticlesRepository.Default.pageSize).maximum(50))
+  .prop('mostRecent', builder.boolean().default(ListArticlesRepository.Default.mostRecent))
+  .prop('isFeatured', builder.boolean().default(ListArticlesRepository.Default.isFeatured))
+  .prop('isPublished', builder.boolean().default(ListArticlesRepository.Default.isPublished))
   .prop('authorId', builder.string().format('uuid'))
-  .prop('isFeatured', builder.boolean())
-  .prop('isPublished', builder.boolean())
 
 export const listArticleSchema = {
   description: 'List articles schema',
