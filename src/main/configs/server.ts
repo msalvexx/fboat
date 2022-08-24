@@ -1,5 +1,7 @@
 import Fastify, { FastifyInstance } from 'fastify'
 import swagger from '@fastify/swagger'
+import fileUpload from 'fastify-file-upload'
+import staticFile from '@fastify/static'
 
 import { MySQLConnectionManager } from '@/shared/infra'
 import { EnvConfig } from './env'
@@ -14,6 +16,8 @@ const setupHooks = async (server: FastifyInstance): Promise<void> => {
 
 const setupPlugins = async (server: FastifyInstance): Promise<void> => {
   await server.register(swagger, swaggerConfig)
+  await server.register(fileUpload, EnvConfig.getInstance().configs.fileUpload)
+  await server.register(staticFile, EnvConfig.getInstance().configs.staticFile)
 }
 
 const setupRoutes = async (server: FastifyInstance): Promise<void> => {

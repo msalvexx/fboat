@@ -1,5 +1,5 @@
 import getenv from 'getenv'
-import path from 'path'
+import path, { resolve } from 'path'
 
 export class EnvConfig {
   private static instance: EnvConfig
@@ -28,6 +28,13 @@ export class EnvConfig {
     server: {
       host: getenv('SERVER_HOST', 'localhost'),
       port: getenv.int('SERVER_PORT', 3000)
+    },
+    fileUpload: {
+      limits: { fileSize: 5 * 1024 * 1024 }
+    },
+    staticFile: {
+      root: resolve('../../../public'),
+      prefix: '/public/'
     }
   }
 
