@@ -1,14 +1,17 @@
-import { GetArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
+import { AuthorNotFoundError, GetArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { MySQLArticle } from '@/content-system/infra/repositories'
+import { MySQLAccount } from '@/iam/infra/repositories/entities'
 
 import { Repository } from 'typeorm'
 
 export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository {
   private readonly repo: Repository<MySQLArticle>
+  private readonly authorRepo: Repository<MySQLAccount>
 
   constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.repo = connection.getRepository(MySQLArticle)
+    this.authorRepo = connection.getRepository(MySQLAccount)
   }
 
   async save (params: SaveArticleRepository.Params): Promise<SaveArticleRepository.Result> {
@@ -28,7 +31,11 @@ export class MySQLArticleRepository implements SaveArticleRepository, GetArticle
       revisionDate: params.revisionDate
     }
     if (retrievedArticle === null) await this.repo.insert({ ...data, articleId: params.articleId })
-    else await this.repo.update({ articleId: params.articleId }, data)
+    else {
+      const author = await this.authorRepo.findOne({ where: { accountId: params.author.accountId } })
+      if (author === null) throw new AuthorNotFoundError(params.author.accountId)
+      await this.repo.update({ articleId: params.articleId }, data)
+    }
   }
 
   async get (idOrSlug: string): Promise<GetArticleRepository.Result> {

@@ -1,4 +1,4 @@
-import { Article, SlugAlreadyInUseError } from '@/content-system/domain'
+import { Article, AuthorNotFoundError, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLArticle, MySQLArticleRepository } from '@/content-system/infra'
 import { MySQLConnectionManager } from '@/shared/infra'
 
@@ -12,6 +12,22 @@ describe('ArticleRepository', () => {
   let connectionManager: MySQLConnectionManager
   let repository: Repository<MySQLArticle>
   let params: Article
+
+  const insertOnDatabase = async (params: Article): Promise<void> => {
+    await repository.save({
+      articleId: params.articleId,
+      accountId: params.author.accountId,
+      title: params.title,
+      summary: params.summary,
+      content: params.content,
+      slug: params.slug,
+      photo: params.coverPhoto,
+      isPublished: params.isPublished,
+      publishDate: params.publishDate,
+      creationDate: params.creationDate,
+      revisionDate: params.revisionDate
+    })
+  }
 
   beforeAll(async () => {
     connectionManager = await getConnectionManager()
@@ -39,6 +55,23 @@ describe('ArticleRepository', () => {
       await expect(promise).rejects.toThrow(new SlugAlreadyInUseError('artigo-1'))
     })
 
+    test('Will throw if author not exists', async () => {
+      await insertOnDatabase(params)
+
+      params.changeArticle({
+        author: {
+          accountId: '123',
+          photo: 'any-photo',
+          name: 'any-name',
+          occupation: 'bla'
+        }
+      })
+
+      const promise = sut.save(params)
+
+      await expect(promise).rejects.toThrow(new AuthorNotFoundError(params.author.accountId))
+    })
+
     test('Can create article successfully', async () => {
       await sut.save(params)
 
@@ -54,19 +87,8 @@ describe('ArticleRepository', () => {
     })
 
     test('Can update article successfully', async () => {
-      await repository.save({
-        articleId: params.articleId,
-        accountId: params.author.accountId,
-        title: params.title,
-        summary: params.summary,
-        content: params.content,
-        slug: params.slug,
-        photo: params.coverPhoto,
-        isPublished: params.isPublished,
-        publishDate: params.publishDate,
-        creationDate: params.creationDate,
-        revisionDate: params.revisionDate
-      })
+      await insertOnDatabase(params)
+
       params.changeArticle({
         title: 'other title',
         slug: 'other-title'
