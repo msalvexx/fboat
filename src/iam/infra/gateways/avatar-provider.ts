@@ -1,18 +1,16 @@
 import { AvatarPhotoProvider } from '@/iam/domain'
 
-import { HttpGetClient } from '@/shared/domain/protocols'
-
 export class UiAvatarPhotoProvider implements AvatarPhotoProvider {
-  private readonly baseUrl = 'https://ui-avatars.com/api'
-
-  constructor (private readonly httpClient: HttpGetClient) { }
+  private readonly configs = {
+    baseUrl: 'https://ui-avatars.com/api/',
+    format: 'svg',
+    rounded: 'true',
+    size: '128'
+  }
 
   async get (name: AvatarPhotoProvider.Params): Promise<AvatarPhotoProvider.Result> {
-    try {
-      return await this.httpClient.get({ url: this.baseUrl, params: { name } })
-    } catch (e) {
-      console.error(e)
-      return null
-    }
+    name = name.replace(' ', '+')
+    const { baseUrl, format, rounded, size } = this.configs
+    return `${baseUrl}?format=${format}&rounded=${rounded}&name=${name}&size=${size}`
   }
 }

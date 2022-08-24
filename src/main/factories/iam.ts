@@ -2,7 +2,6 @@ import { AccountModifier, GetAccount } from '@/iam/domain/protocols'
 import { AccountService, AuthenticationService } from '@/iam/service'
 import { MySQLAccountRepository } from '@/iam/infra/repositories'
 import { BcryptAdapter, JwtAdapter, UiAvatarPhotoProvider } from '@/iam/infra/gateways'
-import { AxiosHttpClient } from '@/shared/infra/gateways'
 import { Handler } from '@/shared/domain/protocols/middleware'
 
 import { EnvConfig } from '@/main/configs/env'
@@ -16,8 +15,7 @@ const makeJwtAdapter = (): JwtAdapter => new JwtAdapter(
   EnvConfig.getInstance().configs.jwt.secret,
   EnvConfig.getInstance().configs.jwt.expiresIn
 )
-const makeHttpClient = (): AxiosHttpClient => new AxiosHttpClient()
-const makeAvatarProvider = (): UiAvatarPhotoProvider => new UiAvatarPhotoProvider(makeHttpClient())
+const makeAvatarProvider = (): UiAvatarPhotoProvider => new UiAvatarPhotoProvider()
 const makeAccountService = (): Service => new AccountService(
   makeAccountRepository(),
   makeBcryptAdapter(),
