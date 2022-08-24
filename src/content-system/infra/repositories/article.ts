@@ -1,17 +1,16 @@
 import { AuthorNotFoundError, GetArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
-import { MySQLArticle } from '@/content-system/infra/repositories'
-import { MySQLAccount } from '@/iam/infra/repositories/entities'
+import { MySQLArticle, MySQLAuthor } from '@/content-system/infra/repositories'
 
 import { Repository } from 'typeorm'
 
 export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository {
   private readonly repo: Repository<MySQLArticle>
-  private readonly authorRepo: Repository<MySQLAccount>
+  private readonly authorRepo: Repository<MySQLAuthor>
 
   constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.repo = connection.getRepository(MySQLArticle)
-    this.authorRepo = connection.getRepository(MySQLAccount)
+    this.authorRepo = connection.getRepository(MySQLAuthor)
   }
 
   async save (params: SaveArticleRepository.Params): Promise<SaveArticleRepository.Result> {

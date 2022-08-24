@@ -1,4 +1,4 @@
-import { MySQLAccount } from '../../../../iam/infra/repositories/entities'
+import { MySQLAuthor } from './MySQLAuthor'
 import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
 
 export type ArticleParams = {
@@ -37,9 +37,9 @@ export class MySQLArticle {
   @PrimaryColumn({ name: 'id_artigo', type: 'varchar', unique: true })
     articleId!: string
 
-  @OneToOne(() => MySQLAccount, { eager: true })
+  @OneToOne(() => MySQLAuthor, { eager: true })
   @JoinColumn({ name: "id_conta" })
-    account!: MySQLAccount
+    account!: MySQLAuthor
 
   @Column({ name: 'id_conta', type: 'varchar' })
     accountId!: string
