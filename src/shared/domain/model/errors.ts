@@ -24,3 +24,12 @@ export class TransactionNotFoundError extends Error {
     this.name = 'TransactionNotFoundError'
   }
 }
+
+export class StorageFileError extends Error {
+  readonly statusCode: number = 500
+
+  constructor () {
+    super('An error happened while persisting file')
+    this.name = 'StorageFileError'
+  }
+}

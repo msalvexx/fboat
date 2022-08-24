@@ -50,3 +50,15 @@ export namespace GetArticle {
 export interface GetArticle {
   get: (idOrSlug: GetArticle.Params) => Promise<GetArticle.Result>
 }
+
+export namespace SaveAttachment {
+  export type Params = {
+    file: Buffer
+    extension: string
+  }
+  export type Result = string
+}
+
+export interface SaveAttachment {
+  save: (file: SaveAttachment.Params) => Promise<SaveAttachment.Result>
+}
