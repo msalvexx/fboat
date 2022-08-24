@@ -14,6 +14,9 @@ test-integration: stop-app start-deps
 	@npm run test:integration
 	@make stop-app
 
+test-coverage: stop-app start-deps
+	@npm run test:coveralls
+
 test-watch:
 	@npm test:watch
 
