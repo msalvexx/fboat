@@ -32,7 +32,7 @@ type App = {
 }
 
 export const buildApp = async (config: any = null): Promise<App> => {
-  const serverInstance = Fastify()
+  const serverInstance = Fastify({ logger: true })
   const connectionManager = await startDbConnection(config)
   await setupHooks(serverInstance)
   await setupPlugins(serverInstance)

@@ -1,6 +1,6 @@
 import { Permission } from '@/iam/domain/model'
 import { Handler } from '@/shared/domain/protocols/middleware'
-import { AccountToAuthorMapperHandler, AuthorizationHandler, MethodHandler, ServiceHandler, TokenCertifierHandler } from '@/shared/handlers'
+import { AccountToAuthorMapperHandler, AuthorizationHandler, MethodHandler, ServiceHandler, TokenCertifierHandler, FileUploadHandler } from '@/shared/handlers'
 
 import { makeAuthenticationService } from '@/main/factories'
 
@@ -26,6 +26,11 @@ export class HandlerBuilder {
 
   authorization (permission: Permission): HandlerBuilder {
     this.addHandler(new AuthorizationHandler(permission))
+    return this
+  }
+
+  fileUpload (): HandlerBuilder {
+    this.addHandler(new FileUploadHandler())
     return this
   }
 

@@ -32,6 +32,9 @@ describe('Save Attachment', () => {
   test('Should return url path where the file was storage', async () => {
     const result = await sut.save({ file: Buffer.from('any'), extension: 'png' })
 
-    expect(result).toEqual(expect.stringMatching(/^localhost\/public\/.*\.png/))
+    expect(result).toEqual({
+      url: expect.stringMatching(/^localhost\/public\/.*\.png/),
+      fileName: expect.stringMatching(/^.*\.png/)
+    })
   })
 })

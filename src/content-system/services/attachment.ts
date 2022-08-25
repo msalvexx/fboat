@@ -6,7 +6,7 @@ import fs from 'fs'
 
 export class AttachmentService implements SaveAttachment {
   constructor (private readonly contentPath: string, private readonly urlPrefixPath: string) {}
-  async save (params: SaveAttachment.Params): Promise<string> {
+  async save (params: SaveAttachment.Params): Promise<SaveAttachment.Result> {
     const fileName = `${newUuid()}.${params.extension}`
     try {
       if (!fs.existsSync(this.contentPath)) fs.mkdirSync(this.contentPath)
@@ -15,6 +15,9 @@ export class AttachmentService implements SaveAttachment {
       console.log(e)
       throw new StorageFileError()
     }
-    return `${this.urlPrefixPath}/${fileName}`
+    return {
+      url: `${this.urlPrefixPath}/${fileName}`,
+      fileName
+    }
   }
 }

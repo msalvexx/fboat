@@ -27,14 +27,15 @@ export class EnvConfig {
     },
     server: {
       host: getenv('SERVER_HOST', 'localhost'),
-      port: getenv.int('SERVER_PORT', 3000)
+      port: getenv.int('SERVER_PORT', 3000),
+      url: `${getenv('SERVER_HOST', 'localhost')}:${getenv.int('SERVER_PORT', 3000)}`
     },
     fileUpload: {
-      limits: { fileSize: 5 * 1024 * 1024 }
+      limits: { fileSize: 2 * 1024 * 1024 }
     },
     staticFile: {
       root: resolve('../../../public'),
-      prefix: '/public/'
+      prefix: '/public'
     }
   }
 

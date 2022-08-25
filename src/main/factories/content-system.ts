@@ -1,6 +1,7 @@
 import { MySQLArticleRepository } from '@/content-system/infra'
-import { ArticleService } from '@/content-system/services'
+import { ArticleService, AttachmentService } from '@/content-system/services'
 import { Handler } from '@/shared/domain/protocols/middleware'
+import { EnvConfig } from '@/main/configs'
 import { HandlerBuilder } from './builder'
 
 const makeArticleRepository = (): MySQLArticleRepository => new MySQLArticleRepository()
@@ -38,4 +39,22 @@ export const makeListArticles = (): Handler => {
   return HandlerBuilder
     .of(repository)
     .service(repository.fetchPage)
+}
+
+const makeAttachmentService = (): AttachmentService => {
+  const configs = EnvConfig.getInstance().configs
+  const server: string = configs.server.url
+  const path: string = configs.staticFile.prefix
+  const staticFileDirectory: string = configs.staticFile.root
+  const prefixPath = `${server}${path}`
+  return new AttachmentService(staticFileDirectory, prefixPath)
+}
+
+export const makeSaveAttachment = (): Handler => {
+  const service = makeAttachmentService()
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .fileUpload()
+    .service(service.save)
 }

@@ -56,7 +56,10 @@ export namespace SaveAttachment {
     file: Buffer
     extension: string
   }
-  export type Result = string
+  export type Result = {
+    url: string
+    fileName: string
+  }
 }
 
 export interface SaveAttachment {
