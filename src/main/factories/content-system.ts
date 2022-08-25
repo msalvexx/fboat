@@ -1,22 +1,22 @@
 import { MySQLArticleRepository } from '@/content-system/infra'
 import { ArticleService, AttachmentService } from '@/content-system/services'
-import { Handler } from '@/shared/domain/protocols/handler'
+import { Controller } from '@/shared/domain/protocols/controller'
 import { EnvConfig } from '@/main/configs'
-import { HandlerBuilder } from './builder'
+import { ControllerBuilder } from './controller-builder'
 
 const makeArticleRepository = (): MySQLArticleRepository => new MySQLArticleRepository()
 const makeArticleService = (): ArticleService => new ArticleService(makeArticleRepository())
 
-export const makeGetArticle = (): Handler => {
+export const makeGetArticle = (): Controller => {
   const service = makeArticleService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .service(service.get)
 }
 
-export const makeCreateArticle = (): Handler => {
+export const makeCreateArticle = (): Controller => {
   const service = makeArticleService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .authorization('CreateArticle')
@@ -25,9 +25,9 @@ export const makeCreateArticle = (): Handler => {
     .service(service.create)
 }
 
-export const makeChangeArticle = (): Handler => {
+export const makeChangeArticle = (): Controller => {
   const service = makeArticleService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .authorization('ChangeArticle')
@@ -35,16 +35,16 @@ export const makeChangeArticle = (): Handler => {
     .service(service.change)
 }
 
-export const makeListArticles = (): Handler => {
+export const makeListArticles = (): Controller => {
   const repository = makeArticleRepository()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(repository)
     .service(repository.fetchPage)
 }
 
-export const makeRemoveArticle = (): Handler => {
+export const makeRemoveArticle = (): Controller => {
   const repository = makeArticleRepository()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(repository)
     .tokenCertifier()
     .authorization('DeleteArticle')
@@ -61,9 +61,9 @@ const makeAttachmentService = (): AttachmentService => {
   return new AttachmentService(staticFileDirectory, prefixPath)
 }
 
-export const makeSaveAttachment = (): Handler => {
+export const makeSaveAttachment = (): Controller => {
   const service = makeAttachmentService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .fileUpload()
@@ -71,9 +71,9 @@ export const makeSaveAttachment = (): Handler => {
     .service(service.save)
 }
 
-export const makeRemoveAttachment = (): Handler => {
+export const makeRemoveAttachment = (): Controller => {
   const service = makeAttachmentService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .onSuccess(204)

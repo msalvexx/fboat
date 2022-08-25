@@ -1,7 +1,7 @@
 import { SaveAttachment } from '@/content-system'
-import { AbstractHandler } from '@/shared/handlers'
+import { AbstractController } from '@/shared/controllers'
 
-export class FileUploadHandler extends AbstractHandler {
+export class FileUploadController extends AbstractController {
   override async handle (params: any): Promise<any> {
     if (params.file !== undefined) {
       const file: SaveAttachment.Params = {

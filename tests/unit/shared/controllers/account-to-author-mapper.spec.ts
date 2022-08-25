@@ -1,15 +1,15 @@
-import { AccountToAuthorMapperHandler } from '@/shared/handlers/acount-author-mapper'
+import { AccountToAuthorMapperController } from '@/shared/controllers/acount-author-mapper'
 
 import { mockAccount } from '@/tests/mocks/iam'
-import { HandlerSpy } from '@/tests/mocks/shared/handler'
+import { ControllerSpy } from '@/../tests/mocks/shared/controller'
 
-describe('Account to Author Mapper Handler', () => {
-  let sut: AccountToAuthorMapperHandler
-  let spy: HandlerSpy
+describe('Account to Author Mapper Controller', () => {
+  let sut: AccountToAuthorMapperController
+  let spy: ControllerSpy
 
   beforeEach(() => {
-    sut = new AccountToAuthorMapperHandler()
-    spy = new HandlerSpy()
+    sut = new AccountToAuthorMapperController()
+    spy = new ControllerSpy()
     sut.setNext(spy)
   })
 

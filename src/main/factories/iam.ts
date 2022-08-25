@@ -2,10 +2,10 @@ import { AccountModifier, GetAccount } from '@/iam/domain/protocols'
 import { AccountService, AuthenticationService } from '@/iam/service'
 import { MySQLAccountRepository } from '@/iam/infra/repositories'
 import { BcryptAdapter, JwtAdapter, UiAvatarPhotoProvider } from '@/iam/infra/gateways'
-import { Handler } from '@/shared/domain/protocols/handler'
+import { Controller } from '@/shared/domain/protocols/controller'
 
 import { EnvConfig } from '@/main/configs/env'
-import { HandlerBuilder } from './builder'
+import { ControllerBuilder } from './controller-builder'
 
 type Service = AccountModifier & GetAccount
 
@@ -28,24 +28,24 @@ export const makeAuthenticationService = (): AuthenticationService => new Authen
   makeBcryptAdapter()
 )
 
-export const makeLogin = (): Handler => {
+export const makeLogin = (): Controller => {
   const service = makeAuthenticationService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .service(service.authenticate)
 }
 
-export const makeGetAccount = (): Handler => {
+export const makeGetAccount = (): Controller => {
   const service = makeAccountService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .service(service.getAccount)
 }
 
-export const makeCreateAccount = (): Handler => {
+export const makeCreateAccount = (): Controller => {
   const service = makeAccountService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .authorization('CreateAccount')
@@ -53,9 +53,9 @@ export const makeCreateAccount = (): Handler => {
     .service(service.createAccount)
 }
 
-export const makeChangeAccount = (): Handler => {
+export const makeChangeAccount = (): Controller => {
   const service = makeAccountService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .authorization('ChangeAccount')
@@ -63,9 +63,9 @@ export const makeChangeAccount = (): Handler => {
     .service(service.changeAccount)
 }
 
-export const makeChangePassword = (): Handler => {
+export const makeChangePassword = (): Controller => {
   const service = makeAccountService()
-  return HandlerBuilder
+  return ControllerBuilder
     .of(service)
     .tokenCertifier()
     .authorization('ChangePassword')

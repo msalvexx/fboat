@@ -1,18 +1,18 @@
 import { UnauthorizedError } from '@/iam/domain/model'
-import { TokenCertifierHandler } from '@/shared/handlers/token-certifier'
+import { TokenCertifierController } from '@/shared/controllers/token-certifier'
 
 import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'
-import { HandlerSpy } from '@/tests/mocks/shared'
+import { ControllerSpy } from '@/tests/mocks/shared'
 
-describe('Authentication Handler', () => {
-  let sut: TokenCertifierHandler
+describe('Authentication Controller', () => {
+  let sut: TokenCertifierController
   let service: AuthenticationCertifierMock
-  let spy: HandlerSpy
+  let spy: ControllerSpy
 
   beforeEach(() => {
     service = new AuthenticationCertifierMock()
-    sut = new TokenCertifierHandler(service)
-    spy = new HandlerSpy()
+    sut = new TokenCertifierController(service)
+    spy = new ControllerSpy()
     sut.setNext(spy)
   })
 

@@ -1,8 +1,8 @@
-import { AbstractHandler } from './handler'
+import { AbstractController } from './controller'
 
 export type MethodHandler = (params: any) => Promise<any>
 
-export class ServiceHandler extends AbstractHandler {
+export class ServiceHandlerController extends AbstractController {
   constructor (
     private readonly method: MethodHandler,
     private readonly instance: Object,

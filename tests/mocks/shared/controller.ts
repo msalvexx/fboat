@@ -1,6 +1,6 @@
-import { AbstractHandler } from '@/shared/handlers'
+import { AbstractController } from '@/shared/controllers'
 
-export class HandlerSpy extends AbstractHandler {
+export class ControllerSpy extends AbstractController {
   params: any
 
   override async handle (params: any): Promise<any> {

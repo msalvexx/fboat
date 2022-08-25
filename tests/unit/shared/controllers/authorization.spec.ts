@@ -1,16 +1,16 @@
 import { ForbiddenError, UnauthorizedError } from '@/iam/domain/model'
-import { AuthorizationHandler } from '@/shared/handlers/authorization'
+import { AuthorizationController } from '@/shared/controllers/authorization'
 
-import { HandlerSpy } from '@/tests/mocks/shared'
+import { ControllerSpy } from '@/tests/mocks/shared'
 import { mockAccount } from '@/tests/mocks/iam'
 
-describe('Authorization Handler', () => {
-  let sut: AuthorizationHandler
-  let spy: HandlerSpy
+describe('Authorization Controller', () => {
+  let sut: AuthorizationController
+  let spy: ControllerSpy
 
   beforeEach(() => {
-    sut = new AuthorizationHandler('ChangeAccount')
-    spy = new HandlerSpy()
+    sut = new AuthorizationController('ChangeAccount')
+    spy = new ControllerSpy()
     sut.setNext(spy)
   })
 

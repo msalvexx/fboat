@@ -1,4 +1,4 @@
-import { Handler as ServiceHandler } from '@/shared/domain/protocols/handler'
+import { Controller as ServiceHandler } from '@/shared/domain/protocols/controller'
 
 import { FastifyRequest, FastifyReply } from 'fastify'
 

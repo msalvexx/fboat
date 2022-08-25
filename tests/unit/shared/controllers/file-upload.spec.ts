@@ -1,14 +1,14 @@
-import { FileUploadHandler } from '@/shared/handlers/file-upload'
+import { FileUploadController } from '@/shared/controllers/file-upload'
 
-import { HandlerSpy } from '@/tests/mocks/shared'
+import { ControllerSpy } from '@/tests/mocks/shared'
 
-describe('File Upload Handler', () => {
-  let sut: FileUploadHandler
-  let spy: HandlerSpy
+describe('File Upload Controller', () => {
+  let sut: FileUploadController
+  let spy: ControllerSpy
 
   beforeEach(() => {
-    sut = new FileUploadHandler()
-    spy = new HandlerSpy()
+    sut = new FileUploadController()
+    spy = new ControllerSpy()
     sut.setNext(spy)
   })
 

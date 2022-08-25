@@ -1,8 +1,8 @@
 import { Author } from '@/content-system/domain'
 import { Account } from '@/iam/domain/model'
-import { AbstractHandler } from './handler'
+import { AbstractController } from './controller'
 
-export class AccountToAuthorMapperHandler extends AbstractHandler {
+export class AccountToAuthorMapperController extends AbstractController {
   override async handle (params: any): Promise<any> {
     if ('loggedAccount' in params && !('author' in params)) {
       const { personalData, accountId }: Account = params.loggedAccount

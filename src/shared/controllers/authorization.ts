@@ -1,7 +1,7 @@
 import { User, Permission, UnauthorizedError, ForbiddenError } from '@/iam/domain/model'
-import { AbstractHandler } from './handler'
+import { AbstractController } from './controller'
 
-export class AuthorizationHandler extends AbstractHandler {
+export class AuthorizationController extends AbstractController {
   constructor (private readonly permission: Permission) {
     super()
   }
