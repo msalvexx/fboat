@@ -1,17 +1,48 @@
-import { Account, GetAccountByAccountId, GetAccountByEmailRepository, SaveAccountRepository } from '@/iam/domain'
+import { Account, GetAccountByAccountId, GetAccountByEmailRepository, ListAccountsRepository, SaveAccountRepository } from '@/iam/domain'
 import { MySQLAccount, MySQLUser } from '@/iam/infra/repositories/entities'
 import { MySQLConnectionManager } from '@/shared/infra'
 
 import { Repository } from 'typeorm'
 import { MySQLRole } from './entities/MySQLRole'
 
-export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository, GetAccountByAccountId {
+export class MySQLAccountRepository implements GetAccountByEmailRepository, SaveAccountRepository, GetAccountByAccountId, ListAccountsRepository {
   private readonly userRepo: Repository<MySQLUser>
   private readonly accountRepo: Repository<MySQLAccount>
 
   constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.userRepo = connection.getRepository(MySQLUser)
     this.accountRepo = connection.getRepository(MySQLAccount)
+  }
+
+  async fetchPage ({ pageSize, pageNumber }: ListAccountsRepository.Params): Promise<ListAccountsRepository.Result> {
+    const size = pageSize ?? ListAccountsRepository.Default.pageSize
+    const number = pageNumber ?? ListAccountsRepository.Default.pageNumber
+    const accounts = await this.accountRepo.find({
+      order: { firstName: 'asc' },
+      relations: { user: true },
+      take: size,
+      skip: number - 1
+    })
+    return {
+      items: accounts.map(x => ({
+        accountId: x.accountId,
+        isActive: x.isActive,
+        creationDate: x.createdAt,
+        personalData: {
+          firstName: x.firstName,
+          lastName: x.lastName,
+          photo: x.photo,
+          occupation: x.occupation,
+          birthDate: x.birthDate
+        },
+        user: {
+          userId: x.user.userId,
+          email: x.user.email,
+          roles: x.user.roles.split(',').filter(x => x !== '').map(x => MySQLRole.getKeyByValue(x))
+        }
+      })),
+      page: { number, size }
+    }
   }
 
   async getByAccountId (accountId: GetAccountByAccountId.Params): Promise<GetAccountByAccountId.Result> {

@@ -28,4 +28,27 @@ export interface GetAccountByAccountId {
   getByAccountId: (accountId: GetAccountByAccountId.Params) => Promise<GetAccountByAccountId.Result>
 }
 
+export namespace ListAccountsRepository {
+  export type Page = { size: number, number: number }
+
+  export type Params = Partial<{
+    pageSize: number
+    pageNumber: number
+  }>
+
+  export type Result = {
+    items: Array<Partial<Account.Params>>
+    page: Page
+  }
+
+  export const Default = {
+    pageNumber: 1,
+    pageSize: 10
+  }
+}
+
+export interface ListAccountsRepository {
+  fetchPage: (params: ListAccountsRepository.Params) => Promise<ListAccountsRepository.Result>
+}
+
 export type AccountRepository = SaveAccountRepository & GetAccountByEmailRepository & GetAccountByAccountId
