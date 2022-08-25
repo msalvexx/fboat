@@ -31,6 +31,8 @@ export const createAvailableRoles = (): Role[] => {
     ...fBoatReaderPermissions,
     ...fBoatControllerPermissions,
     'ChangeRole',
+    'ListAccounts',
+    'GetAccount',
     'CreateAccount',
     'ChangeAccount',
     'ChangePassword',
