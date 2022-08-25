@@ -1,6 +1,6 @@
-import { RemoveAttachment, SaveAttachment } from "@/content-system/domain"
-import { StorageFileError } from "@/shared/domain/model"
-import { newUuid } from "@/shared/infra/gateways"
+import { RemoveAttachment, SaveAttachment } from '@/content-system/domain'
+import { StorageFileError } from '@/shared/domain/model'
+import { newUuid } from '@/shared/infra/gateways'
 
 import { resolve } from 'path'
 import fs from 'fs'
