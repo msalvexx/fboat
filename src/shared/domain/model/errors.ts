@@ -29,7 +29,7 @@ export class StorageFileError extends Error {
   readonly statusCode: number = 500
 
   constructor () {
-    super('An error happened while persisting file')
+    super('An error happened while persisting or removing file')
     this.name = 'StorageFileError'
   }
 }
