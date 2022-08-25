@@ -35,7 +35,7 @@ describe('PUT /account/:id', () => {
         roles: ['FBoatController']
       })
 
-    expect(status).toBe(200)
+    expect(status).toBe(204)
 
     const account = await connectionManager.getRepository(MySQLAccount).findOne({ where: { accountId } })
     expect(account?.firstName).toBe('Paulo')

@@ -1,6 +1,6 @@
 import { MySQLArticleRepository } from '@/content-system/infra'
 import { ArticleService, AttachmentService } from '@/content-system/services'
-import { Handler } from '@/shared/domain/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/handler'
 import { EnvConfig } from '@/main/configs'
 import { HandlerBuilder } from './builder'
 
@@ -21,6 +21,7 @@ export const makeCreateArticle = (): Handler => {
     .tokenCertifier()
     .authorization('CreateArticle')
     .accountToAuthor()
+    .onSuccess(201)
     .service(service.create)
 }
 
@@ -56,6 +57,7 @@ export const makeSaveAttachment = (): Handler => {
     .of(service)
     .tokenCertifier()
     .fileUpload()
+    .onSuccess(201)
     .service(service.save)
 }
 
@@ -64,5 +66,6 @@ export const makeRemoveAttachment = (): Handler => {
   return HandlerBuilder
     .of(service)
     .tokenCertifier()
+    .onSuccess(204)
     .service(service.remove)
 }

@@ -11,6 +11,7 @@ describe('DELETE /attachment/{fileName}', () => {
   let serverInstance: FastifyInstance
   let connectionManager: MySQLConnectionManager
   let token: string
+  const staticFileDirectory = EnvConfig.getInstance().configs.staticFile.root
 
   beforeAll(async () => {
     ({ serverInstance, connectionManager } = await startTestServer())
@@ -19,14 +20,13 @@ describe('DELETE /attachment/{fileName}', () => {
   beforeEach(async () => await refreshDatabase(connectionManager))
   afterAll(async () => await stopTestServer({ serverInstance }))
 
-  test('Should return 200', async () => {
+  test('Should return 204', async () => {
     const uuid: string = '68292c6c-9635-4151-a994-11b09cab83e8'
-    fs.writeFileSync(resolve(EnvConfig.getInstance().configs.staticFile.root, `${uuid}.txt`), Buffer.from('any'))
+    fs.writeFileSync(resolve(staticFileDirectory, `${uuid}.txt`), Buffer.from('any'))
 
-    const { status } = await supertest(serverInstance.server)
+    await supertest(serverInstance.server)
       .delete(`/attachment/${uuid}`)
       .set('Authorization', token)
-
-    expect(status).toBe(200)
+      .expect(204)
   })
 })

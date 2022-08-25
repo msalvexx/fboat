@@ -2,7 +2,7 @@ import { AccountModifier, GetAccount } from '@/iam/domain/protocols'
 import { AccountService, AuthenticationService } from '@/iam/service'
 import { MySQLAccountRepository } from '@/iam/infra/repositories'
 import { BcryptAdapter, JwtAdapter, UiAvatarPhotoProvider } from '@/iam/infra/gateways'
-import { Handler } from '@/shared/domain/protocols/middleware'
+import { Handler } from '@/shared/domain/protocols/handler'
 
 import { EnvConfig } from '@/main/configs/env'
 import { HandlerBuilder } from './builder'
@@ -49,6 +49,7 @@ export const makeCreateAccount = (): Handler => {
     .of(service)
     .tokenCertifier()
     .authorization('CreateAccount')
+    .onSuccess(201)
     .service(service.createAccount)
 }
 
@@ -58,6 +59,7 @@ export const makeChangeAccount = (): Handler => {
     .of(service)
     .tokenCertifier()
     .authorization('ChangeAccount')
+    .onSuccess(204)
     .service(service.changeAccount)
 }
 
@@ -67,5 +69,6 @@ export const makeChangePassword = (): Handler => {
     .of(service)
     .tokenCertifier()
     .authorization('ChangePassword')
+    .onSuccess(204)
     .service(service.changePassword)
 }

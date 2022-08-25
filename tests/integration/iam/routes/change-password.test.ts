@@ -26,6 +26,6 @@ describe('PUT /account/:id/password', () => {
         newPassword: 'newpassword'
       })
 
-    expect(status).toBe(200)
+    expect(status).toBe(204)
   })
 })

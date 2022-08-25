@@ -8,7 +8,6 @@ import supertest from 'supertest'
 describe('GET /article/:id', () => {
   let serverInstance: FastifyInstance
   let connectionManager: MySQLConnectionManager
-  let token: string
 
   beforeAll(async () => ({ serverInstance, connectionManager } = await startTestServer()))
   beforeEach(async () => await refreshDatabase(connectionManager))
@@ -29,7 +28,6 @@ describe('GET /article/:id', () => {
 
     const { status, body } = await supertest(serverInstance.server)
       .get(`/article/${validSlug}`)
-      .set('Authorization', token)
 
     expect(status).toBe(200)
     expect(body.slug).toBe(validSlug)

@@ -28,7 +28,7 @@ describe('POST /article', () => {
         slug: 'new-slug'
       })
 
-    expect(status).toBe(200)
+    expect(status).toBe(201)
     expect(body.title).toBe('An amazing article')
   })
 })

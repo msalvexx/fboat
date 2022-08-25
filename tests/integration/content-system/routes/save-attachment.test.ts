@@ -16,13 +16,13 @@ describe('POST /attachment', () => {
   beforeEach(async () => await refreshDatabase(connectionManager))
   afterAll(async () => await stopTestServer({ serverInstance }))
 
-  test('Should return 200', async () => {
+  test('Should return 201', async () => {
     const { status, body } = await supertest(serverInstance.server)
       .post(`/attachment`)
       .set('Authorization', token)
       .attach('file', Buffer.from('any_buffer'), { filename: 'any_name', contentType: 'image/png' })
 
-    expect(status).toBe(200)
+    expect(status).toBe(201)
     expect(body.url).toBeDefined()
   })
 })
