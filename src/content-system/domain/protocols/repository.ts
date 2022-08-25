@@ -47,3 +47,12 @@ export namespace ListArticlesRepository {
 export interface ListArticlesRepository {
   fetchPage: (params: ListArticlesRepository.Params) => Promise<ListArticlesRepository.Result>
 }
+
+export namespace RemoveArticleRepository {
+  export type Params = { idOrSlug: string }
+  export type Result = void
+}
+
+export interface RemoveArticleRepository {
+  remove: (params: RemoveArticleRepository.Params) => Promise<RemoveArticleRepository.Result>
+}

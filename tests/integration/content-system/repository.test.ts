@@ -6,6 +6,7 @@ import { mockArticle } from '@/tests/mocks/content-system'
 import { refreshDatabase, getConnectionManager } from '@/tests/integration/configs/helpers.integration'
 
 import { Repository } from 'typeorm'
+import { ResourceNotFoundError } from '@/shared/domain/model'
 
 describe('ArticleRepository', () => {
   let sut: MySQLArticleRepository
@@ -143,6 +144,22 @@ describe('ArticleRepository', () => {
       })
 
       expect(articles.items.length).toBe(0)
+    })
+  })
+
+  describe('remove', () => {
+    test('Will return error if article was not found', async () => {
+      const promise = sut.remove({ idOrSlug: 'any-id' })
+
+      await expect(promise).rejects.toThrow(new ResourceNotFoundError())
+    })
+
+    test('Will remove article if id or slug is provided', async () => {
+      const articleId = '6b1eec7e-ac93-4fb6-8924-0327a750b1e6'
+
+      await sut.remove({ idOrSlug: articleId })
+
+      await expect(repository.findOne({ where: { articleId } })).resolves.toBeNull()
     })
   })
 })

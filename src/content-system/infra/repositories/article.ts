@@ -1,16 +1,29 @@
-import { AuthorNotFoundError, GetArticleRepository, ListArticlesRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
+import { AuthorNotFoundError, GetArticleRepository, ListArticlesRepository, RemoveArticleRepository, SaveArticleRepository, SlugAlreadyInUseError } from '@/content-system/domain'
 import { MySQLConnectionManager } from '@/shared/infra'
 import { MySQLArticle, MySQLAuthor } from '@/content-system/infra/repositories'
 
 import { Repository } from 'typeorm'
+import { ResourceNotFoundError } from '@/shared/domain/model'
 
-export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository, ListArticlesRepository {
+export class MySQLArticleRepository implements SaveArticleRepository, GetArticleRepository, ListArticlesRepository, RemoveArticleRepository {
   private readonly repo: Repository<MySQLArticle>
   private readonly authorRepo: Repository<MySQLAuthor>
 
   constructor (readonly connection: MySQLConnectionManager = MySQLConnectionManager.getInstance()) {
     this.repo = connection.getRepository(MySQLArticle)
     this.authorRepo = connection.getRepository(MySQLAuthor)
+  }
+
+  async remove ({ idOrSlug }: RemoveArticleRepository.Params): Promise<void> {
+    const dbArticle = await this.repo.findOne({
+      where: [
+        { articleId: idOrSlug },
+        { slug: idOrSlug }
+      ],
+      relations: { account: true }
+    })
+    if (dbArticle === null) throw new ResourceNotFoundError()
+    await this.repo.remove(dbArticle)
   }
 
   async fetchPage (params: ListArticlesRepository.Params = ListArticlesRepository.Default): Promise<ListArticlesRepository.Result> {
