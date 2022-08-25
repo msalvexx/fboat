@@ -22,7 +22,7 @@ describe('Save Attachment', () => {
 
     expect(result).toEqual({
       url: expect.stringMatching(/^localhost\/public\/.*\.png/),
-      fileName: expect.stringMatching(/^.*\.png/)
+      fileName: expect.stringMatching(/^.*/)
     })
   })
 })

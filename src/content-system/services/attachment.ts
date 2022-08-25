@@ -12,16 +12,16 @@ export class AttachmentService implements SaveAttachment, RemoveAttachment {
   ) {}
 
   async save (params: SaveAttachment.Params): Promise<SaveAttachment.Result> {
-    const fileName = `${newUuid()}.${params.extension}`
+    const fileName = newUuid()
     try {
       if (!fs.existsSync(this.contentPath)) fs.mkdirSync(this.contentPath)
-      fs.writeFileSync(resolve(this.contentPath, fileName), params.file)
+      fs.writeFileSync(resolve(this.contentPath, `${fileName}.${params.extension}`), params.file)
     } catch (e) {
       console.log(e)
       throw new StorageFileError()
     }
     return {
-      url: `${this.urlPrefixPath}/${fileName}`,
+      url: `${this.urlPrefixPath}/${fileName}.${params.extension}`,
       fileName
     }
   }
