@@ -1,16 +1,16 @@
-import { FastifyInstance, RouteOptions } from 'fastify'
-
-import { getArticleSchema, createArticleSchema, changeArticleSchema, listArticleSchema, saveAttachmentSchema, removeAttachmentSchema } from '@/shared/infra/gateways/schemas/content-system'
-
-import { makeChangeArticle, makeCreateArticle, makeGetArticle, makeListArticles, makeRemoveAttachment, makeSaveAttachment } from '@/main/factories'
+import * as Schema from '@/shared/infra/gateways/schemas/content-system'
+import * as Factory from '@/main/factories'
 import adapt from '@/main/adapters/service-handler'
 
-export const contentSystemRoutes = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
-  router.put('/article/:idOrSlug', { schema: changeArticleSchema }, adapt(makeChangeArticle()))
-  router.get('/article/:idOrSlug', { schema: getArticleSchema }, adapt(makeGetArticle()))
-  router.get('/article', { schema: listArticleSchema }, adapt(makeListArticles()))
-  router.post('/article', { schema: createArticleSchema }, adapt(makeCreateArticle()))
+import { FastifyInstance, RouteOptions } from 'fastify'
 
-  router.post('/attachment', { schema: saveAttachmentSchema }, adapt(makeSaveAttachment()))
-  router.delete('/attachment/:fileName', { schema: removeAttachmentSchema }, adapt(makeRemoveAttachment()))
+export const contentSystemRoutes = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
+  router.delete('/article/:idOrSlug', { schema: Schema.deleteArticleSchema }, adapt(Factory.makeRemoveArticle()))
+  router.put('/article/:idOrSlug', { schema: Schema.changeArticleSchema }, adapt(Factory.makeChangeArticle()))
+  router.get('/article/:idOrSlug', { schema: Schema.getArticleSchema }, adapt(Factory.makeGetArticle()))
+  router.get('/article', { schema: Schema.listArticleSchema }, adapt(Factory.makeListArticles()))
+  router.post('/article', { schema: Schema.createArticleSchema }, adapt(Factory.makeCreateArticle()))
+
+  router.post('/attachment', { schema: Schema.saveAttachmentSchema }, adapt(Factory.makeSaveAttachment()))
+  router.delete('/attachment/:fileName', { schema: Schema.removeAttachmentSchema }, adapt(Factory.makeRemoveAttachment()))
 }

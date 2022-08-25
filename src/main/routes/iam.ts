@@ -1,13 +1,13 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { changeAccountSchema, changePasswordSchema, createAccountSchema, getAccountSchema } from '@/shared/infra/gateways/schemas/iam'
+import * as Schema from '@/shared/infra/gateways/schemas/iam'
 
-import { makeChangeAccount, makeChangePassword, makeCreateAccount, makeGetAccount } from '@/main/factories'
+import * as Factory from '@/main/factories'
 import adapt from '@/main/adapters/service-handler'
 
 export const iamRoutes = async (router: FastifyInstance, _: RouteOptions): Promise<void> => {
-  router.post('/account', { schema: createAccountSchema }, adapt(makeCreateAccount()))
-  router.get('/account/:accountId', { schema: getAccountSchema }, adapt(makeGetAccount()))
-  router.put('/account/:accountId', { schema: changeAccountSchema }, adapt(makeChangeAccount()))
-  router.put('/account/:accountId/password', { schema: changePasswordSchema }, adapt(makeChangePassword()))
+  router.post('/account', { schema: Schema.createAccountSchema }, adapt(Factory.makeCreateAccount()))
+  router.get('/account/:accountId', { schema: Schema.getAccountSchema }, adapt(Factory.makeGetAccount()))
+  router.put('/account/:accountId', { schema: Schema.changeAccountSchema }, adapt(Factory.makeChangeAccount()))
+  router.put('/account/:accountId/password', { schema: Schema.changePasswordSchema }, adapt(Factory.makeChangePassword()))
 }

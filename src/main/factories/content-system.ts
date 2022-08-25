@@ -42,6 +42,16 @@ export const makeListArticles = (): Handler => {
     .service(repository.fetchPage)
 }
 
+export const makeRemoveArticle = (): Handler => {
+  const repository = makeArticleRepository()
+  return HandlerBuilder
+    .of(repository)
+    .tokenCertifier()
+    .authorization('DeleteArticle')
+    .onSuccess(204)
+    .service(repository.remove)
+}
+
 const makeAttachmentService = (): AttachmentService => {
   const configs = EnvConfig.getInstance().configs
   const server: string = configs.server.url
