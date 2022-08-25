@@ -72,3 +72,12 @@ export const makeChangePassword = (): Controller => {
     .onSuccess(204)
     .service(service.changePassword)
 }
+
+export const makeListAccounts = (): Controller => {
+  const repository = makeAccountRepository()
+  return ControllerBuilder
+    .of(repository)
+    .tokenCertifier()
+    .authorization('ListAccounts')
+    .service(repository.fetchPage)
+}
