@@ -58,3 +58,11 @@ export const makeSaveAttachment = (): Handler => {
     .fileUpload()
     .service(service.save)
 }
+
+export const makeRemoveAttachment = (): Handler => {
+  const service = makeAttachmentService()
+  return HandlerBuilder
+    .of(service)
+    .tokenCertifier()
+    .service(service.remove)
+}

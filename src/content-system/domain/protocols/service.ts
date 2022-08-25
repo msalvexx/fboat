@@ -66,6 +66,12 @@ export interface SaveAttachment {
   save: (file: SaveAttachment.Params) => Promise<SaveAttachment.Result>
 }
 
+export namespace RemoveAttachment {
+  export type Params = {
+    fileName: string
+  }
+}
+
 export interface RemoveAttachment {
-  remove: (fileName: string) => Promise<void>
+  remove: (params: RemoveAttachment.Params) => Promise<void>
 }

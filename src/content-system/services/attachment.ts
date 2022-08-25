@@ -26,10 +26,11 @@ export class AttachmentService implements SaveAttachment, RemoveAttachment {
     }
   }
 
-  async remove (fileName: string): Promise<void> {
+  async remove ({ fileName }: RemoveAttachment.Params): Promise<void> {
     try {
-      const file = resolve(this.contentPath, fileName)
-      if (fs.existsSync(file)) fs.rmSync(file)
+      fs.readdirSync(this.contentPath)
+        .filter(x => x.includes(fileName))
+        .forEach(file => fs.rmSync(resolve(this.contentPath, file)))
     } catch (e) {
       console.log(e)
       throw new StorageFileError()
