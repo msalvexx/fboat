@@ -22,6 +22,6 @@
     "experimentalDecorators": true,
     "removeComments": true
   },
-  "include": ["src", "tests", "jest.*.ts", "migrations"],
+  "include": ["src", "tests", "jest.*.ts", "migrations", "webpack.*.ts"],
   "exclude": []
 }
