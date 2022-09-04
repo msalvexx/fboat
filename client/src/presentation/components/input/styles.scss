@@ -1,0 +1,31 @@
+@import '../../styles/global.scss';
+
+.input {
+  @extend .uk-form-controls;
+
+  div {
+    @extend [class*='uk-inline'], [class*='uk-width'], .uk-margin-remove-bottom;
+  }
+  
+  input {
+    @extend .uk-input;
+
+    &[data-status="invalid"] {
+      @extend .uk-form-danger;
+    }
+  }
+
+  span {
+    @extend .uk-form-icon, .uk-form-icon-flip;
+
+    &[data-status="invalid"] {
+      @extend .uk-form-danger;
+    }
+  }
+}
+
+.errorAlert {
+  @extend .uk-text-left, .uk-text-danger;
+  
+  padding: 5px 10px;
+}

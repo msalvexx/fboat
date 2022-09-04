@@ -6,7 +6,7 @@
   }
 
   section > div {
-    @extend .uk-container, .uk-width-large;
+    @extend .uk-container, .uk-width-medium;
 
     div {
       @extend .uk-card;
@@ -19,21 +19,9 @@
 }
 
 .form {
-  @extend .uk-padding, .uk-padding-remove-horizontal;
+  @extend .uk-padding, .uk-padding-remove-horizontal, .uk-form-stacked;
 
   div {
-    @extend .uk-margin, .uk-text-center;
-  }
-
-  input {
-    @extend .uk-input, .uk-width-medium;
-  }
-
-  label {
-    @extend .uk-text-small, .uk-text-center;
-  }
-
-  button {
-    @extend .uk-button, .uk-button-primary, .uk-width-medium, .uk-margin-top;
+    @extend .uk-margin, .uk-text-center, .uk-margin-remove-bottom;
   }
 }

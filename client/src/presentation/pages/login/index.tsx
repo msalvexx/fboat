@@ -1,6 +1,9 @@
 import React from 'react'
 import Styles from './styles.scss'
 
+import { Input, SubmitButton, Spinner } from '@/presentation/components'
+import { ForgotPassword } from './components'
+
 const Login: React.FC = () => {
   return (
     <div className={Styles.login}>
@@ -9,18 +12,11 @@ const Login: React.FC = () => {
         <div>
           <h3>Bem vindo de volta!</h3>
           <form className={Styles.form}>
-            <div>
-              <input type="email" name="email" placeholder="e-mail"></input>
-            </div>
-            <div>
-              <input type="password" name="password" placeholder="senha"></input>
-            </div>
-            <div>
-              <button>Entrar</button>
-            </div>
-            <div>
-              <label>Esqueceu a senha? <a href="#">Recupere aqui</a></label>
-            </div>
+            <Input type="email" name="email" placeholder="e-mail"/>
+            <Input type="password" name="password" placeholder="senha"/>
+            <SubmitButton text="Entrar"></SubmitButton>
+            <Spinner/>
+            <ForgotPassword/>
           </form>
         </div>
        </div>

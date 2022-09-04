@@ -19,7 +19,9 @@
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-invalid-void-type": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
+    "react/jsx-uses-vars": "error" ,
+    "react/prop-types": "off"
   }
 }

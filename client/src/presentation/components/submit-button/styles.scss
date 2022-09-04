@@ -1,0 +1,7 @@
+@import '../../styles/global.scss';
+
+.button {
+  button {
+    @extend .uk-button, .uk-button-primary, [class*='uk-width'], .uk-margin-top;
+  }
+}
