@@ -1,0 +1,39 @@
+@import '../../styles/global.scss';
+
+.login {
+  section {
+    @extend .uk-section, .uk-section-muted, .uk-flex, .uk-flex-middle, .uk-animation-fade, .uk-height-viewport;
+  }
+
+  section > div {
+    @extend .uk-container, .uk-width-large;
+
+    div {
+      @extend .uk-card;
+
+      h3 { 
+        @extend .uk-card-title, .uk-text-center;
+      }
+    }
+  }
+}
+
+.form {
+  @extend .uk-padding, .uk-padding-remove-horizontal;
+
+  div {
+    @extend .uk-margin, .uk-text-center;
+  }
+
+  input {
+    @extend .uk-input, .uk-width-medium;
+  }
+
+  label {
+    @extend .uk-text-small, .uk-text-center;
+  }
+
+  button {
+    @extend .uk-button, .uk-button-primary, .uk-width-medium, .uk-margin-top;
+  }
+}

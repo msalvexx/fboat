@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+import Login from '@/presentation/pages/login'
+
 ReactDOM.render(
-  (<div>Hello React</div>),
+  <Login/>,
   document.getElementById('main')
 )
