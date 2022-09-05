@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom'
 import UIkit from 'uikit'
 import Icons from 'uikit/dist/js/uikit-icons'
 
-import Login from '@/presentation/pages/login'
+import { Router } from '@/presentation/components'
 
 UIkit.use(Icons)
 
 ReactDOM.render(
-  <Login/>,
+  <Router/>,
   document.getElementById('main')
 )
