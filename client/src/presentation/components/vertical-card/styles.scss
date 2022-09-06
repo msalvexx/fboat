@@ -1,0 +1,32 @@
+@import '../../styles/global.scss';
+
+.verticalCard {
+  @extend .uk-link-toggle;
+
+  > div {
+    @extend .uk-margin, .uk-card, .uk-card-default, .uk-grid-collapse;
+
+    > div:first-of-type {
+      @extend .uk-cover-container;
+
+      img {
+        height: 16rem;
+        width: auto;
+      }
+    }
+
+    > div:last-of-type {
+      @extend .uk-card-body;
+      
+      align-self: center;
+    }
+
+    h3 {
+      @extend .uk-card-title;
+    }
+
+    a {
+      color: $global-emphasis-color !important;
+    }
+  }
+}

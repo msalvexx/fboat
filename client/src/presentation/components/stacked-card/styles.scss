@@ -1,0 +1,25 @@
+@import '../../styles/global.scss';
+
+.card {
+  @extend .uk-link-toggle;
+
+  > div {
+    @extend .uk-card, .uk-card-default;
+
+    p {
+      color: $global-emphasis-color !important;
+    }
+
+    > div:nth-of-type(2) {
+      @extend .uk-card-body, .uk-padding-small;
+
+      h3 {
+        @extend .uk-card-title;
+        
+        a {
+          color: $global-emphasis-color !important;
+        }
+      }
+    }
+  }
+}

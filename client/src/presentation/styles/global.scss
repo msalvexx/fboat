@@ -1,15 +1,31 @@
 $global-small-font-size: 1rem;
 
+$navbar-text-color: rgb(238, 238, 238) !default;
+$navbar-text-color-emphasis: white !default;
+$navbar-background: #333 !default;
+
+$global-danger-lighten: #ff90a5 !default;
+
 @import 'uikit/src/scss/variables-theme.scss';
 @import 'uikit/src/scss/mixins-theme.scss';
 @import 'uikit/src/scss/uikit-theme.scss';
 
+@import 'uikit/src/scss/uikit.scss';
+
 section {
-  @extend .uk-section;
+  @extend .uk-section, .uk-section-muted;
+
+  border-bottom: solid 1px rgba(200, 200, 200, 0.5);
+}
+
+section:last-of-type {
+  border-bottom: none;
 }
 
 main {
-  min-height: 100vh;
+  @extend .uk-background-muted;
+  height: fit-content;
+  min-height: 82vh;
 }
 
 content {

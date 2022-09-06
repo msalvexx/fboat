@@ -1,12 +1,14 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Input, SubmitButton, Spinner } from '@/presentation/components'
+import { Input, SubmitButton, Spinner, Footer, Header } from '@/presentation/components'
 import { ForgotPassword } from './components'
 
 const Login: React.FC = () => {
   return (
+    <>
     <div className={Styles.login}>
+      <Header/>
       <section>
        <div>
         <div>
@@ -22,6 +24,8 @@ const Login: React.FC = () => {
        </div>
       </section>
     </div>
+    <Footer/>
+    </>
   )
 }
 

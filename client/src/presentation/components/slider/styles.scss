@@ -1,0 +1,52 @@
+@import '../../styles/global.scss';
+
+.slider {
+  @extend content, section;
+  
+  > p {
+    @extend .uk-text-bold;
+  }
+
+  > img {
+    width: auto;
+    height: 25vh;
+  }
+
+  > div {
+    @extend .uk-slider-container-offset, .uk-slider-container, .uk-slider;
+    overflow: initial;
+
+    > div {
+      @extend .uk-position-relative, .uk-visible-toggle;
+      
+      ul {
+        @extend .uk-slider-items, .uk-grid;
+        overflow: hidden;
+        flex-wrap: inherit;
+
+        li {
+          padding-left: 25px;
+          padding-right: 25px;
+          width: 25%;
+        }
+      }
+
+      > a {
+        @extend .uk-position-small, .uk-hidden-hover;
+        z-index: 9999;
+        position: absolute;
+        top: calc(50% - 10px);
+      }
+
+      > a:first-of-type {
+        @extend .uk-position-center-left-out;
+        left: -40px;
+      }
+
+      > a:last-of-type {
+        @extend .uk-position-center-right-out;
+        right: -24px;
+      }
+    }
+  }
+}

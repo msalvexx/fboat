@@ -3,6 +3,7 @@
 .login {
   section {
     @extend .uk-section, .uk-section-muted, .uk-flex, .uk-flex-middle, .uk-animation-fade, .uk-height-viewport;
+    padding: 0;
   }
 
   section > div {

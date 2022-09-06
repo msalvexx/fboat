@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Header, Avatar } from '@/presentation/components'
+import { Header, Avatar, ArticleProps, Slider, Footer } from '@/presentation/components'
 
 const ViewArticle: React.FC = () => {
   const content = `
@@ -37,8 +37,17 @@ const ViewArticle: React.FC = () => {
   const description = 'And the single moment it all changed for me'
   const avatar = 'https://ui-avatars.com/api/?name=John+Doe&rounded=true'
   const author = 'Jhon Doe'
-  const creationDate = '12 de abril 2012'
+  const creationDate = new Date()
   const photo = 'https://miro.medium.com/max/2400/1*KRvhEGacBHexmoaBlbzKpQ.jpeg'
+  const authorRelated: ArticleProps[] = new Array(6).fill({
+    author: 'Jhon Doe',
+    avatar: 'https://ui-avatars.com/api/?name=John+Doe&rounded=true',
+    coverPhoto: 'https://miro.medium.com/max/2400/1*KRvhEGacBHexmoaBlbzKpQ.jpeg',
+    publishDate: new Date(),
+    slug: 'any-slug',
+    title: 'My Awesome Title',
+    description: 'Any description here to write'
+  })
   return (
     <>
       <Header/>
@@ -49,6 +58,8 @@ const ViewArticle: React.FC = () => {
         <img src={photo} />
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </article>
+      <Slider sliderName='Mais conteúdos deste autor' articles={authorRelated}/>
+      <Footer/>
     </>
   )
 }

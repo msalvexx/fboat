@@ -1,0 +1,19 @@
+@import '../../styles/global.scss';
+
+.searchBar {
+  @extend content, section;
+
+  form {
+    @extend .uk-search, .uk-search-default, [class*='uk-width'];
+    
+    background-color: white;
+    
+    span {
+      @extend .uk-search-icon;
+    }
+
+    input {
+     @extend .uk-search-input; 
+    }
+  }
+}

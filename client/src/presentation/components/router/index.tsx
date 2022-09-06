@@ -6,6 +6,7 @@ import '@/presentation/styles/global.scss'
 const Router: React.FC = () => (
   <BrowserRouter>
     <Routes>
+      <Route path='/' element={<Pages.Home/>} />
       <Route path='/login' element={<Pages.Login/>} />
       <Route path='/article/:slugOrId' element={<Pages.ViewArticle />} />
     </Routes>

@@ -10,12 +10,9 @@
       @extend .uk-link-reset;
     }
   }
-
-  div:nth-of-type(2) {
-    padding: 2.5rem 0;
-  }
   
   & > img {
+    padding: 25px 0;
     max-height: 20rem;
     min-width: 100%;
     object-fit: cover;
@@ -26,4 +23,6 @@
       @extend .uk-text-lead;
     }
   }
+
+  padding-bottom: 0;
 }

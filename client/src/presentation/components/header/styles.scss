@@ -1,36 +1,59 @@
 @import '../../styles/global.scss';
 
 .header {
-  @extend .uk-navbar-container, .uk-margin, .uk-navbar;
+  background-color: $navbar-background;
 
-  padding: 0 30rem;
+  nav {
+    @extend .uk-margin, .uk-navbar;
 
-
-  :first-child {
-    @extend .uk-navbar-left;
-    
-    a {
-      @extend .uk-navbar-item, .uk-logo;
-    }
-  }
-
-  :last-child {
-    @extend .uk-navbar-right;
-   
-    ul {
-      @extend .uk-navbar-nav;  
-
+    margin-bottom: 0;
+    padding: 0 30rem;
+    -webkit-box-shadow: 0px 9px 9px -6px #D6D6D6; 
+    box-shadow: 0px 9px 9px -6px #D6D6D6;
+  
+    :first-child {
+      @extend .uk-navbar-left;
+      
       a {
-        @extend .uk-navbar-item;
+        @extend .uk-navbar-item, .uk-logo;
+        color: $navbar-text-color;
+
+        &:hover {
+          color: $navbar-text-color-emphasis;
+        }
       }
     }
+  
+    :last-child {
+      @extend .uk-navbar-right;
+     
+      ul {
+        @extend .uk-navbar-nav;  
+  
+        a {
+          @extend .uk-navbar-item;
+          color: $navbar-text-color;
 
-    div {
-      @extend .uk-navbar-item;  
-    }
-    
-    button {
-      @extend .uk-button, .uk-button-default, .uk-button-secondary;
+          &:hover {
+            color: $navbar-text-color-emphasis;
+          }
+        }
+      }
+  
+      div {
+        @extend .uk-navbar-item;  
+      }
+      
+      button {
+        @extend .uk-button;
+
+        background-color: $navbar-text-color;
+        color: $global-secondary-background;
+
+        &:hover {
+          background-color: $navbar-text-color-emphasis;
+        }
+      }
     }
   }
 }
@@ -68,6 +91,7 @@
 .logout {
   a {
     @extend .uk-text-danger;
+    color: $global-danger-lighten;
 
     &:hover {
       text-decoration: underline !important;

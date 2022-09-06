@@ -1,0 +1,9 @@
+@import '../../styles/global.scss';
+
+.list {
+  @extend content, section;
+
+  > p {
+    @extend .uk-text-bold;
+  }
+}

@@ -4,7 +4,7 @@ import Styles from './styles.scss'
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   avatar: string
   author: string
-  creationDate: string
+  creationDate: Date
 }
 
 const Input: React.FC<Props> = ({ avatar, author, creationDate }: Props) => {
@@ -13,7 +13,7 @@ const Input: React.FC<Props> = ({ avatar, author, creationDate }: Props) => {
       <img src={avatar} width="48" height="48"/>
       <div>
         <p>{author}</p>
-        <p>{creationDate}</p>
+        <p>{creationDate.toLocaleDateString()}</p>
       </div>
     </div>
   )
