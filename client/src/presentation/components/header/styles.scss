@@ -1,0 +1,76 @@
+@import '../../styles/global.scss';
+
+.header {
+  @extend .uk-navbar-container, .uk-margin, .uk-navbar;
+
+  padding: 0 30rem;
+
+
+  :first-child {
+    @extend .uk-navbar-left;
+    
+    a {
+      @extend .uk-navbar-item, .uk-logo;
+    }
+  }
+
+  :last-child {
+    @extend .uk-navbar-right;
+   
+    ul {
+      @extend .uk-navbar-nav;  
+
+      a {
+        @extend .uk-navbar-item;
+      }
+    }
+
+    div {
+      @extend .uk-navbar-item;  
+    }
+    
+    button {
+      @extend .uk-button, .uk-button-default, .uk-button-secondary;
+    }
+  }
+}
+
+@media screen and (max-width: 1580px) {
+  .header {
+    padding: 0 20rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .header {
+    padding: 0 10rem;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .header {
+    padding: 0 5rem;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .header {
+    padding: 0 2.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 0 1rem;
+  }
+}
+
+.logout {
+  a {
+    @extend .uk-text-danger;
+
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+}

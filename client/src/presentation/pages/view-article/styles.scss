@@ -1,0 +1,29 @@
+@import '../../styles/global.scss';
+
+.viewArticle {
+  @extend .uk-article, content;
+
+  h1 {
+    @extend .uk-article-title;
+
+    a {
+      @extend .uk-link-reset;
+    }
+  }
+
+  div:nth-of-type(2) {
+    padding: 2.5rem 0;
+  }
+  
+  & > img {
+    max-height: 20rem;
+    min-width: 100%;
+    object-fit: cover;
+  }
+
+  & > p {
+    &:first-child {
+      @extend .uk-text-lead;
+    }
+  }
+}

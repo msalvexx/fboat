@@ -7,3 +7,41 @@ $global-small-font-size: 1rem;
 section {
   @extend .uk-section;
 }
+
+main {
+  min-height: 100vh;
+}
+
+content {
+  padding: 2.5rem 30rem;
+}
+
+@media screen and (max-width: 1580px) {
+  content {
+    padding: 2.5rem 20rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  content {
+    padding: 2.5rem 10rem;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  content {
+    padding: 2.5rem 5rem;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  content {
+    padding: 2.5rem 2.5rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  content {
+    padding: 2.5rem 1rem;
+  }
+}
