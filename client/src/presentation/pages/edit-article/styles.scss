@@ -1,0 +1,11 @@
+@import '../../styles/global.scss';
+
+.editArticle {
+  @extend content, section;
+
+  height: 100vh;
+
+  fieldset > div[data-content-editor] {
+    padding: 10px 0;
+  }
+}

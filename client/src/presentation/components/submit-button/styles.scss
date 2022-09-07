@@ -2,6 +2,14 @@
 
 .button {
   button {
-    @extend .uk-button, .uk-button-primary, [class*='uk-width'], .uk-margin-top;
+    @extend .uk-button, [class*='uk-width'], .uk-margin-top;
+    
+    &[data-status="primary"] {
+      @extend .uk-button-primary;
+    }
+
+    &[data-status="white"] {
+      @extend .uk-button-white;
+    }
   }
 }

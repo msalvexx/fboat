@@ -1,3 +1,22 @@
 * {
   font-family: 'Cairo', sans-serif;
 }
+
+.rdw-editor-main, .rdw-editor-toolbar, .rdw-option-wrapper, .rdw-dropdown-wrapper {
+  border: 1px solid rgba(118, 118, 118, 0.3) !important;
+  background-color: white !important;
+}
+
+.rdw-editor-main {
+  min-height: 50vh;
+}
+
+.rdw-editor-wrapper {
+  display: inline-block;
+}
+
+.rdw-dropdown-wrapper a,
+.rdw-dropdown-wrapper a:hover {
+  text-decoration: none;
+  color: black;
+}

@@ -32,6 +32,10 @@ content {
   padding: 2.5rem 30rem;
 }
 
+fieldset {
+  @extend .uk-fieldset;
+}
+
 @media screen and (max-width: 1580px) {
   content {
     padding: 2.5rem 20rem;
@@ -59,5 +63,16 @@ content {
 @media screen and (max-width: 480px) {
   content {
     padding: 2.5rem 1rem;
+  }
+}
+
+.uk-button-white, .ukButtonWhite {
+  @extend .uk-button;
+
+  background-color: $navbar-text-color;
+  color: $global-secondary-background;
+
+  &:hover {
+    background-color: $navbar-text-color-emphasis;
   }
 }

@@ -1,8 +1,35 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-const Header: React.FC = () => {
+type Button = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> |
+React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
+
+type Props = {
+  button?: Button
+}
+
+type ItemProps = {
+  text: string
+  href: string
+  className?: string
+}
+
+const item: React.FC<ItemProps> = ({ text, href, className }: ItemProps) => <ul><a className={className} href={href}>{text}</a></ul>
+
+const loggedUserOptions: React.FC<boolean> = (isLogged: boolean) => (
+  isLogged
+    ? <>
+      {item({ text: 'Meus Artigos', href: '#' })}
+      {item({ text: 'Sair', href: '#' })}
+    </>
+    : <></>
+)
+
+const Header: React.FC<Props> = ({ button }: Props) => {
   const isLogged = true
+  const options = loggedUserOptions(isLogged)
+  button = button ?? <a href='/article/new-article'>Criar Artigo</a>
+  if (!isLogged) button = <a href='/login'>Entrar</a>
   return (
     <div className={Styles.header}>
       <nav>
@@ -14,18 +41,8 @@ const Header: React.FC = () => {
             <ul>
               <a href="#">Sobre o projeto</a>
             </ul>
-            { isLogged && <>
-                <ul>
-                  <a href="#">Meus Artigos</a>
-                </ul>
-                <ul className={Styles.logout}>
-                  <a href="#">Sair</a>
-                </ul>
-              </>
-            }
-            <div>
-              {isLogged ? <button>Criar Artigo</button> : <button>Entrar</button>}
-            </div>
+            {options}
+            <div data-action><>{ button }</></div>
           </div>
       </nav>
     </div>

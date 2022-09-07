@@ -44,15 +44,8 @@
         @extend .uk-navbar-item;  
       }
       
-      button {
-        @extend .uk-button;
-
-        background-color: $navbar-text-color;
-        color: $global-secondary-background;
-
-        &:hover {
-          background-color: $navbar-text-color-emphasis;
-        }
+      div[data-action] a {
+        @extend .uk-button-white;
       }
     }
   }

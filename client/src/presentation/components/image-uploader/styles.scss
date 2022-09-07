@@ -1,0 +1,23 @@
+@import '../../styles/global.scss';
+
+.imageUploader {
+  @extend .uk-placeholder, .uk-text-center,;
+  
+  background-color: white;
+
+  span:nth-of-type(2) {
+    @extend .uk-text-middle;
+  }
+
+  div {
+    @extend .uk-form-custom;
+
+    span {
+      @extend .uk-link;
+    }
+  }
+
+  progress {
+    @extend .uk-progress;
+  }
+}
