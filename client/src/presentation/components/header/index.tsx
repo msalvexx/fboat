@@ -6,6 +6,7 @@ React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAncho
 
 type Props = {
   button?: Button
+  buttonHidden?: boolean
 }
 
 type ItemProps = {
@@ -25,7 +26,8 @@ const loggedUserOptions: React.FC<boolean> = (isLogged: boolean) => (
     : <></>
 )
 
-const Header: React.FC<Props> = ({ button }: Props) => {
+const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
+  buttonHidden = buttonHidden ?? false
   const isLogged = true
   const options = loggedUserOptions(isLogged)
   button = button ?? <a href='/article/new-article'>Criar Artigo</a>
@@ -42,7 +44,7 @@ const Header: React.FC<Props> = ({ button }: Props) => {
               <a href="#">Sobre o projeto</a>
             </ul>
             {options}
-            <div data-action><>{ button }</></div>
+            <div hidden={buttonHidden} data-action><>{ button }</></div>
           </div>
       </nav>
     </div>

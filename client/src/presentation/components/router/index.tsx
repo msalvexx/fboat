@@ -10,6 +10,8 @@ const Router: React.FC = () => (
       <Route path='/login' element={<Pages.Login/>} />
       <Route path='/article/:slugOrId' element={<Pages.ViewArticle />} />
       <Route path='/article/new' element={<Pages.EditArticle />} />
+      <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />
+      <Route path='/my-articles' element={<Pages.MyArticles />} />
     </Routes>
   </BrowserRouter>
 )

@@ -1,0 +1,17 @@
+@import '../../../../styles/global.scss';
+
+.actions {
+  @extend .uk-grid-collapse, .uk-flex-right;
+  > div {
+    @extend .uk-width-1-2, .uk-text-right;
+    > div {
+      @extend [class*='uk-inline'];
+      
+      > div {
+        @extend .uk-card, .uk-card-body, .uk-card-default, .uk-text-center, .uk-padding;
+        width: max-content;
+        padding: 24px 48px;
+      }
+    }
+  }
+}

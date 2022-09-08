@@ -1,0 +1,21 @@
+@import '../../styles/global.scss';
+
+.tab {
+  ul:first-of-type {
+    li {
+      display: list-item !important;
+
+      a {
+        @extend .uk-text-capitalize;
+      }
+    }
+
+    li:first-of-type {
+      padding-left: 0;
+    }
+  }
+
+  ul:last-of-type {
+    @extend .uk-switcher, .uk-margin;
+  }
+}

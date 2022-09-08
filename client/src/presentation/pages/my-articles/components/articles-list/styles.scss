@@ -1,0 +1,42 @@
+@import '../../../../styles/global.scss';
+
+.articlesList {
+  > div {
+    @extend .uk-margin, .uk-card, .uk-card-default, .uk-grid-collapse;
+
+    > div:first-of-type {
+      @extend .uk-cover-container;
+
+      img {
+        height: 12.5rem;
+        width: auto;
+      }
+    }
+
+    > div:last-of-type {
+      @extend .uk-card-body, .uk-width-expand;
+      padding: 10px 40px;
+      align-self: center;
+
+      > div {
+        @extend .uk-grid-collapse;
+      }
+      
+      > div > div:first-of-type {
+        @extend .uk-width-4-5;
+      }
+
+      > div > div:last-of-type {
+        @extend .uk-width-1-5;
+      }
+    }
+
+    h3 {
+      @extend .uk-card-title;
+    }
+
+    a {
+      color: $global-emphasis-color !important;
+    }
+  }
+}

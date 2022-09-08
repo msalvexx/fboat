@@ -1,0 +1,20 @@
+@import '../../styles/global.scss';
+
+.myArticles {
+  @extend content, section;
+}
+
+.info {
+  @extend .uk-flex;
+  
+  margin-bottom: 24px;
+
+  > p {
+    @extend .uk-text-lead, .uk-flex-auto;
+    margin-bottom: 0;
+  }
+
+  > a {
+    @extend .uk-button, .uk-button-primary;
+  }
+}

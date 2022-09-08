@@ -4,11 +4,11 @@
   button {
     @extend .uk-button, [class*='uk-width'], .uk-margin-top;
     
-    &[data-status="primary"] {
+    &[data-theme="primary"] {
       @extend .uk-button-primary;
     }
 
-    &[data-status="white"] {
+    &[data-theme="white"] {
       @extend .uk-button-white;
     }
   }
