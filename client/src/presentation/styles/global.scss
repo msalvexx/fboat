@@ -14,6 +14,8 @@ $global-danger-lighten: #ff90a5 !default;
 
 section {
   @extend .uk-section, .uk-section-muted;
+  padding-top: 120px;
+  padding-bottom: 120px;
 
   border-bottom: solid 1px rgba(200, 200, 200, 0.5);
 }
@@ -29,7 +31,7 @@ main {
 }
 
 content {
-  padding: 2.5rem 30rem;
+  padding: 6.5rem 30rem;
 }
 
 fieldset {
