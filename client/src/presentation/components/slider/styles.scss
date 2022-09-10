@@ -22,20 +22,8 @@
         @extend .uk-slider-container, .uk-light;
 
         > ul {
-          @extend .uk-slider-items, .uk-child-width-1-2, .uk-grid;
+          @extend .uk-slider-items, .uk-child-width-1-3, .uk-grid;
           flex-wrap: nowrap;
-  
-          li {
-            width: 25%;
-
-            &:first-of-type {
-              padding-left: 0;
-            }
-
-            &:last-of-type {
-              padding-right: 0;
-            }
-          }
         }
       }
 

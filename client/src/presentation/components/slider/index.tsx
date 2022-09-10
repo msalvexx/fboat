@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Styles from './styles.scss'
 
 import { StackedCard, ArticleProps } from '@/presentation/components'
+import UIkit from 'uikit'
 
 type Props = {
   sliderName: string
@@ -9,13 +10,16 @@ type Props = {
 }
 
 const Slider: React.FC<Props> = ({ sliderName, articles }: Props) => {
+  useEffect(() => {
+    UIkit.slider('[data-slider]')
+  })
   return (
     <section className={Styles.slider}>
       <p>{sliderName}</p>
-      <div data-slider>
+      <div data-slider data-uk-slider data-tabindex="-1">
         <div tabIndex={-1}>
-          <div data-slider-container>
-            <ul>
+          <div className='uk-slider-container uk-light' data-slider-container data-tabindex="-1">
+            <ul className='uk-slider-items uk-child-width-1-3@s uk-grid uk-grid-small'>
               {articles.map((article, index) => <li key={index}>
                 <StackedCard article={article}/>
               </li>)}
