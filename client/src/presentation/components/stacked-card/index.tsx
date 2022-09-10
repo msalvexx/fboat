@@ -25,7 +25,7 @@ const Card: React.FC<CardProps> = ({ article }: CardProps) => {
             <img src={article.coverPhoto} width="1800" height="1200"/>
           </div>
           <div>
-              <h3>{article.title}</h3>
+              <h4>{article.title}</h4>
               <Avatar
                 title={article.author}
                 avatar={article.avatar}

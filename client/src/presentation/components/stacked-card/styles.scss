@@ -6,7 +6,7 @@
   > div {
     @extend .uk-card, .uk-card-default;
 
-    p {
+    p, h4 {
       color: $global-emphasis-color !important;
     }
 

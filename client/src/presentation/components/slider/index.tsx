@@ -12,15 +12,19 @@ const Slider: React.FC<Props> = ({ sliderName, articles }: Props) => {
   return (
     <section className={Styles.slider}>
       <p>{sliderName}</p>
-      <div>
+      <div data-slider>
         <div tabIndex={-1}>
-          <ul>
-            {articles.map((article, index) => <li key={index}>
-              <StackedCard article={article}/>
-            </li>)}
-          </ul>
-          <a data-href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
-          <a data-href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+          <div data-slider-container>
+            <ul>
+              {articles.map((article, index) => <li key={index}>
+                <StackedCard article={article}/>
+              </li>)}
+            </ul>
+          </div>
+          <div data-slider-nav>
+            <a data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+            <a data-uk-slidenav-next data-uk-slider-item="next"></a>
+          </div>
         </div>
       </div>
     </section>
