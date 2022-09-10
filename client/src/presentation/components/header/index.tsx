@@ -20,12 +20,7 @@ type ItemProps = {
 const item: React.FC<ItemProps> = ({ text, href, className }: ItemProps) => <ul><a className={className} href={href}>{text}</a></ul>
 
 const loggedUserOptions: React.FC<boolean> = (isLogged: boolean) => (
-  isLogged
-    ? <>
-      {item({ text: 'Meus Artigos', href: '#' })}
-      {item({ text: 'Sair', href: '#' })}
-    </>
-    : <></>
+  isLogged ? <> {item({ text: 'Meus Artigos', href: '#' })} </> : <></>
 )
 
 const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
