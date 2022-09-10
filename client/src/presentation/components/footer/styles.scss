@@ -6,31 +6,31 @@
   width: 100%;
   bottom: 0;
 
-  nav {
+  footer > nav {
     @extend .uk-navbar;
     padding: 24px 0;
-  }
-
-  div {
-    @extend .uk-navbar-center;
-  }
-
-  ul {
-    @extend .uk-navbar-nav;  
-  }
-
-  a {
-    @extend .uk-navbar-item, .uk-logo, .uk-icon-button, .uk-margin-small-right;
-    color: $global-secondary-background;
-    background-color: $navbar-text-color;
     
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
+    > div {
+      @extend .uk-navbar-center;
 
-    &:hover {
-      background-color: $navbar-text-color-emphasis;
+      > ul {
+        @extend .uk-navbar-nav;  
+
+        > a {
+          @extend .uk-navbar-item, .uk-logo, .uk-icon-button, .uk-margin-small-right;
+          color: $global-secondary-background;
+          background-color: $navbar-text-color;
+          
+          width: 36px;
+          height: 36px;
+          min-width: 36px;
+          min-height: 36px;
+      
+          > &:hover {
+            background-color: $navbar-text-color-emphasis;
+          }
+        }
+      }
     }
   }
 }

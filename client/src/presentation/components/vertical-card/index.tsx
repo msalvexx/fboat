@@ -21,9 +21,9 @@ const VerticalCard: React.FC<CardProps> = ({ article, direction }: CardProps) =>
                 <h3>{article.title}</h3>
                 <p>{article.description}</p>
                 <Avatar
-                  author={article.author}
+                  title={article.author}
                   avatar={article.avatar}
-                  creationDate={article.publishDate}
+                  subtitle={article.publishDate.toLocaleDateString()}
                 />
             </div>
         </div>

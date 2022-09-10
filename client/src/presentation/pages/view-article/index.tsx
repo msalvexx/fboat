@@ -54,7 +54,7 @@ const ViewArticle: React.FC = () => {
       <article className={Styles.viewArticle}>
         <h1>{title}</h1>
         <p>{description}</p>
-        <Avatar avatar={avatar} author={author} creationDate={creationDate} />
+        <Avatar avatar={avatar} title={author} subtitle={creationDate.toLocaleDateString()} />
         <img src={photo} />
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </article>

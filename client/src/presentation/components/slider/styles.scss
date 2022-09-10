@@ -19,12 +19,12 @@
     > div {
       @extend .uk-position-relative, .uk-visible-toggle;
       
-      ul {
+      > ul {
         @extend .uk-slider-items, .uk-grid;
         overflow: hidden;
         flex-wrap: inherit;
 
-        li {
+        > li {
           padding-left: 25px;
           padding-right: 25px;
           width: 25%;

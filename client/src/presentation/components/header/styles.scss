@@ -3,7 +3,7 @@
 .header {
   background-color: $navbar-background;
 
-  nav {
+  > nav {
     @extend .uk-margin, .uk-navbar;
 
     margin-bottom: 0;
@@ -11,10 +11,10 @@
     -webkit-box-shadow: 0px 9px 9px -6px #D6D6D6; 
     box-shadow: 0px 9px 9px -6px #D6D6D6;
   
-    :first-child {
+    > :first-child {
       @extend .uk-navbar-left;
       
-      a {
+      > a {
         @extend .uk-navbar-item, .uk-logo;
         color: $navbar-text-color;
 
@@ -24,27 +24,27 @@
       }
     }
   
-    :last-child {
+    > :last-child {
       @extend .uk-navbar-right;
      
-      ul {
+      > ul {
         @extend .uk-navbar-nav;  
   
-        a {
+        > a {
           @extend .uk-navbar-item;
           color: $navbar-text-color;
 
-          &:hover {
+          > &:hover {
             color: $navbar-text-color-emphasis;
           }
         }
       }
   
-      div {
+      > div {
         @extend .uk-navbar-item;  
       }
       
-      div[data-action] a {
+      > div[data-action] a {
         @extend .uk-button-white;
       }
     }

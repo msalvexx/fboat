@@ -1,6 +1,8 @@
 import React from 'react'
 import Styles from './styles.scss'
 
+import { AccountMenu } from '@/presentation/components'
+
 type Button = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> |
 React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
 
@@ -45,6 +47,7 @@ const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
             </ul>
             {options}
             <div hidden={buttonHidden} data-action><>{ button }</></div>
+            <AccountMenu />
           </div>
       </nav>
     </div>

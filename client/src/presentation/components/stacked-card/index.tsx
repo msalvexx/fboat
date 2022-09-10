@@ -27,9 +27,9 @@ const Card: React.FC<CardProps> = ({ article }: CardProps) => {
           <div>
               <h3>{article.title}</h3>
               <Avatar
-                author={article.author}
+                title={article.author}
                 avatar={article.avatar}
-                creationDate={article.publishDate}
+                subtitle={article.publishDate.toLocaleDateString()}
               />
           </div>
       </div>
