@@ -10,7 +10,7 @@ type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>
 const Input: React.FC<Props> = ({ className, avatar, title, subtitle }: Props) => {
   return (
     <div className={[Styles.avatar, className].join(' ')}>
-      <img src={avatar} width="48" height="48"/>
+      <img className='uk-border-circle' src={avatar} width="48" height="48"/>
       <div>
         <p>{title}</p>
         <p>{subtitle}</p>
