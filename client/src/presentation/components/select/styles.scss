@@ -1,0 +1,28 @@
+@import '../../styles/global.scss';
+
+.select {
+  &[data-status='invalid'] > div {
+    border-color: $text-danger-color;
+  }
+
+  > div {
+    border-radius: 0;
+  }
+
+  > div,
+  > div > div,
+  > div > div > div,
+  > div > div > div > div {
+    margin-top: 0 !important;
+  }
+
+  > div > div > div {
+    text-align: left !important;
+  }
+}
+
+.errorAlert {
+  @extend .uk-text-left, .uk-text-danger;
+  
+  padding: 5px 10px;
+}
