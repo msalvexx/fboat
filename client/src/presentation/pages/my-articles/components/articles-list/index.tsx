@@ -1,8 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { ArticleProps } from '@/presentation/components'
-import { Actions } from '@/presentation/pages/my-articles/components'
+import { ArticleProps, Actions } from '@/presentation/components'
 
 type Props = {
   articles: ArticleProps[]
@@ -24,7 +23,12 @@ const ArticlesList: React.FC<Props> = ({ articles }: Props) => {
                   <p>Publicado em {article.publishDate.toLocaleDateString()}</p>
               </div>
               <div>
-                <Actions slugOrId={article.slug} removeHandler={() => {}}/>
+                <Actions
+                  href={`/article/${article.slug}/edit`}
+                  slugOrId={article.slug}
+                  removeHandler={() => {}}
+                  resourceName='artigo'
+                />
               </div>
             </div>
           </div>

@@ -1,0 +1,23 @@
+@import '../../../styles/global.scss';
+
+.accountsList {
+  [data-card] {
+    @extend .uk-margin, .uk-card, .uk-card-default, .uk-grid-collapse;
+
+    > div {
+      @extend .uk-card-body, .uk-padding-small;
+
+      > div {
+        @extend .uk-grid-collapse;
+      }
+
+      > div > div:first-of-type {
+        @extend .uk-width-5-6;
+      }
+
+      > div > div:last-of-type {
+        @extend .uk-width-1-6;
+      }
+    }
+  }
+}

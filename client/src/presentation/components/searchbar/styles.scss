@@ -3,6 +3,9 @@
 .searchBar {
   @extend content, section;
 
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+
   form {
     @extend .uk-search, .uk-search-default, [class*='uk-width'];
     

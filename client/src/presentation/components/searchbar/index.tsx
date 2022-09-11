@@ -1,12 +1,16 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-const SearchBar: React.FC = () => {
+type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+  placeholder: string
+}
+
+const SearchBar: React.FC<Props> = (props: Props) => {
   return (
     <section className={Styles.searchBar}>
       <form>
         <span data-uk-search-icon></span>
-        <input type="search" placeholder="Pesquise por artigos, autores ou palavras-chave..."/>
+        <input {...props} type="search" placeholder={props.placeholder}/>
       </form>
     </section>
   )

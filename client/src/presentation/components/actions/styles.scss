@@ -1,4 +1,4 @@
-@import '../../../../styles/global.scss';
+@import '../../styles/global.scss';
 
 .actions {
   @extend .uk-grid-collapse, .uk-flex-right;
@@ -13,5 +13,9 @@
         padding: 24px 48px;
       }
     }
+  }
+
+  [data-drop] {
+    position: absolute;
   }
 }
