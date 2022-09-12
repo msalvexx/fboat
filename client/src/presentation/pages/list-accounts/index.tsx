@@ -1,10 +1,11 @@
 import React from 'react'
 import Styles from './styles.scss'
+import GlobalStyle from '@/presentation/styles/global.scss'
 
 import { Footer, Header, SearchBar } from '@/presentation/components'
+import AccountsList from './accounts-list'
 
 import { faker } from '@faker-js/faker'
-import AccountsList from './accounts-list'
 
 const ListAccounts: React.FC = () => {
   const accounts: any[] = []
@@ -16,8 +17,9 @@ const ListAccounts: React.FC = () => {
       email: faker.internet.email()
     }
   }
+  const primaryButton = <a className={GlobalStyle.ukButtonWhite}>Criar conta</a>
   return (<>
-    <Header/>
+    <Header button={primaryButton}/>
     <SearchBar placeholder='Busque pelo nome ou e-mail cadastrado...'/>
     <section className={Styles.listAccounts}>
       <AccountsList accounts={accounts}/>

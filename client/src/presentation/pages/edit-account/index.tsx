@@ -4,10 +4,10 @@ import Styles from './styles.scss'
 import { Header, Footer, SubmitButton } from '@/presentation/components'
 import { Credentials, PersonalData } from './components'
 
-const MyAccount: React.FC = () => {
+const EditAccount: React.FC = () => {
   return (<>
       <Header/>
-      <section className={Styles.myAccount}>
+      <section className={Styles.editAccount}>
         <h3 className='uk-text-lead'>Minha Conta</h3>
         <PersonalData/>
         <Credentials/>
@@ -20,4 +20,4 @@ const MyAccount: React.FC = () => {
   )
 }
 
-export default MyAccount
+export default EditAccount
