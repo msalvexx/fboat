@@ -5,14 +5,18 @@ import { EditorState, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import draftToHtml from 'draftjs-to-html'
 
-import { Footer, Header, ImageUploader, Input } from '@/presentation/components'
+import { ButtonGroup, Footer, Header, ImageUploader, Input } from '@/presentation/components'
 
 import GlobalStyle from '@/presentation/styles/global.scss'
 
 const EditArticle: React.FC = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
   console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())))
-  const component = <button className={GlobalStyle.ukButtonWhite}>Publicar</button>
+  const component = <ButtonGroup
+    className={GlobalStyle.ukButtonWhite}
+    defaultAction={{ handler: () => {}, name: 'Publicar' }}
+    actions={[{ handler: () => {}, name: 'Salvar Rascunho' }]}
+  />
   return <>
     <Header button={component}/>
     <section className={Styles.editArticle}>
