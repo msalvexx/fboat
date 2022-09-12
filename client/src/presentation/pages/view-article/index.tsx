@@ -58,7 +58,7 @@ const ViewArticle: React.FC = () => {
         <img src={photo} />
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </article>
-      <Slider sliderName='Mais conteúdos deste autor' articles={authorRelated}/>
+      <Slider className='uk-padding-remove-top' sliderName='Mais conteúdos deste autor' articles={authorRelated}/>
       <Footer/>
     </>
   )

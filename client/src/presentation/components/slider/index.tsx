@@ -7,14 +7,15 @@ import UIkit from 'uikit'
 type Props = {
   sliderName: string
   articles: ArticleProps[]
+  className?: string
 }
 
-const Slider: React.FC<Props> = ({ sliderName, articles }: Props) => {
+const Slider: React.FC<Props> = ({ className, sliderName, articles }: Props) => {
   useEffect(() => {
     UIkit.slider('[data-slider]')
   })
   return (
-    <section className={Styles.slider}>
+    <section className={[Styles.slider, className].join(' ')}>
       <p>{sliderName}</p>
       <div data-slider data-uk-slider data-tabindex="-1">
         <div tabIndex={-1}>

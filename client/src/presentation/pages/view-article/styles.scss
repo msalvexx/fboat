@@ -2,6 +2,7 @@
 
 .viewArticle {
   @extend .uk-article, content;
+  padding-top: 120px;
 
   h1 {
     @extend .uk-article-title;

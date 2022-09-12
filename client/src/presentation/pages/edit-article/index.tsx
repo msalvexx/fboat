@@ -16,6 +16,7 @@ const EditArticle: React.FC = () => {
   return <>
     <Header button={component}/>
     <section className={Styles.editArticle}>
+      <h3 className='uk-text-lead'>Novo artigo</h3>
       <form>
         <fieldset>
           <Input type="text" name="title" placeholder="Título"/>

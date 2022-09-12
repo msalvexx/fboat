@@ -27,7 +27,7 @@ const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
   buttonHidden = buttonHidden ?? false
   const isLogged = true
   const options = loggedUserOptions(isLogged)
-  button = button ?? <a href='/article/new-article'>Criar Artigo</a>
+  button = button ?? <a href='/article/new'>Criar Artigo</a>
   if (!isLogged) button = <a href='/login'>Entrar</a>
   return (
     <div className={Styles.header}>

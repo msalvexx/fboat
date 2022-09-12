@@ -44,7 +44,7 @@ const AccountMenu: React.FC = () => {
               <li><a href="/my-account">Minha conta</a></li>
               <li data-divider></li>
               <li><a href="/list-accounts">Gerenciar contas cadastradas</a></li>
-              <li><a href="#">Criar nova conta de usuário</a></li>
+              <li><a href="/account/new">Criar nova conta de usuário</a></li>
               <li data-divider></li>
               <li data-logout><a href="#">Sair da minha conta</a></li>
           </ul>

@@ -13,6 +13,7 @@ const Router: React.FC = () => (
       <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />
       <Route path='/my-articles' element={<Pages.MyArticles />} />
       <Route path='/my-account' element={<Pages.MyAccount />} />
+      <Route path='/account/new' element={<Pages.MyAccount />} />
       <Route path='/list-accounts' element={<Pages.ListAccounts />} />
     </Routes>
   </BrowserRouter>
