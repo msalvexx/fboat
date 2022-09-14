@@ -1,5 +1,3 @@
-import { Article } from '@/content-system/domain'
-
 type AuthorParams = {
   accountId: string
   name: string
@@ -16,4 +14,24 @@ export type ArticleParams = {
   slug?: string
 }
 
-export type ArticleResult = Article.Params
+type AuthorResult = {
+  name: string
+  accountId: string
+  occupation: string
+  photo: string | null
+}
+
+export type ArticleResult = {
+  articleId: string
+  creationDate: Date
+  title: string
+  author: AuthorResult
+  summary: string
+  content: string
+  isPublished: boolean
+  isFeatured: boolean
+  coverPhoto: string
+  slug: string
+  publishDate: Date | undefined
+  revisionDate: Date
+}

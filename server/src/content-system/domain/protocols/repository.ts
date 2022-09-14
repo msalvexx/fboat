@@ -1,7 +1,7 @@
-import { Article } from '@/content-system/domain'
+import { ArticleParams, ArticleResult } from '@/content-system/domain/protocols'
 
 export namespace SaveArticleRepository {
-  export type Params = Article
+  export type Params = ArticleResult
   export type Result = Promise<void>
 }
 
@@ -11,7 +11,7 @@ export interface SaveArticleRepository {
 
 export namespace GetArticleRepository {
   export type Params = string
-  export type Result = Article.Params | undefined
+  export type Result = ArticleResult | undefined
 }
 
 export interface GetArticleRepository {
@@ -31,7 +31,7 @@ export namespace ListArticlesRepository {
   }>
 
   export type Result = {
-    items: Array<Partial<Article.Params>>
+    items: Array<Partial<ArticleParams>>
     page: Page
   }
 

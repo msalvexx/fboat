@@ -43,6 +43,7 @@ export class ArticleService implements CreateArticle, GetArticle, UpdateArticle 
       summary: article.summary,
       creationDate: article.creationDate,
       isPublished: article.isPublished,
+      isFeatured: article.isFeatured,
       publishDate: article.publishDate,
       revisionDate: article.revisionDate,
       slug: article.slug
