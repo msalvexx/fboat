@@ -1,0 +1,28 @@
+@import '../../styles/global.scss';
+
+.login {
+  section {
+    @extend .uk-section, .uk-section-muted, .uk-flex, .uk-flex-middle, .uk-animation-fade, .uk-height-viewport;
+    padding: 0;
+  }
+
+  section > div {
+    @extend .uk-container, .uk-width-medium;
+
+    div {
+      @extend .uk-card;
+
+      h3 { 
+        @extend .uk-card-title, .uk-text-center;
+      }
+    }
+  }
+}
+
+.form {
+  @extend .uk-padding, .uk-padding-remove-horizontal, .uk-form-stacked;
+
+  div {
+    @extend .uk-margin, .uk-text-center, .uk-margin-remove-bottom;
+  }
+}
