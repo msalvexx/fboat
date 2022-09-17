@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "tsconfigRootDir": "./",
+    "project": ["./packages/*/tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint"],
+  "root": true
+} 
