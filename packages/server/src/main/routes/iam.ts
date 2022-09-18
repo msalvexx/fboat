@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import * as Schema from '@/server/shared/infra/schemas/iam'
+import * as Schema from '@/core/iam/schemas'
 
 import * as Factory from '@/server/main/factories'
 import adapt from '@/server/main/adapters/service-handler'

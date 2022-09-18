@@ -1,4 +1,4 @@
-import { authorizationHeader } from '@/server/shared/infra/schemas/iam'
+import { authorizationHeader } from '@/core/iam/schemas'
 import { paramsSchema, tags } from './commons'
 
 export const deleteArticleSchema = {

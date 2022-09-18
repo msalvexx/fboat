@@ -1,6 +1,7 @@
-import builder from 'fluent-json-schema'
-import { authorizationHeader } from '@/server/shared/infra/schemas/iam'
+import { authorizationHeader } from '@/core/iam/schemas'
 import { tags } from './commons'
+
+import builder from 'fluent-json-schema'
 
 const params = builder
   .object()

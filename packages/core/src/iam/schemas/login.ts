@@ -1,4 +1,5 @@
 import { emailSchema, tags } from './commons'
+
 import builder from 'fluent-json-schema'
 
 const bodySchema = builder

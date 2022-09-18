@@ -64,7 +64,6 @@
     "fastify": "^4.4.0",
     "fastify-file-upload": "^4.0.0",
     "fastify-plugin": "^4.2.0",
-    "fluent-json-schema": "^3.1.0",
     "getenv": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",

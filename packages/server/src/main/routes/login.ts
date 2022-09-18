@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { loginSchema } from '@/server/shared/infra/schemas/iam'
+import { loginSchema } from '@/core/iam/schemas'
 
 import { makeLogin } from '@/server/main/factories'
 import adapt from '@/server/main/adapters/service-handler'

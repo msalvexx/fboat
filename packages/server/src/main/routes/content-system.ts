@@ -1,4 +1,4 @@
-import * as Schema from '@/server/shared/infra/schemas/content-system'
+import * as Schema from '@/core/content-system/schemas'
 import * as Factory from '@/server/main/factories'
 import adapt from '@/server/main/adapters/service-handler'
 

@@ -23,7 +23,8 @@
   "dependencies": {
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "fluent-json-schema": "^3.1.0"
   },
   "scripts": {
     "build": "npm run clean && tsc -p tsconfig-build.json",
