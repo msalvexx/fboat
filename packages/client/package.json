@@ -64,6 +64,7 @@
     "webpack-dev-server": "^4.10.1"
   },
   "dependencies": {
+    "@fboat/core": "^1.0.0",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "module-alias": "^2.2.2",

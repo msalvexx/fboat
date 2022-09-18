@@ -1,21 +1,15 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react",
-    "incremental": true,
-    "outDir": "./dist",
     "rootDirs": ["src", "tests"],
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "forceConsistentCasingInFileNames": true,
-    "target": "ES2022",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowJs": true,
     "strictNullChecks": true,
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"],
+      "@/core": ["../../core/src"],
+      "@/core/*": ["../../core/src/*"],
+      "@/client/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },
     "noImplicitOverride": true,
@@ -24,5 +18,5 @@
     "removeComments": true
   },
   "include": ["src", "tests", "jest.*.ts", "migrations", "webpack.*.ts"],
-  "exclude": []
+  "references": [{ "path": "../core" }]
 }

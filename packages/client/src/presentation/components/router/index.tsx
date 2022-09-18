@@ -1,7 +1,7 @@
-import * as Pages from '@/presentation/pages'
+import * as Pages from '@/client/presentation/pages'
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import '@/presentation/styles/global.scss'
+import '@/client/presentation/styles/global.scss'
 
 const Router: React.FC = () => (
   <BrowserRouter>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Header, Footer, SubmitButton } from '@/presentation/components'
+import { Header, Footer, SubmitButton } from '@/client/presentation/components'
 import { Credentials, PersonalData } from './components'
 
 const EditAccount: React.FC = () => {

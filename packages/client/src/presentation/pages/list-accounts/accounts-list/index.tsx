@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Avatar, Actions } from '@/presentation/components'
+import { Avatar, Actions } from '@/client/presentation/components'
 
 export type AccountProps = {
   accountId: string

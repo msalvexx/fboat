@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ArticleProps, Header, SearchBar, Slider, List, Footer } from '@/presentation/components'
+import { ArticleProps, Header, SearchBar, Slider, List, Footer } from '@/client/presentation/components'
 
 import { faker } from '@faker-js/faker'
 

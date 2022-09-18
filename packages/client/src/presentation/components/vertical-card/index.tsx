@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { ArticleProps, Avatar } from '@/presentation/components'
+import { ArticleProps, Avatar } from '@/client/presentation/components'
 
 type CardProps = {
   article: ArticleProps

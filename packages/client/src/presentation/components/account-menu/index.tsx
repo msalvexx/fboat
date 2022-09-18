@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useState } from 'react'
 import Styles from './styles.scss'
 
-import { Avatar } from '@/presentation/components'
+import { Avatar } from '@/client/presentation/components'
 
 const useOutsideClick = (callback: () => void): MutableRefObject<any> => {
   const ref = React.useRef<any>()

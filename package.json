@@ -2,7 +2,7 @@
   "workspaces": [
     "packages/core",
     "packages/server",
-    "packages\\client"
+    "packages/client"
   ],
   "devDependencies": {
     "@types/rimraf": "^3.0.2",

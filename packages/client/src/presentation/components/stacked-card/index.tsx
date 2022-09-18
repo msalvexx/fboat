@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Avatar } from '@/presentation/components'
+import { Avatar } from '@/client/presentation/components'
 
 export type ArticleProps = {
   author: string

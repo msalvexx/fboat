@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Footer, Header, Tabs } from '@/presentation/components'
+import { Footer, Header, Tabs } from '@/client/presentation/components'
 import { ArticlesList } from './components'
 
 const MyArticles: React.FC = () => {

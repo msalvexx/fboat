@@ -18,6 +18,5 @@
     "removeComments": true
   },
   "include": ["src", "tests", "jest.*.ts", "migrations"],
-  "exclude": [],
   "references": [{ "path": "../core" }]
 }

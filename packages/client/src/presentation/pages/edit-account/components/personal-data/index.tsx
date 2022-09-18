@@ -1,4 +1,4 @@
-import { Input } from '@/presentation/components'
+import { Input } from '@/client/presentation/components'
 import React from 'react'
 import Styles from './styles.scss'
 

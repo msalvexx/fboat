@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Styles from './styles.scss'
 
-import { StackedCard, ArticleProps } from '@/presentation/components'
+import { StackedCard, ArticleProps } from '@/client/presentation/components'
 import UIkit from 'uikit'
 
 type Props = {

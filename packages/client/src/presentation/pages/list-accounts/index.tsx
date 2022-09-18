@@ -1,8 +1,8 @@
 import React from 'react'
 import Styles from './styles.scss'
-import GlobalStyle from '@/presentation/styles/global.scss'
+import GlobalStyle from '@/client/presentation/styles/global.scss'
 
-import { Footer, Header, SearchBar } from '@/presentation/components'
+import { Footer, Header, SearchBar } from '@/client/presentation/components'
 import AccountsList from './accounts-list'
 
 import { faker } from '@faker-js/faker'

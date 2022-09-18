@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Input, SubmitButton, Spinner, Footer, Header } from '@/presentation/components'
+import { Input, SubmitButton, Spinner, Footer, Header } from '@/client/presentation/components'
 import { ForgotPassword } from './components'
 
 const Login: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { ArticleProps, Actions } from '@/presentation/components'
+import { ArticleProps, Actions } from '@/client/presentation/components'
 
 type Props = {
   articles: ArticleProps[]

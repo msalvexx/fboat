@@ -1,7 +1,7 @@
 import React from 'react'
 import Styles from './styles.scss'
 
-import { Header, Avatar, ArticleProps, Slider, Footer } from '@/presentation/components'
+import { Header, Avatar, ArticleProps, Slider, Footer } from '@/client/presentation/components'
 
 const ViewArticle: React.FC = () => {
   const content = `
