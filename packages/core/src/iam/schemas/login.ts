@@ -2,7 +2,7 @@ import { emailSchema, tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const loginBodySchema = builder
   .object()
   .description('Login object')
   .prop('email', emailSchema)
@@ -11,6 +11,6 @@ const bodySchema = builder
 
 export const loginSchema = {
   description: 'Login schema',
-  body: bodySchema,
+  body: loginBodySchema,
   tags
 }

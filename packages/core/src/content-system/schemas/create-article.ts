@@ -3,7 +3,7 @@ import { tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const createArticle = builder
   .object()
   .description('article body')
   .prop('title', builder.string().required())
@@ -14,7 +14,7 @@ const bodySchema = builder
 
 export const createArticleSchema = {
   description: 'Get article schema',
-  body: bodySchema,
+  body: createArticle,
   headers: authorizationHeader,
   tags
 }

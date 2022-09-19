@@ -3,7 +3,7 @@ import { emailSchema, rolesSchema, tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const createAccount = builder
   .object()
   .description('Create account object')
   .definition('personalData', builder.object()
@@ -23,6 +23,6 @@ const bodySchema = builder
 export const createAccountSchema = {
   description: 'Create account schema',
   headers: authorizationHeader,
-  body: bodySchema,
+  body: createAccount,
   tags
 }

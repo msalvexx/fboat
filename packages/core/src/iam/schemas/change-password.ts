@@ -3,7 +3,7 @@ import { accountParamsSchema, defaultResponseSchema, tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const changePassword = builder
   .object()
   .description('Change password object')
   .prop('newPassword', builder.string().required())
@@ -12,7 +12,7 @@ export const changePasswordSchema = {
   description: 'Change password schema',
   params: accountParamsSchema,
   headers: authorizationHeader,
-  body: bodySchema,
+  body: changePassword,
   response: defaultResponseSchema,
   tags
 }

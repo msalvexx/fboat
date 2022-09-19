@@ -3,7 +3,7 @@ import { accountParamsSchema, defaultResponseSchema, rolesSchema, tags } from '.
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const changeAccount = builder
   .object()
   .description('Change account object')
   .prop('roles', rolesSchema)
@@ -22,7 +22,7 @@ export const changeAccountSchema = {
   description: 'Change account schema',
   params: accountParamsSchema,
   headers: authorizationHeader,
-  body: bodySchema,
+  body: changeAccount,
   response: defaultResponseSchema,
   tags
 }

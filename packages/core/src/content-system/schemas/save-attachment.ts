@@ -3,7 +3,7 @@ import { tags } from './commons'
 
 import builder from 'fluent-json-schema'
 
-const bodySchema = builder
+export const attachment = builder
   .object()
   .description('Attachment body')
   .prop('file', builder
@@ -15,7 +15,7 @@ const bodySchema = builder
 
 export const saveAttachmentSchema = {
   description: 'Save attachment schema',
-  body: bodySchema,
+  body: attachment,
   headers: authorizationHeader,
   tags
 }
