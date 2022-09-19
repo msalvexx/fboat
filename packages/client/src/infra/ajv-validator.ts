@@ -2,6 +2,13 @@ import { Validation } from '@/client/presentation/protocols'
 
 import { ValidateFunction } from 'ajv'
 
+export const customErrorMessages = {
+  required: 'Este é um campo obrigatório',
+  properties: {
+    email: 'Este e-mail é inválido'
+  }
+}
+
 export const validate: Validation = (ajvValidate: ValidateFunction<unknown>) => fields => {
   ajvValidate(fields)
   if (!ajvValidate.errors) return undefined
