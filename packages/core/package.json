@@ -3,7 +3,30 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/src",
-  "types": "dist/src",
+  "types": "index.d.ts",
+  "exports": {
+    "./content-system/schemas": "./dist/src/content-system/schemas/index.js",
+    "./content-system/protocols": "./dist/src/content-system/protocols/index.js",
+    "./content-system/models": "./dist/src/content-system/models/index.js",
+    "./content-system": "./dist/src/content-system/index.js",
+    "./content-system/*": "./dist/src/content-system/*.js",
+    "./iam/schemas": "./dist/src/iam/schemas/index.js",
+    "./iam/protocols": "./dist/src/iam/protocols/index.js",
+    "./iam/models": "./dist/src/iam/models/index.js",
+    "./iam": "./dist/src/iam/index.js",
+    "./iam/*": "./dist/src/iam/*.js",
+    "./shared/gateways": "./dist/src/shared/gateways/index.js",
+    "./shared/models": "./dist/src/shared/models/index.js",
+    "./shared": "./dist/src/shared/index.js",
+    "./shared/*": "./dist/src/shared/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "content-system/*": ["dist/src/content-system/*"],
+      "iam/*": ["dist/src/iam/*"],
+      "shared/*": ["dist/src/shared/*"]
+    }
+  },
   "private": true,
   "devDependencies": {
     "@types/jest": "^28.1.6",

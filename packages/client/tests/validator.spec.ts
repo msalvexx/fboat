@@ -1,6 +1,6 @@
 import { setupValidator as sut } from '@/client/main/factories'
 
-import { loginBodySchema } from '@/core/iam/schemas'
+import { loginBodySchema } from '@fboat/core/src/iam/schemas'
 
 describe('Validator', () => {
   test('Will return error case field required field is not provided', () => {

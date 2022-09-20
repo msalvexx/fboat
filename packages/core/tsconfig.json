@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDirs": ["src", "tests"],
     "outDir": "dist",
+    "declarationDir": "dist",
     "baseUrl": "src",
     "paths": {
       "@/core/*": ["*"],

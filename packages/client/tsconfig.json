@@ -3,12 +3,12 @@
   "compilerOptions": {
     "jsx": "react",
     "rootDirs": ["src", "tests"],
+    "outDir": "dist",
+    "declarationDir": "dist",
     "allowJs": true,
     "strictNullChecks": true,
     "baseUrl": "src",
     "paths": {
-      "@/core": ["../../core/src"],
-      "@/core/*": ["../../core/src/*"],
       "@/client/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import React from 'react'
 import { setupValidator } from '@/client/main/factories'
-import * as Schemas from '@/core/iam/schemas'
+import * as Schemas from '@fboat/core/iam/schemas'
 
 const Router: React.FC = () => (
   <RecoilRoot>
