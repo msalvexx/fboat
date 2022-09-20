@@ -1,12 +1,13 @@
 export default {
   roots: ['<rootDir>/tests'],
-  testMatch: ['**/*.spec.ts'],
+  testMatch: ['**/*.spec.{ts,tsx}'],
   collectCoverageFrom: [
     '<rootDir>/src/**/*.{ts,tsx}',
     '!<rootDir>/src/main/**',
     '!<rootDir>/src/**/index.ts',
     '!**/*.d.ts'
   ],
+  setupFilesAfterEnv: ['<rootDir>/src/main/config/jest-setup.ts'],
   coverageDirectory: 'coverage',
   coverageProvider: 'babel',
   testEnvironment: 'jsdom',
@@ -14,9 +15,9 @@ export default {
     '.+\\.(ts|tsx)$': 'ts-jest'
   },
   moduleNameMapper: {
+    '\\.scss$': 'identity-obj-proxy',
     '@/client(.*)': '<rootDir>/src$1',
     '@/tests(.*)': '<rootDir>/tests$1',
-    '@/core(.*)': '<rootDir>/../core/dist/src$1',
-    '\\.scss$': 'identity-obj-proxy'
+    '@/core(.*)': '<rootDir>/../core/dist/src$1'
   }
 }

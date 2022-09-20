@@ -3,8 +3,10 @@ import Styles from './styles.scss'
 
 import { Header, Footer, SubmitButton } from '@/client/presentation/components'
 import { Credentials, PersonalData } from './components'
+import { editAccountState } from './components/atom'
 
 const EditAccount: React.FC = () => {
+  const [state] = useRecoil(editAccountState)
   return (<>
       <Header/>
       <section className={Styles.editAccount}>
@@ -12,7 +14,7 @@ const EditAccount: React.FC = () => {
         <PersonalData/>
         <Credentials/>
         <div data-uk-grid className='uk-flex-right'>
-          <SubmitButton text='Salvar'/>
+          <SubmitButton state={state} text='Salvar'/>
         </div>
       </section>
       <Footer/>
@@ -21,3 +23,7 @@ const EditAccount: React.FC = () => {
 }
 
 export default EditAccount
+function useRecoil(editAccountState: any): [any] {
+  throw new Error('Function not implemented.')
+}
+

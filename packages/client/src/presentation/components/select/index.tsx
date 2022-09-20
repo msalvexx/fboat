@@ -37,13 +37,13 @@ const Select: React.FC<Props> = (props: Props) => {
     color: dangerColor,
     boxShadow: 'none'
   }
-  const defaultInvalidStyle = (base: any, _): any => ({
+  const defaultInvalidStyle = (base: any): any => ({
     ...base,
     ...config,
     '&:hover': config,
     '&:focus': config
   })
-  const multiValueInvalidStyle = (base: any, _): any => ({
+  const multiValueInvalidStyle = (base: any): any => ({
     ...base,
     ...config,
     '&:hover': config,
