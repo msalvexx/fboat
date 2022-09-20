@@ -2,13 +2,15 @@ import * as Pages from '@/client/presentation/pages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import React from 'react'
+import { setupValidator } from '@/client/main/factories'
+import * as Schemas from '@/core/iam/schemas'
 
 const Router: React.FC = () => (
   <RecoilRoot>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Pages.Home/>} />
-        <Route path='/login' element={<Pages.Login/>} />
+        <Route path='/login' element={<Pages.Login validator={setupValidator(Schemas.loginBodySchema)}/>} />
         <Route path='/article/:slugOrId' element={<Pages.ViewArticle />} />
         <Route path='/article/new' element={<Pages.EditArticle />} />
         <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />

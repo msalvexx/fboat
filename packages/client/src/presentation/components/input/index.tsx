@@ -9,6 +9,7 @@ type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>
 
 const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
   const inputRef = createRef<HTMLInputElement>()
+  const wasSubmitted = state.wasSubmitted
   const error = state[`${props.name}Error`]
   return (
     <>
@@ -17,17 +18,17 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
           <input
             {...props}
             ref={inputRef}
-            data-status={error ? 'invalid' : 'valid'}
+            data-status={error && wasSubmitted ? 'invalid' : 'valid'}
             data-testid={props.name}
             readOnly
             onFocus={e => { e.target.readOnly = false }}
             onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
           />
           {props.icon && <span data-uk-icon={`icon: ${props.icon}`}></span>}
-          {error && <span data-status={error ? 'invalid' : 'valid'} data-uk-icon='icon: close'></span>}
+          {error && wasSubmitted && <span data-status={error && wasSubmitted ? 'invalid' : 'valid'} data-uk-icon='icon: close'></span>}
         </div>
       </div>
-      {error && <label data-testid={`${props.name}-alert`} className={Styles.errorAlert}>{error}</label>}
+      {error && wasSubmitted && <label data-testid={`${props.name}-alert`} className={Styles.errorAlert}>{error}</label>}
     </>
   )
 }

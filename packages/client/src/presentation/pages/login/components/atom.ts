@@ -5,12 +5,11 @@ export const loginState = atom({
   default: {
     isLoading: false,
     isFormInvalid: true,
+    wasSubmitted: false,
     email: '',
-    emailDirty: '',
     emailError: '',
     password: '',
     passwordError: '',
-    passwordDirty: '',
     mainError: ''
   }
 })
