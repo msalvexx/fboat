@@ -45,7 +45,7 @@ const Login: React.FC<Props> = ({ validator }) => {
         <div>
           <h3>Bem vindo de volta!</h3>
           <form data-testid='form' className={Styles.form} onSubmit={handleSubmit}>
-            <Input state={state} setState={setState} type='email' name='email' placeholder='e-mail'/>
+            <Input state={state} setState={setState} type='text' name='email' placeholder='e-mail'/>
             <Input state={state} setState={setState} type='password' name='password' placeholder='senha'/>
             <SubmitButton text='Entrar'></SubmitButton>
             <FormStatus state={state}/>
