@@ -27,13 +27,10 @@ const Login: React.FC<Props> = ({ validator }) => {
   const validate = (): void => {
     const { email, password } = state
     const errors = validator({ email, password })
-    if (!errors) {
-      setState(old => ({ ...old, emailError: '' }))
-      setState(old => ({ ...old, passwordError: '' }))
-    } else {
-      errors.forEach(({ field, message }) => setState(old => ({ ...old, [`${field}Error`]: message })))
-    }
-    setState(old => ({ ...old, isFormInvalid: !!old.emailError || !!old.passwordError }))
+    const newState: any = { emailError: '', passwordError: '' }
+    errors?.forEach(({ field, message }) => (newState[`${field}Error`] = message))
+    const isFormInvalid = !!newState.emailError || !!newState.passwordError
+    setState(old => ({ ...old, ...newState, isFormInvalid }))
   }
 
   return (
