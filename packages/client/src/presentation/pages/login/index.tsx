@@ -6,22 +6,26 @@ import { Input, SubmitButton, FormStatus, Footer, Header } from '@/client/presen
 import { ForgotPassword } from './components'
 import { loginState } from './components/atom'
 import { useRecoilState } from 'recoil'
+import { AuthenticateUser } from '@fboat/core/iam/protocols'
 
 type Props = {
   validator: Validator
+  service?: AuthenticateUser
 }
 
-const Login: React.FC<Props> = ({ validator }) => {
+const Login: React.FC<Props> = ({ validator, service }) => {
   const [state, setState] = useRecoilState(loginState)
 
   useEffect(() => validate(), [state.email])
   useEffect(() => validate(), [state.password])
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
     setState({ ...state, wasSubmitted: true })
     if (state.isFormInvalid || state.isLoading) return
     setState({ ...state, isLoading: true })
+    const { email, password } = state
+    await service?.authenticate({ email, password })
   }
 
   const validate = (): void => {

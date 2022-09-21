@@ -2,6 +2,7 @@ import React from 'react'
 import { fireEvent, render as reactRender, screen, waitFor } from '@testing-library/react'
 import { RecoilRoot } from 'recoil'
 import { faker } from '@faker-js/faker'
+import { AuthenticateUserSpy } from '@/tests/mocks'
 
 import { Login } from '@/client/presentation/pages'
 import { FieldError, Validator } from '@/client/presentation/protocols'
@@ -15,7 +16,15 @@ const render = (Page: React.FC): void => {
 }
 const setupMockValidator = (errors: FieldError[] | undefined = undefined): Validator => () => errors
 
-const makeSut = (errors: FieldError[] | undefined = undefined): void => render(() => <Login validator={setupMockValidator(errors)}/>)
+type SutTypes = {
+  service: AuthenticateUserSpy
+}
+
+const makeSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
+  const service = new AuthenticateUserSpy()
+  render(() => <Login service={service} validator={setupMockValidator(errors)}/>)
+  return { service }
+}
 
 export const testStatusForField = (fieldName: string, validationError = ''): void => {
   const field = screen.getByTestId(fieldName)
@@ -34,15 +43,17 @@ const simulateSubmit = async (): Promise<void> => {
   await waitFor(() => form)
 }
 
-export const populateField = (fieldName: string, value = faker.random.word()): void => {
+export const populateField = (fieldName: string, value = faker.random.word()): string => {
   const input = screen.getByTestId(fieldName)
   fireEvent.input(input, { target: { value } })
+  return value
 }
 
-const simulateValidSubmit = async (): Promise<void> => {
-  populateField('email')
-  populateField('password')
+const simulateValidSubmit = async (): Promise<{ email: string, password: string }> => {
+  const email = populateField('email')
+  const password = populateField('password')
   await simulateSubmit()
+  return { email, password }
 }
 
 describe('Login Page', () => {
@@ -80,5 +91,13 @@ describe('Login Page', () => {
     await simulateValidSubmit()
 
     expect(screen.getByTestId('spinner')).toBeDefined()
+  })
+
+  test('Should call authentication service with correct values', async () => {
+    const { service } = makeSut()
+
+    const { email, password } = await simulateValidSubmit()
+
+    expect(service.params).toStrictEqual({ email, password })
   })
 })
