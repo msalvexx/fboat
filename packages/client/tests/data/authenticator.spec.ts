@@ -35,7 +35,10 @@ class HttpClientSpy implements HttpClient {
   body!: any
   method!: HttpMethod
   response: HttpResponse = {
-    statusCode: HttpStatusCode.ok
+    statusCode: HttpStatusCode.ok,
+    body: {
+      token: faker.datatype.uuid()
+    }
   }
 
   async request (data: HttpRequest): Promise<HttpResponse<any>> {
@@ -60,7 +63,7 @@ class Authentication implements AuthenticateUser {
     })
     switch (httpResponse.statusCode) {
       case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
-      case HttpStatusCode.ok: return null as any
+      case HttpStatusCode.ok: return httpResponse.body
       default: throw new UnexpectedError()
     }
   }
@@ -110,7 +113,7 @@ describe('Authenticate User', () => {
     expect(httpClient.url).toBe(url)
   })
 
-  test('Should throw UnauthorizedError when status code 401', async () => {
+  test('Should throw UnauthorizedError when http status code 401', async () => {
     const { sut, httpClient } = makeSut()
     httpClient.response = { statusCode: HttpStatusCode.unauthorized }
 
@@ -119,7 +122,7 @@ describe('Authenticate User', () => {
     await expect(promise).rejects.toThrowError(new InvalidCredentialsError())
   })
 
-  test('Should throw UnauthorizedError when status code not 200', async () => {
+  test('Should throw UnauthorizedError when http status code not 200', async () => {
     const { sut, httpClient } = makeSut()
     const invalidHttpResponses = [
       HttpStatusCode.serverError,
@@ -133,5 +136,13 @@ describe('Authenticate User', () => {
     const promise = sut.authenticate(mockParams())
 
     await expect(promise).rejects.toThrowError(new UnexpectedError())
+  })
+
+  test('Should will return body in case of http status code 200', async () => {
+    const { sut, httpClient } = makeSut()
+
+    const response = await sut.authenticate(mockParams())
+
+    expect(response).toStrictEqual(httpClient.response.body)
   })
 })
