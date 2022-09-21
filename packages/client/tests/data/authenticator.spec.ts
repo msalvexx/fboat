@@ -30,12 +30,15 @@ class HttpClientSpy implements HttpClient {
   url!: string
   body!: any
   method!: HttpMethod
+  response: HttpResponse = {
+    statusCode: HttpStatusCode.ok
+  }
 
   async request (data: HttpRequest): Promise<HttpResponse<any>> {
     this.body = data.body
     this.method = data.method
     this.url = data.url
-    return null as any
+    return this.response
   }
 }
 
@@ -46,12 +49,22 @@ class Authentication implements AuthenticateUser {
   ) {}
 
   async authenticate (params: AuthenticateUser.Params): Promise<AuthenticateUser.Result> {
-    await this.httpClient.request({
+    const httpResponse = await this.httpClient.request({
       method: 'post',
       url: this.url,
       body: params
     })
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
+    }
     return null as any
+  }
+}
+
+export class InvalidCredentialsError extends Error {
+  constructor () {
+    super('Credenciais inválidas')
+    this.name = 'InvalidCredentialsError'
   }
 }
 
@@ -83,5 +96,14 @@ describe('Authenticate User', () => {
     expect(httpClient.body).toStrictEqual(params)
     expect(httpClient.method).toBe('post')
     expect(httpClient.url).toBe(url)
+  })
+
+  test('Should throw UnauthorizedError when status code 401', async () => {
+    const { sut, httpClient } = makeSut()
+    httpClient.response = { statusCode: HttpStatusCode.unauthorized }
+
+    const promise = sut.authenticate(mockParams())
+
+    await expect(promise).rejects.toThrowError(new InvalidCredentialsError())
   })
 })
