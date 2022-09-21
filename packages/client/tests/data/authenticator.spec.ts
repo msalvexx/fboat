@@ -17,7 +17,11 @@ export interface HttpClient<R = any> {
 
 export enum HttpStatusCode {
   ok = 200,
+  noContent = 204,
+  badRequest = 400,
   unauthorized = 401,
+  forbidden = 403,
+  notFound = 404,
   serverError = 500
 }
 
@@ -56,8 +60,9 @@ class Authentication implements AuthenticateUser {
     })
     switch (httpResponse.statusCode) {
       case HttpStatusCode.unauthorized: throw new InvalidCredentialsError()
+      case HttpStatusCode.ok: return null as any
+      default: throw new UnexpectedError()
     }
-    return null as any
   }
 }
 
@@ -65,6 +70,13 @@ export class InvalidCredentialsError extends Error {
   constructor () {
     super('Credenciais inválidas')
     this.name = 'InvalidCredentialsError'
+  }
+}
+
+export class UnexpectedError extends Error {
+  constructor () {
+    super('Algo de errado aconteceu. Tente novamente em breve.')
+    this.name = 'UnexpectedError'
   }
 }
 
@@ -105,5 +117,21 @@ describe('Authenticate User', () => {
     const promise = sut.authenticate(mockParams())
 
     await expect(promise).rejects.toThrowError(new InvalidCredentialsError())
+  })
+
+  test('Should throw UnauthorizedError when status code not 200', async () => {
+    const { sut, httpClient } = makeSut()
+    const invalidHttpResponses = [
+      HttpStatusCode.serverError,
+      HttpStatusCode.forbidden,
+      HttpStatusCode.notFound,
+      HttpStatusCode.noContent,
+      HttpStatusCode.badRequest
+    ]
+    httpClient.response = { statusCode: faker.helpers.arrayElement(invalidHttpResponses) }
+
+    const promise = sut.authenticate(mockParams())
+
+    await expect(promise).rejects.toThrowError(new UnexpectedError())
   })
 })
