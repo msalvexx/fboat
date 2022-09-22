@@ -2,6 +2,13 @@ import { HttpClient, HttpMethod, HttpResponse, HttpStatusCode, HttpRequest } fro
 
 import { faker } from '@faker-js/faker'
 
+export const mockHttpRequest = (): HttpRequest => ({
+  url: faker.internet.url(),
+  method: faker.helpers.arrayElement(['get', 'post', 'put', 'delete']),
+  body: { body: faker.random.word() },
+  headers: { headers: faker.random.numeric() }
+})
+
 export class HttpClientSpy implements HttpClient {
   url!: string
   body!: any
