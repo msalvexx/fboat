@@ -5,18 +5,23 @@ import { faker } from '@faker-js/faker'
 import { populateField, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
 import { AuthenticateUserSpy } from '@/tests/mocks'
 
-import { Login } from '@/client/presentation/pages'
-import { FieldError } from '@/client/presentation/protocols'
+import { AuthenticateUser } from '@fboat/core/iam/protocols'
 import { InvalidCredentialsError } from '@/client/domain'
+import { FieldError } from '@/client/presentation/protocols'
+import { Login } from '@/client/presentation/pages'
 
 type SutTypes = {
   service: AuthenticateUserSpy
+  setCurrentAccountMock: (account: AuthenticateUser.Result) => void
 }
 
 const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
   const service = new AuthenticateUserSpy()
-  render(() => <Login service={service} validator={() => errors}/>)
-  return { service }
+  const { setCurrentAccountMock } = render({
+    Page: () => <Login service={service} validator={() => errors}/>,
+    history: ['/login']
+  })
+  return { service, setCurrentAccountMock }
 }
 
 const simulateValidSubmit = async (): Promise<{ email: string, password: string }> => {
@@ -80,5 +85,14 @@ describe('Login Page', () => {
 
     expect(screen.getByTestId('form-status-wrap').children).toHaveLength(1)
     expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
+  })
+
+  test('Should call UpdateCurrentAccount on success', async () => {
+    const { service, setCurrentAccountMock } = renderSut()
+
+    await simulateValidSubmit()
+
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(service.result)
+    expect(location.pathname).toBe('/')
   })
 })

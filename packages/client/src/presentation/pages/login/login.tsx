@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import Styles from './styles.scss'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 
 import { Validator } from '@/client/presentation/protocols'
-import { Input, SubmitButton, FormStatus, Footer, Header } from '@/client/presentation/components'
-import { ForgotPassword } from './components'
-import { loginState } from './components/atom'
-import { useRecoilState } from 'recoil'
 import { AuthenticateUser } from '@fboat/core/iam/protocols'
+
+import { Input, SubmitButton, FormStatus, Footer, Header, currentAccountState } from '@/client/presentation/components'
+import { ForgotPassword, loginState } from './components'
 
 type Props = {
   validator: Validator
@@ -15,6 +16,9 @@ type Props = {
 
 const Login: React.FC<Props> = ({ validator, service }) => {
   const [state, setState] = useRecoilState(loginState)
+  const { setCurrentAccount } = useRecoilValue(currentAccountState)
+
+  const navigate = useNavigate()
 
   useEffect(() => validate(), [state.email])
   useEffect(() => validate(), [state.password])
@@ -27,7 +31,9 @@ const Login: React.FC<Props> = ({ validator, service }) => {
     const { email, password } = state
     let newState = {}
     try {
-      await service?.authenticate({ email, password })
+      const account = await service?.authenticate({ email, password })
+      setCurrentAccount(account)
+      navigate('/')
     } catch (error) {
       newState = { mainError: error.message, isLoading: false }
     } finally {
