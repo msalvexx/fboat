@@ -21,7 +21,3 @@ const EditAccount: React.FC = () => {
 }
 
 export default EditAccount
-function useRecoil(editAccountState: any): [any] {
-  throw new Error('Function not implemented.')
-}
-

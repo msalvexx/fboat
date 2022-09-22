@@ -3,7 +3,7 @@ import Styles from './styles.scss'
 import GlobalStyle from '@/client/presentation/styles/global.scss'
 
 import { Footer, Header, SearchBar } from '@/client/presentation/components'
-import AccountsList from './accounts-list'
+import AccountsList from './accounts-list/accounts-list'
 
 import { faker } from '@faker-js/faker'
 
