@@ -21,7 +21,7 @@
     "@typescript-eslint/no-invalid-void-type": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/no-minused-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error" ,
     "react/prop-types": "off"

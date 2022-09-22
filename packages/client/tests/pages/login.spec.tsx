@@ -7,6 +7,7 @@ import { AuthenticateUserSpy } from '@/tests/mocks'
 
 import { Login } from '@/client/presentation/pages'
 import { FieldError } from '@/client/presentation/protocols'
+import { InvalidCredentialsError } from '@/client/domain'
 
 type SutTypes = {
   service: AuthenticateUserSpy
@@ -68,5 +69,16 @@ describe('Login Page', () => {
     const { email, password } = await simulateValidSubmit()
 
     expect(service.params).toStrictEqual({ email, password })
+  })
+
+  test('Should present error if authentication fails', async () => {
+    const { service } = renderSut()
+    const error = new InvalidCredentialsError()
+    service.result = error
+
+    await simulateValidSubmit()
+
+    expect(screen.getByTestId('form-status-wrap').children).toHaveLength(1)
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message)
   })
 })

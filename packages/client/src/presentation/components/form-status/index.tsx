@@ -15,7 +15,7 @@ const FormStatus: React.FC<Props> = ({ state }) => {
   return (
     <div data-testid='form-status-wrap' className={Styles.errorWrap}>
       {isLoading && <Spinner/>}
-      {mainError && <label className={Styles.errorAlert}>{mainError}</label>}
+      {mainError && <label data-testid='main-error' className={Styles.errorAlert}>{mainError}</label>}
     </div>
   )
 }

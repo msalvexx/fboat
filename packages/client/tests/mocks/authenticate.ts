@@ -3,13 +3,14 @@ import { faker } from '@faker-js/faker'
 
 export class AuthenticateUserSpy implements AuthenticateUser {
   params!: any
-  result = {
+  result: any = {
     personName: faker.name.fullName(),
     token: faker.datatype.uuid()
   }
 
   async authenticate (params: AuthenticateUser.Params): Promise<AuthenticateUser.Result> {
     this.params = params
+    if (this.result instanceof Error) throw this.result
     return this.result
   }
 }

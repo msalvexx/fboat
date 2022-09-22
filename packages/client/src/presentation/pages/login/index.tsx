@@ -25,7 +25,14 @@ const Login: React.FC<Props> = ({ validator, service }) => {
     if (state.isFormInvalid || state.isLoading) return
     setState({ ...state, isLoading: true })
     const { email, password } = state
-    await service?.authenticate({ email, password })
+    let newState = {}
+    try {
+      await service?.authenticate({ email, password })
+    } catch (error) {
+      newState = { mainError: error.message, isLoading: false }
+    } finally {
+      setState(old => ({ ...old, ...newState }))
+    }
   }
 
   const validate = (): void => {
