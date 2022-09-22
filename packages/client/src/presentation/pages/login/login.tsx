@@ -11,7 +11,7 @@ import { ForgotPassword, loginState } from './components'
 
 type Props = {
   validator: Validator
-  service?: AuthenticateUser
+  service: AuthenticateUser
 }
 
 const Login: React.FC<Props> = ({ validator, service }) => {

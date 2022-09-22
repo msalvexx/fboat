@@ -1,7 +1,6 @@
 export { default as Input } from './input/input'
 export { default as SubmitButton } from './submit-button/submit-button'
 export { default as Spinner } from './spinner/spinner'
-export { default as Router } from './router/router'
 export { default as Header } from './header/header'
 export { default as Avatar } from './avatar/avatar'
 export { default as SearchBar } from './searchbar/searchbar'

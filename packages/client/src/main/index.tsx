@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import UIkit from 'uikit'
 import Icons from 'uikit/dist/js/uikit-icons'
 
-import { Router } from '@/client/presentation/components'
+import { Router } from '@/client/main/router'
 
 UIkit.use(Icons)
 
