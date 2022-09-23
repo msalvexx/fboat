@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Styles from './styles.scss'
+import Styles from './slider-styles.scss'
 
 import { StackedCard, ArticleProps } from '@/client/presentation/components'
 import UIkit from 'uikit'

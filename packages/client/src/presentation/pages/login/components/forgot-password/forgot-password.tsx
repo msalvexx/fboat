@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './forgot-password-styles.scss'
 
 const SubmitButton: React.FC = () => {
   return (

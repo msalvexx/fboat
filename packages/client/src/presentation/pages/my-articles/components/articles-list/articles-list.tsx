@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './articles-list-styles.scss'
 
 import { ArticleProps, Actions } from '@/client/presentation/components'
 

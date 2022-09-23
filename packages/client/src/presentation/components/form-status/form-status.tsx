@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './form-status-styles.scss'
 
 import { Spinner } from '@/client/presentation/components'
 

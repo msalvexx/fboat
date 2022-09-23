@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './stacked-card-styles.scss'
 
 import { Avatar } from '@/client/presentation/components'
 

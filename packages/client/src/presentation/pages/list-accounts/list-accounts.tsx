@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './list-accounts-styles.scss'
 import GlobalStyle from '@/client/presentation/styles/global.scss'
 
 import { Footer, Header, SearchBar } from '@/client/presentation/components'

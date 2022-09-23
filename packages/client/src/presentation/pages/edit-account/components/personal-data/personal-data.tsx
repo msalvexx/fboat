@@ -1,6 +1,6 @@
 import { Input } from '@/client/presentation/components'
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './personal-data-styles.scss'
 
 const PersonalData: React.FC = () => {
   return (<div className={Styles.personalData}>

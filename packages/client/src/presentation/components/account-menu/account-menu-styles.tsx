@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useState } from 'react'
-import Styles from './styles.scss'
+import Styles from './account-menu-styles.scss'
 
 import { Avatar } from '@/client/presentation/components'
 

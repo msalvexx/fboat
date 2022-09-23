@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './view-article-styles.scss'
 
 import { Header, Avatar, ArticleProps, Slider, Footer } from '@/client/presentation/components'
 

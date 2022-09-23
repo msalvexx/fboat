@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './header-styles.scss'
 
 import { AccountMenu } from '@/client/presentation/components'
 

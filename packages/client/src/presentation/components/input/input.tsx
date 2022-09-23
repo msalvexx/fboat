@@ -1,5 +1,5 @@
 import React, { createRef } from 'react'
-import Styles from './styles.scss'
+import Styles from './input-styles.scss'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   icon?: string

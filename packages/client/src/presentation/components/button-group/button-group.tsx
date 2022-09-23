@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './button-group-styles.scss'
 
 type Action = {
   handler: () => void

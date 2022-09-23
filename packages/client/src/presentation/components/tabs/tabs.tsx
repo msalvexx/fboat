@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Styles from './styles.scss'
+import Styles from './sttabs-stylesyles.scss'
 
 type TabItem = {
   tabName: string

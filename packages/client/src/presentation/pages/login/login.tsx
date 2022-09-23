@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Styles from './styles.scss'
+import Styles from './login-styles.scss'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 

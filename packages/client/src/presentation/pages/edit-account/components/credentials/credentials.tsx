@@ -1,6 +1,6 @@
 import { Input, Select } from '@/client/presentation/components'
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './credentials-styles.scss'
 
 const Credentials: React.FC = () => {
   const defaultRoles = [{

@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './my-articles-styles.scss'
 
 import { Footer, Header, Tabs } from '@/client/presentation/components'
 import { ArticlesList } from './components'

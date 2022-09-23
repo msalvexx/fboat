@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './edit-account-styles.scss'
 
 import { Header, Footer, SubmitButton } from '@/client/presentation/components'
 import { Credentials, PersonalData } from './components'

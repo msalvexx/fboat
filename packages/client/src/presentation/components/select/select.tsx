@@ -1,6 +1,6 @@
 import React from 'react'
 import MultiSelect, { components, DropdownIndicatorProps, ClearIndicatorProps } from 'react-select'
-import Styles from './styles.scss'
+import Styles from './select-styles.scss'
 
 type Option = {
   value: string

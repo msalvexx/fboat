@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './styles.scss'
+import Styles from './vertical-card-styles.scss'
 
 import { ArticleProps, Avatar } from '@/client/presentation/components'
 

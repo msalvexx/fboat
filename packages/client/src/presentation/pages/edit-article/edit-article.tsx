@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from 'react'
-import Styles from './styles.scss'
+import Styles from './edit-article-styles.scss'
 
 import { EditorState, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
