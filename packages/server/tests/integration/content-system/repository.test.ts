@@ -1,5 +1,5 @@
-import { ResourceNotFoundError } from '@/core/shared'
-import { Article, AuthorNotFoundError, SlugAlreadyInUseError } from '@/core/content-system'
+import { ResourceNotFoundError } from '@fboat/core/shared'
+import { Article, AuthorNotFoundError, SlugAlreadyInUseError } from '@fboat/core/content-system'
 import { MySQLArticle, MySQLArticleRepository } from '@/server/content-system/infra'
 import { MySQLConnectionManager } from '@/server/shared/infra'
 

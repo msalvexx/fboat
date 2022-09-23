@@ -1,4 +1,4 @@
-import { ResourceNotFoundError, SlugAlreadyInUseError, AuthorNotFoundError } from '@/core'
+import { ResourceNotFoundError, SlugAlreadyInUseError, AuthorNotFoundError } from '@fboat/core'
 import { SaveArticleRepository, GetArticleRepository, ListArticlesRepository, RemoveArticleRepository } from '@/server/content-system/protocols'
 import { MySQLConnectionManager } from '@/server/shared/infra'
 import { MySQLArticle, MySQLAuthor } from '@/server/content-system/infra/repositories'

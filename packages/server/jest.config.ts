@@ -14,7 +14,6 @@ export default {
   },
   moduleNameMapper: {
     '@/server/(.*)': '<rootDir>/src/$1',
-    '@/tests/(.*)': '<rootDir>/tests/$1',
-    '@/core(.*)': '<rootDir>/../core/dist/src$1'
+    '@/tests/(.*)': '<rootDir>/tests/$1'
   }
 }

@@ -1,4 +1,4 @@
-import { Account } from '@/core/iam'
+import { Account } from '../../iam'
 
 export namespace AuthenticateUser {
   export type Params = {

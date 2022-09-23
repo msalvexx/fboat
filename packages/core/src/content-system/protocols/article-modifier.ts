@@ -1,4 +1,4 @@
-import { ArticleResult, ArticleParams } from '@/core/content-system/protocols'
+import { ArticleResult, ArticleParams } from '../../content-system/protocols'
 
 export namespace CreateArticle {
   export type Params = ArticleParams

@@ -1,4 +1,5 @@
-import { Account, AccountModifier, AccountNotFoundError, ChangeAccount, ChangePassword, CreateAccount, createAccount, EmailAlreadyInUseError, GetAccount } from '@/core'
+import { AccountModifier, GetAccount, CreateAccount, ChangeAccount, ChangePassword } from '@fboat/core/iam/protocols'
+import { createAccount, Account, EmailAlreadyInUseError, AccountNotFoundError } from '@fboat/core/iam/models'
 import { AccountRepository, Hasher, AvatarPhotoProvider } from '@/server/iam/protocols'
 
 export class AccountService implements AccountModifier, GetAccount {

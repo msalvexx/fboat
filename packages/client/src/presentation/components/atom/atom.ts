@@ -4,7 +4,7 @@ import { atom } from 'recoil'
 export const currentAccountState = atom({
   key: 'currentAccountState',
   default: {
-    getCurrentAccount: null as unknown as () => AuthenticateUser.Result,
-    setCurrentAccount: null as unknown as (account: AuthenticateUser.Result | undefined) => void
+    getCurrentAccount: null as () => AuthenticateUser.Result,
+    setCurrentAccount: null as (account: AuthenticateUser.Result | undefined) => void
   }
 })

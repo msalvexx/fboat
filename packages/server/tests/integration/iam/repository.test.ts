@@ -1,4 +1,4 @@
-import { Account } from '@/core/iam'
+import { Account } from '@fboat/core/iam'
 import { GetAccountByEmailRepository } from '@/server/iam/protocols'
 import { MySQLAccountRepository } from '@/server/iam/infra/repositories'
 import { MySQLAccount, MySQLUser, MySQLRole } from '@/server/iam/infra/repositories/entities'

@@ -5,6 +5,7 @@ export class EnvConfig {
   private static instance: EnvConfig
   readonly configs: any = {
     environment: getenv('APP_ENV', 'dev'),
+    isProduction: ['production', 'prod'].includes(getenv('APP_ENV', 'dev')),
     isTestEnvironment: ['test', 'dev'].includes(getenv('APP_ENV', 'dev')),
     db: {
       database: getenv('DB_NAME', 'test'),
@@ -15,7 +16,7 @@ export class EnvConfig {
       entities: [
         'iam/infra/repositories/entities/index.{js,ts}',
         'content-system/infra/repositories/entities/index.{js,ts}'
-      ].map(x => path.resolve(`${getenv('APP_ENV', 'dev') !== 'test' ? 'dist' : 'src'}/${x}`)),
+      ].map(x => path.resolve(`${getenv('APP_ENV', 'dev') !== 'test' ? 'dist/src' : 'src'}/${x}`)),
       migrations: getenv('APP_ENV', 'dev') === 'test' ? ['migrations/**/*.{js,ts}'].map(x => path.resolve(x)) : []
     },
     bcrypt: {
@@ -36,6 +37,9 @@ export class EnvConfig {
     staticFile: {
       root: resolve('../../../public'),
       prefix: '/public'
+    },
+    cors: {
+      origin: ['test', 'dev'].includes(getenv('APP_ENV', 'dev')) ? '*': getenv('APP_CORS_ORIGIN')
     }
   }
 

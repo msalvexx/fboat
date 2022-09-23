@@ -1,4 +1,4 @@
-import { Account } from '@/core/iam'
+import { Account } from '../../iam'
 import { CreateAccount, ChangeAccount, ChangePassword } from '.'
 
 export namespace GetAccount {

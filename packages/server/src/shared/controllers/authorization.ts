@@ -1,4 +1,4 @@
-import { User, Permission, UnauthorizedError, ForbiddenError } from '@/core'
+import { User, Permission, UnauthorizedError, ForbiddenError } from '@fboat/core'
 import { AbstractController } from './controller'
 
 export class AuthorizationController extends AbstractController {

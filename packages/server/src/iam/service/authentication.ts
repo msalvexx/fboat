@@ -1,4 +1,4 @@
-import { Account, UnauthorizedError, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@/core'
+import { Account, UnauthorizedError, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@fboat/core'
 import { GetAccountByEmailRepository, Cryptography, Hasher } from '@/server/iam/protocols'
 
 export class AuthenticationService implements Authenticator, AuthenticationCertifier {

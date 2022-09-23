@@ -1,5 +1,6 @@
 import Fastify, { FastifyInstance } from 'fastify'
 import swagger from '@fastify/swagger'
+import cors from '@fastify/cors'
 import fileUpload from 'fastify-file-upload'
 import staticFile from '@fastify/static'
 
@@ -16,6 +17,7 @@ const setupHooks = async (server: FastifyInstance): Promise<void> => {
 
 const setupPlugins = async (server: FastifyInstance): Promise<void> => {
   await server.register(swagger, swaggerConfig)
+  await server.register(cors, EnvConfig.getInstance().configs.cors)
   await server.register(fileUpload, EnvConfig.getInstance().configs.fileUpload)
   await server.register(staticFile, EnvConfig.getInstance().configs.staticFile)
 }

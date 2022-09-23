@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@/core/shared/model'
+import { ResourceNotFoundError } from '../../shared/models'
 
 export class EmailAlreadyInUseError extends Error {
   readonly statusCode: number = 400

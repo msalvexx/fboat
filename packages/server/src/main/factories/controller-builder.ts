@@ -1,4 +1,4 @@
-import { Permission } from '@/core'
+import { Permission } from '@fboat/core'
 import { Controller } from '@/server/shared/protocols/controller'
 import { AccountToAuthorMapperController, AuthorizationController, MethodHandler, ServiceHandlerController, TokenCertifierController, FileUploadController } from '@/server/shared/controllers'
 

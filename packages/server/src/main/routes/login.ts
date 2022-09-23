@@ -1,6 +1,6 @@
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { loginSchema } from '@/core/iam/schemas'
+import { loginSchema } from '@fboat/core/iam/schemas'
 
 import { makeLogin } from '@/server/main/factories'
 import adapt from '@/server/main/adapters/service-handler'

@@ -1,6 +1,6 @@
 import { Account, AdminPermission, FBoatControllerPermission, FBoatReaderPermission, WriterPermission, Permission, Role } from '.'
-import { CreateAccount } from '@/core/iam'
-import { newUuid } from '@/core/shared'
+import { CreateAccount } from '../../iam/protocols'
+import { newUuid } from '../../shared/gateways'
 
 export const createAccount = (params: CreateAccount.Params): Account => {
   const { email, password, roles, personalData } = params

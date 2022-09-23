@@ -1,4 +1,4 @@
-import { Account } from '@/core'
+import { Account } from '@fboat/core'
 
 export namespace GetAccountByEmailRepository {
   export type Params = string

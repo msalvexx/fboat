@@ -1,4 +1,4 @@
-import { ArticleResult } from '@/core/content-system/protocols'
+import { ArticleResult } from '../../content-system/protocols'
 
 export namespace GetArticle {
   export type Params = { idOrSlug: string }

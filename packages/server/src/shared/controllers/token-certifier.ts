@@ -1,4 +1,4 @@
-import { AuthenticationCertifier } from '@/core'
+import { AuthenticationCertifier } from '@fboat/core'
 import { AbstractController } from './controller'
 
 export class TokenCertifierController extends AbstractController {

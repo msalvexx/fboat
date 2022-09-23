@@ -1,4 +1,4 @@
-import { CreateArticle, GetArticle, UpdateArticle, createArticle, Article, ResourceNotFoundError, ArticleResult } from '@/core'
+import { CreateArticle, GetArticle, UpdateArticle, createArticle, Article, ResourceNotFoundError, ArticleResult } from '@fboat/core'
 import { GetArticleRepository, SaveArticleRepository } from '@/server/content-system/protocols'
 
 export class ArticleService implements CreateArticle, GetArticle, UpdateArticle {

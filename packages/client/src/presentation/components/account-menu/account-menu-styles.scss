@@ -1,0 +1,28 @@
+@import '../../styles/global.scss';
+
+.accountMenu {
+  @extend .uk-navbar-dropdown;
+  padding: 16px 24px;
+  width: max-content;
+  top: 70px;
+  display: block;
+
+  ul {
+    @extend .uk-nav, .uk-navbar-dropdown-nav;
+  }
+
+  li[data-divider] {
+    @extend .uk-nav-divider;
+  }
+
+  [data-logout] {
+    @extend .uk-text-center, .uk-flex-inline;
+
+    justify-content: center;
+    width: 100%;
+
+    a {
+      @extend .uk-text-danger;
+    }
+  }
+}

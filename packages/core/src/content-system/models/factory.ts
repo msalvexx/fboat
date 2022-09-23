@@ -1,6 +1,6 @@
 import { CreateArticle } from '../protocols'
 import { Article } from './article'
-import { newUuid } from '@/core/shared/gateways'
+import { newUuid } from '../../shared/gateways'
 
 export const createArticle = (params: CreateArticle.Params): Article => {
   return new Article({

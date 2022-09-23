@@ -1,6 +1,6 @@
 import { EnvConfig } from '@/server/main/configs/env'
 import defaultDatasource from '@/server/main/configs/ormconfig'
-import { ConnectionNotFoundError, TransactionNotFoundError } from '@/core/shared'
+import { ConnectionNotFoundError, TransactionNotFoundError } from '@fboat/core/shared/models'
 import { DataSource, QueryRunner, ObjectType, Repository } from 'typeorm'
 
 export namespace MySQLConnectionManager {

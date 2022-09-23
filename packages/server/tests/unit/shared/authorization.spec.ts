@@ -1,4 +1,4 @@
-import { ForbiddenError, UnauthorizedError } from '@/core/iam'
+import { ForbiddenError, UnauthorizedError } from '@fboat/core/iam'
 import { AuthorizationController } from '@/server/shared/controllers/authorization'
 
 import { ControllerSpy } from '@/tests/mocks/shared'

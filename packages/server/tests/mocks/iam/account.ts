@@ -1,4 +1,4 @@
-import { Account, PersistDataChangeError } from '@/core/iam'
+import { Account, PersistDataChangeError } from '@fboat/core/iam'
 import { GetAccountByEmailRepository, AccountRepository, GetAccountByAccountId, SaveAccountRepository } from '@/server/iam/protocols'
 import { MockUserParams, defaultUser, mockUserParams } from './user'
 

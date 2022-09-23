@@ -1,2 +1,2 @@
 export * from './gateways'
-export * from './model'
+export * from './models'

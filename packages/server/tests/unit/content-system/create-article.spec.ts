@@ -1,4 +1,4 @@
-import { CreateArticle } from '@/core/content-system'
+import { CreateArticle } from '@fboat/core/content-system'
 import { ArticleServiceSut } from './factory'
 
 describe('Create Article', () => {

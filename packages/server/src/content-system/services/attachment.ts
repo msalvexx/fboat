@@ -1,4 +1,4 @@
-import { newUuid, StorageFileError } from '@/core'
+import { newUuid, StorageFileError } from '@fboat/core'
 import { SaveAttachment, RemoveAttachment } from '@/server/content-system/protocols'
 
 import { resolve } from 'path'

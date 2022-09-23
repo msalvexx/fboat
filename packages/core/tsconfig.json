@@ -4,6 +4,7 @@
     "rootDirs": ["src", "tests"],
     "outDir": "dist",
     "declarationDir": "dist",
+    "noImplicitAny": false,
     "baseUrl": "src",
     "paths": {
       "@/core/*": ["*"],

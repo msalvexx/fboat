@@ -1,4 +1,4 @@
-import { Account, PersonalData } from '@/core/iam'
+import { Account, PersonalData } from '../../iam'
 
 export namespace CreateAccount {
   export type Params = {

@@ -2,13 +2,13 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
+    "declarationDir": "./dist",
+    "noImplicitAny": false,
     "rootDirs": ["src", "tests"],
     "allowJs": true,
     "strictNullChecks": false,
     "baseUrl": "src",
     "paths": {
-      "@/core": ["../../core/src"],
-      "@/core/*": ["../../core/src/*"],
       "@/server/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },

@@ -1,4 +1,4 @@
-import { AccountNotFoundError } from '@/core/iam'
+import { AccountNotFoundError } from '@fboat/core/iam'
 import { MySQLConnectionManager } from '@/server/shared/infra'
 
 import { refreshDatabase, startTestServer, stopTestServer, createTestToken } from '@/tests/integration/configs/helpers.integration'

@@ -1,4 +1,4 @@
-import { Account, Author } from '@/core'
+import { Account, Author } from '@fboat/core'
 import { AbstractController } from './controller'
 
 export class AccountToAuthorMapperController extends AbstractController {

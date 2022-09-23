@@ -1,4 +1,4 @@
-import { AuthenticateUser, ChangeAccount, ChangePassword, CreateAccount } from '@/core/iam'
+import { AuthenticateUser, ChangeAccount, ChangePassword, CreateAccount } from '@fboat/core/iam'
 
 export const mockChangeAccountParams = (accountId: string = 'validAccountId'): ChangeAccount.Params => ({
   accountId,
