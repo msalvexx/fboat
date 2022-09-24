@@ -1,23 +1,32 @@
-import * as Pages from '@/client/main/factories'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { RecoilRoot } from 'recoil'
 import React from 'react'
+import { RecoilRoot } from 'recoil'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-export const Router: React.FC = () => (
-  <RecoilRoot>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Pages.Home />} />
-        <Route path='/login' element={<Pages.Login />} />
-        <Route path='/article/:slugOrId' element={<Pages.ViewArticle />} />
-        <Route path='/article/new' element={<Pages.EditArticle />} />
-        <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />
-        <Route path='/my-articles' element={<Pages.MyArticles />} />
-        <Route path='/my-account' element={<Pages.EditAccount />} />
-        <Route path='/account/new' element={<Pages.EditAccount />} />
-        <Route path='/account/:accountId/edit' element={<Pages.EditAccount />} />
-        <Route path='/list-accounts' element={<Pages.ListAccounts />} />
-      </Routes>
-    </BrowserRouter>
-  </RecoilRoot>
-)
+import * as Pages from '@/client/main/factories'
+import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/client/main/adapters'
+import { currentAccountState } from '@/client/presentation/components'
+
+export const Router: React.FC = () => {
+  const state = {
+    setCurrentAccount: setCurrentAccountAdapter,
+    getCurrentAccount: getCurrentAccountAdapter
+  }
+  return <>
+    <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Pages.Home />} />
+          <Route path='/login' element={<Pages.Login />} />
+          <Route path='/article/:slugOrId' element={<Pages.ViewArticle />} />
+          <Route path='/article/new' element={<Pages.EditArticle />} />
+          <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />
+          <Route path='/my-articles' element={<Pages.MyArticles />} />
+          <Route path='/my-account' element={<Pages.EditAccount />} />
+          <Route path='/account/new' element={<Pages.EditAccount />} />
+          <Route path='/account/:accountId/edit' element={<Pages.EditAccount />} />
+          <Route path='/list-accounts' element={<Pages.ListAccounts />} />
+        </Routes>
+      </BrowserRouter>
+    </RecoilRoot>
+  </>
+}
