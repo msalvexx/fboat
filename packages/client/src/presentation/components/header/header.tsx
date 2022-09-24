@@ -27,7 +27,8 @@ const loggedUserOptions: React.FC<boolean> = (isLogged: boolean) => (
 const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
   buttonHidden = buttonHidden ?? false
   const { getCurrentAccount } = useRecoilValue(currentAccountState)
-  const isLogged = !!getCurrentAccount()
+  const account = getCurrentAccount()
+  const isLogged = !!account
   const options = loggedUserOptions(isLogged)
   button = button ?? <a data-testid='new-article-action' href='/article/new'>Criar Artigo</a>
   if (!isLogged) button = <a data-testid='login-action' href='/login'>Entrar</a>
@@ -44,7 +45,7 @@ const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
             </ul>
             {options}
             <div hidden={buttonHidden} data-testid='primary-action-wrapper' data-action><>{ button }</></div>
-            { isLogged && <AccountMenu /> }
+            { isLogged && <AccountMenu account={account}/> }
           </div>
       </nav>
     </div>

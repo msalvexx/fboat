@@ -7,16 +7,16 @@ type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>
   subtitle: string
 }
 
-const Input: React.FC<Props> = ({ className, avatar, title, subtitle }: Props) => {
+const Avatar: React.FC<Props> = ({ className, avatar, title, subtitle }: Props) => {
   return (
     <div className={[Styles.avatar, className].join(' ')}>
-      <img className='uk-border-circle' src={avatar} width="48" height="48"/>
+      <img data-testid='avatar-img' className='uk-border-circle' src={avatar} width="48" height="48"/>
       <div>
-        <p>{title}</p>
-        <p>{subtitle}</p>
+        <p data-testid='avatar-title'>{title}</p>
+        <p data-testid='avatar-subtitle'>{subtitle}</p>
       </div>
     </div>
   )
 }
 
-export default Input
+export default Avatar
