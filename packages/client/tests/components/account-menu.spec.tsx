@@ -34,4 +34,12 @@ describe('Account Menu', () => {
 
     expect(screen.getByTestId('avatar-title')).toContainHTML(account.name)
   })
+
+  test('Should present the correct photo', () => {
+    const account = mockAccountModel()
+
+    renderSut({ account })
+
+    expect(screen.getByTestId('avatar-photo')).toHaveAttribute('src', account.avatar)
+  })
 })
