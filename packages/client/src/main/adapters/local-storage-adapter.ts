@@ -1,10 +1,10 @@
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
 import { makeLocalStorageAdapter } from '@/client/main/factories'
+import { AccountCredentials } from '@/client/domain'
 
-export const setCurrentAccountAdapter = (account: AuthenticateUser.Result): void => {
+export const setCurrentAccountAdapter = (account: AccountCredentials): void => {
   makeLocalStorageAdapter().set('account', account)
 }
 
-export const getCurrentAccountAdapter = (): AuthenticateUser.Result => {
+export const getCurrentAccountAdapter = (): AccountCredentials => {
   return makeLocalStorageAdapter().get('account')
 }

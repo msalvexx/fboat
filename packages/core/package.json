@@ -23,9 +23,15 @@
   },
   "typesVersions": {
     "*": {
-      "content-system/*": ["dist/src/content-system/*"],
-      "iam/*": ["dist/src/iam/*"],
-      "shared/*": ["dist/src/shared/*"]
+      "content-system/*": [
+        "dist/src/content-system/*"
+      ],
+      "iam/*": [
+        "dist/src/iam/*"
+      ],
+      "shared/*": [
+        "dist/src/shared/*"
+      ]
     }
   },
   "private": true,
@@ -48,7 +54,7 @@
     "fluent-json-schema": "^3.1.0",
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "scripts": {
     "build": "npm run clean && tsc -p tsconfig-build.json",

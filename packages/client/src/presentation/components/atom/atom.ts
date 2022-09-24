@@ -1,10 +1,12 @@
-import { Account } from '@/client/domain'
+import { AccountCredentials } from '@/client/domain'
+import { Account } from '@fboat/core'
 import { atom } from 'recoil'
 
 export const currentAccountState = atom({
   key: 'currentAccountState',
   default: {
-    getCurrentAccount: null as () => Account,
-    setCurrentAccount: null as (account: Account | undefined) => void
+    getCurrentAccountCredentials: null as () => AccountCredentials,
+    setCurrentAccountCredentials: null as (account: AccountCredentials | undefined) => void,
+    getCurrentAccount: null as () => Account
   }
 })

@@ -16,7 +16,7 @@ type Props = {
 
 const Login: React.FC<Props> = ({ validator, service }) => {
   const [state, setState] = useRecoilState(loginState)
-  const { setCurrentAccount } = useRecoilValue(currentAccountState)
+  const { setCurrentAccountCredentials } = useRecoilValue(currentAccountState)
 
   const navigate = useNavigate()
 
@@ -32,9 +32,10 @@ const Login: React.FC<Props> = ({ validator, service }) => {
     let newState = {}
     try {
       const account = await service?.authenticate({ email, password })
-      setCurrentAccount({
-        ...account,
+      setCurrentAccountCredentials({
         email,
+        token: account.token,
+        avatar: account.avatar,
         name: account.personName
       })
       navigate('/')

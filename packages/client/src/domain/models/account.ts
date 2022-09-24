@@ -1,4 +1,4 @@
-export type Account = {
+export type AccountCredentials = {
   email: string
   token: string
   name: string

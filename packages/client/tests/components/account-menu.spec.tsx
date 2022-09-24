@@ -1,45 +1,48 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { render } from '@/tests/helpers'
-import { mockAccountModel } from '@/tests/mocks'
+import { mockAccountCredentials } from '@/tests/mocks'
 
-import { Account } from '@/client/domain/models'
+import { Account } from '@fboat/core'
+import { AccountCredentials } from '@/client/domain'
 import { AccountMenu } from '@/client/presentation/components'
 
 type SutParams = {
   account?: Account
+  accountCredentials?: AccountCredentials
 }
 
-const renderSut = ({ account }: SutParams): void => {
+const renderSut = ({ account, accountCredentials }: SutParams): void => {
   render({
-    Page: () => <AccountMenu account={account}/>,
+    Page: () => <AccountMenu />,
     history: ['/'],
-    account
+    account,
+    accountCredentials
   })
 }
 
 describe('Account Menu', () => {
   test('Should present the correct email', () => {
-    const account = mockAccountModel()
+    const accountCredentials = mockAccountCredentials()
 
-    renderSut({ account })
+    renderSut({ accountCredentials })
 
-    expect(screen.getByTestId('avatar-subtitle')).toContainHTML(account.email)
+    expect(screen.getByTestId('avatar-subtitle')).toContainHTML(accountCredentials.email)
   })
 
   test('Should present the correct name', () => {
-    const account = mockAccountModel()
+    const accountCredentials = mockAccountCredentials()
 
-    renderSut({ account })
+    renderSut({ accountCredentials })
 
-    expect(screen.getByTestId('avatar-title')).toContainHTML(account.name)
+    expect(screen.getByTestId('avatar-title')).toContainHTML(accountCredentials.name)
   })
 
   test('Should present the correct photo', () => {
-    const account = mockAccountModel()
+    const accountCredentials = mockAccountCredentials()
 
-    renderSut({ account })
+    renderSut({ accountCredentials })
 
-    expect(screen.getByTestId('avatar-photo')).toHaveAttribute('src', account.avatar)
+    expect(screen.getByTestId('avatar-photo')).toHaveAttribute('src', accountCredentials.avatar)
   })
 })

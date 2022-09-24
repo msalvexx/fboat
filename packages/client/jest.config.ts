@@ -17,7 +17,6 @@ export default {
   moduleNameMapper: {
     '\\.scss$': 'identity-obj-proxy',
     '@/client(.*)': '<rootDir>/src$1',
-    '@/tests(.*)': '<rootDir>/tests$1',
-    '@/core(.*)': '<rootDir>/../core/dist/src$1'
+    '@/tests(.*)': '<rootDir>/tests$1'
   }
 }

@@ -2,27 +2,30 @@ import React from 'react'
 import { render as reactRender } from '@testing-library/react'
 import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil'
 import { MemoryRouter } from 'react-router-dom'
-import { mockAccountModel } from '@/tests/mocks'
+import { mockAccountCredentials, mockAccountModel } from '@/tests/mocks'
 
-import { Account } from '@/client/domain/models'
+import { Account } from '@fboat/core'
+import { AccountCredentials } from '@/client/domain/models'
 import { currentAccountState } from '@/client/presentation/components'
 
 type Params = {
   Page: React.FC
   history: string[]
+  accountCredentials?: AccountCredentials
   account?: Account
   states?: Array<{ atom: RecoilState<any>, value: any }>
 }
 
 type Result = {
-  setCurrentAccountMock: (account: Account) => void
+  setCurrentAccountMock: (account: AccountCredentials) => void
 }
 
 const setCurrentAccountMock = jest.fn()
 
-export const render = ({ Page, history, account = mockAccountModel(), states = [] }: Params): Result => {
+export const render = ({ Page, history, accountCredentials = mockAccountCredentials(), account = mockAccountModel(), states = [] }: Params): Result => {
   const mockedState = {
-    setCurrentAccount: setCurrentAccountMock,
+    setCurrentAccountCredentials: setCurrentAccountMock,
+    getCurrentAccountCredentials: () => accountCredentials,
     getCurrentAccount: () => account
   }
   const initializeState = ({ set }: MutableSnapshot): void => {

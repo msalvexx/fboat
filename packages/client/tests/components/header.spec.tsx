@@ -1,28 +1,28 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { render } from '@/tests/helpers'
-import { mockAccountModel } from '@/tests/mocks'
+import { mockAccountCredentials, mockAccountModel } from '@/tests/mocks'
 
-import { Account } from '@/client/domain/models'
+import { AccountCredentials } from '@/client/domain/models'
 import { Header } from '@/client/presentation/components'
 
 type SutParams = {
-  account?: Account
+  accountCredentials?: AccountCredentials
   hidePrimaryAction?: boolean
 }
 const defaultSut = { account: mockAccountModel(), hidePrimaryAction: false }
-const renderSut = ({ account = mockAccountModel(), hidePrimaryAction = false }: SutParams = defaultSut): void => {
+const renderSut = ({ accountCredentials = mockAccountCredentials(), hidePrimaryAction = false }: SutParams = defaultSut): void => {
   render({
     Page: () => <Header buttonHidden={hidePrimaryAction}/>,
     history: ['/'],
-    account
+    accountCredentials
   })
 }
 
 describe('Header Component', () => {
   test('Should not show account menu when no account is logged', () => {
-    const account = null
-    renderSut({ account })
+    const accountCredentials = null
+    renderSut({ accountCredentials })
 
     expect(() => screen.getByTestId('account-menu')).toThrow()
     expect(() => screen.getByTestId('login-action')).not.toThrow()

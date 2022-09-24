@@ -8,8 +8,9 @@ import { currentAccountState } from '@/client/presentation/components'
 
 export const Router: React.FC = () => {
   const state = {
-    setCurrentAccount: setCurrentAccountAdapter,
-    getCurrentAccount: getCurrentAccountAdapter
+    setCurrentAccountCredentials: setCurrentAccountAdapter,
+    getCurrentAccountCredentials: getCurrentAccountAdapter,
+    getCurrentAccount: () => ({ user: null }) as any
   }
   return <>
     <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>

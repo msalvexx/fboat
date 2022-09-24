@@ -5,14 +5,14 @@ import { faker } from '@faker-js/faker'
 import { populateField, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
 import { AuthenticateUserSpy } from '@/tests/mocks'
 
-import { Account } from '@/client/domain/models'
+import { AccountCredentials } from '@/client/domain/models'
 import { InvalidCredentialsError } from '@/client/domain'
 import { FieldError } from '@/client/presentation/protocols'
 import { Login } from '@/client/presentation/pages'
 
 type SutTypes = {
   service: AuthenticateUserSpy
-  setCurrentAccountMock: (account: Account) => void
+  setCurrentAccountMock: (account: AccountCredentials) => void
 }
 
 const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
@@ -90,9 +90,14 @@ describe('Login Page', () => {
   test('Should call UpdateCurrentAccount on success', async () => {
     const { service, setCurrentAccountMock } = renderSut()
 
-    await simulateValidSubmit()
+    const { email } = await simulateValidSubmit()
 
-    expect(setCurrentAccountMock).toHaveBeenCalledWith(service.result)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith({
+      avatar: service.result.avatar,
+      token: service.result.token,
+      name: service.result.personName,
+      email
+    })
     expect(location.pathname).toBe('/')
   })
 })

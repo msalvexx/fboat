@@ -5,7 +5,8 @@ export class AuthenticateUserSpy implements AuthenticateUser {
   params!: any
   result: any = {
     personName: faker.name.fullName(),
-    token: faker.datatype.uuid()
+    token: faker.datatype.uuid(),
+    avatar: faker.image.avatar()
   }
 
   async authenticate (params: AuthenticateUser.Params): Promise<AuthenticateUser.Result> {
