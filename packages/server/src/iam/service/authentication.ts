@@ -18,14 +18,15 @@ export class AuthenticationService implements Authenticator, AuthenticationCerti
     const token = await this.crypto.generate({ accountId: retrievedAccount.accountId, userId: retrievedAccount.user.userId, email })
     return {
       token,
-      personName: retrievedAccount.personalData.fullName
+      personName: retrievedAccount.personalData.fullName,
+      avatar: retrievedAccount.personalData.photo
     }
   }
 
   async certificate (params: AuthenticationCertifier.Params): Promise<AuthenticationCertifier.Result> {
     try {
       const { email } = await this.crypto.verify(params)
-      const accountParams = await this.repo.getByEmail(email) as Account.Params
+      const accountParams = await this.repo.getByEmail(email)
       return new Account(accountParams)
     } catch (e) {
       throw new UnauthorizedError()

@@ -26,14 +26,18 @@ describe('When Authenticating user', () => {
 
   test('Should return response correctly if authentication succeeds', async () => {
     const { sut, repo } = AuthenticationSut.makeSut()
-    repo.readResult = mockAccount()
+    const account = mockAccount()
+    const personalData = account.personalData
+    account.changePersonalData({ ...personalData, photo: 'any' })
+    repo.readResult = account
     const params = mockAuthenticateUserParams()
 
     const result = await sut.authenticate(params)
 
     expect(result).toStrictEqual({
       personName: 'any any',
-      token: 'validToken'
+      token: 'validToken',
+      avatar: 'any'
     })
   })
 })

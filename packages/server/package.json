@@ -7,6 +7,7 @@
   },
   "scripts": {
     "start": "APP_ENV=dev node dist/src/main",
+    "build:core": "cd ../core && npm run build && cd ../server && npm i @fboat/core -w @fboat/server",
     "build": "npm run clean && tsc -p tsconfig-build.json",
     "build:watch": "npm run clean && tsc -p tsconfig-build.json -w",
     "clean": "rimraf dist",
