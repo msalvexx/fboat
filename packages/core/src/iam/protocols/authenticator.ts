@@ -10,7 +10,7 @@ export namespace AuthenticateUser {
     personName: string
     token: string
     avatar: string
-  } | Error
+  }
 }
 
 export interface AuthenticateUser {

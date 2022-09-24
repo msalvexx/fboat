@@ -5,14 +5,14 @@ import { faker } from '@faker-js/faker'
 import { populateField, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
 import { AuthenticateUserSpy } from '@/tests/mocks'
 
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
+import { Account } from '@/client/domain/models'
 import { InvalidCredentialsError } from '@/client/domain'
 import { FieldError } from '@/client/presentation/protocols'
 import { Login } from '@/client/presentation/pages'
 
 type SutTypes = {
   service: AuthenticateUserSpy
-  setCurrentAccountMock: (account: AuthenticateUser.Result) => void
+  setCurrentAccountMock: (account: Account) => void
 }
 
 const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {

@@ -32,7 +32,11 @@ const Login: React.FC<Props> = ({ validator, service }) => {
     let newState = {}
     try {
       const account = await service?.authenticate({ email, password })
-      setCurrentAccount(account)
+      setCurrentAccount({
+        ...account,
+        email,
+        name: account.personName
+      })
       navigate('/')
     } catch (error) {
       newState = { mainError: error.message, isLoading: false }

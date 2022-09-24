@@ -4,18 +4,18 @@ import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil'
 import { MemoryRouter } from 'react-router-dom'
 import { mockAccountModel } from '@/tests/mocks'
 
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
+import { Account } from '@/client/domain/models'
 import { currentAccountState } from '@/client/presentation/components'
 
 type Params = {
   Page: React.FC
   history: string[]
-  account?: AuthenticateUser.Result
+  account?: Account
   states?: Array<{ atom: RecoilState<any>, value: any }>
 }
 
 type Result = {
-  setCurrentAccountMock: (account: AuthenticateUser.Result) => void
+  setCurrentAccountMock: (account: Account) => void
 }
 
 const setCurrentAccountMock = jest.fn()

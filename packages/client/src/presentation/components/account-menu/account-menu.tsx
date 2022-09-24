@@ -2,6 +2,7 @@ import React, { MutableRefObject, useState } from 'react'
 import Styles from './account-menu-styles.scss'
 
 import { Avatar } from '@/client/presentation/components'
+import { Account } from '@/client/domain/models'
 
 const useOutsideClick = (callback: () => void): MutableRefObject<any> => {
   const ref = React.useRef<any>()
@@ -23,10 +24,12 @@ const useOutsideClick = (callback: () => void): MutableRefObject<any> => {
   return ref
 }
 
-const AccountMenu: React.FC = () => {
-  const name = 'Jhon Doe'
-  const email = 'jhon.doe@mail.com'
-  const avatar = 'https://ui-avatars.com/api/?name=John+Doe&rounded=true'
+type Props = {
+  account: Account
+}
+
+const AccountMenu: React.FC<Props> = ({ account }: Props) => {
+  const { email, name, avatar } = account
   const [showMenuState, setMenuState] = useState(false)
   const ref = useOutsideClick(() => setMenuState(false))
   return <ul data-testid='account-menu'>

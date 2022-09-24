@@ -1,10 +1,10 @@
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
+import { Account } from '@/client/domain'
 import { atom } from 'recoil'
 
 export const currentAccountState = atom({
   key: 'currentAccountState',
   default: {
-    getCurrentAccount: null as () => AuthenticateUser.Result,
-    setCurrentAccount: null as (account: AuthenticateUser.Result | undefined) => void
+    getCurrentAccount: null as () => Account,
+    setCurrentAccount: null as (account: Account | undefined) => void
   }
 })

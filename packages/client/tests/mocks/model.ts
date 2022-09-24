@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker'
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
+import { Account } from '@/client/domain/models'
 
-export const mockAccountModel = (): AuthenticateUser.Result => ({
+export const mockAccountModel = (): Account => ({
   token: faker.datatype.uuid(),
-  personName: faker.name.fullName(),
-  avatar: faker.image.avatar()
+  name: faker.name.fullName(),
+  avatar: faker.image.avatar(),
+  email: faker.internet.email()
 })
