@@ -9,6 +9,7 @@ export namespace AuthenticateUser {
   export type Result = {
     personName: string
     token: string
+    avatar: string
   } | Error
 }
 
