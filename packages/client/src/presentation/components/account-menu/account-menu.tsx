@@ -29,7 +29,7 @@ const AccountMenu: React.FC = () => {
   const avatar = 'https://ui-avatars.com/api/?name=John+Doe&rounded=true'
   const [showMenuState, setMenuState] = useState(false)
   const ref = useOutsideClick(() => setMenuState(false))
-  return <ul>
+  return <ul data-testid='account-menu'>
     <li>
       <a
         ref={ref}

@@ -1,7 +1,8 @@
 import React from 'react'
 import Styles from './header-styles.scss'
 
-import { AccountMenu } from '@/client/presentation/components'
+import { AccountMenu, currentAccountState } from '@/client/presentation/components'
+import { useRecoilValue } from 'recoil'
 
 type Button = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> |
 React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
@@ -25,10 +26,11 @@ const loggedUserOptions: React.FC<boolean> = (isLogged: boolean) => (
 
 const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
   buttonHidden = buttonHidden ?? false
-  const isLogged = true
+  const { getCurrentAccount } = useRecoilValue(currentAccountState)
+  const isLogged = !!getCurrentAccount()
   const options = loggedUserOptions(isLogged)
-  button = button ?? <a href='/article/new'>Criar Artigo</a>
-  if (!isLogged) button = <a href='/login'>Entrar</a>
+  button = button ?? <a data-testid='new-article-action' href='/article/new'>Criar Artigo</a>
+  if (!isLogged) button = <a data-testid='login-action' href='/login'>Entrar</a>
   return (
     <div className={Styles.header}>
       <nav>
@@ -42,7 +44,7 @@ const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
             </ul>
             {options}
             <div hidden={buttonHidden} data-action><>{ button }</></div>
-            <AccountMenu />
+            { isLogged && <AccountMenu /> }
           </div>
       </nav>
     </div>
