@@ -9,7 +9,6 @@ import supertest from 'supertest'
 import fs from 'fs'
 import rimraf from 'rimraf'
 
-
 describe('DELETE /attachment/{fileName}', () => {
   let serverInstance: FastifyInstance
   let connectionManager: MySQLConnectionManager
@@ -23,14 +22,14 @@ describe('DELETE /attachment/{fileName}', () => {
   })
 
   beforeEach(async () => await refreshDatabase(connectionManager))
-  
+
   afterAll(async () => {
     await stopTestServer({ serverInstance })
     if (fs.existsSync(staticFileDirectory)) rimraf.sync(staticFileDirectory)
   })
 
   test('Should return 204', async () => {
-    const uuid: string = '68292c6c-9635-4151-a994-11b09cab83e8'
+    const uuid = '68292c6c-9635-4151-a994-11b09cab83e8'
     fs.writeFileSync(resolve(staticFileDirectory, `${uuid}.txt`), Buffer.from('any'))
 
     await supertest(serverInstance.server)

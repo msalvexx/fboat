@@ -1,4 +1,4 @@
-import { Account } from '@fboat/core/iam'
+import { Account } from '@fboat/core/iam/models'
 import { GetAccountByEmailRepository } from '@/server/iam/protocols'
 import { MySQLAccountRepository } from '@/server/iam/infra/repositories'
 import { MySQLAccount, MySQLUser, MySQLRole } from '@/server/iam/infra/repositories/entities'
@@ -28,7 +28,7 @@ describe('AccountRepository', () => {
     await connectionManager.disconnect()
   })
 
-  const saveAccountOnDatabase = async (account: Account, roles: string = ''): Promise<void> => {
+  const saveAccountOnDatabase = async (account: Account, roles = ''): Promise<void> => {
     await accountRepo.save({
       accountId: account.accountId,
       birthDate: account.personalData.birthDate,

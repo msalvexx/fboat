@@ -1,8 +1,8 @@
 import { Hasher } from '@/server/iam/protocols'
 
 export class HasherMock implements Hasher {
-  compareResult: boolean = true
-  generateResult: string = 'hashedPassword'
+  compareResult = true
+  generateResult = 'hashedPassword'
 
   async compare (plaintext: string, digest: string): Promise<boolean> {
     return this.compareResult

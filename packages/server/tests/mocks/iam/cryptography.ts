@@ -1,7 +1,7 @@
 import { Cryptography, TokenGenerator, TokenVerifier } from '@/server/iam/protocols'
 
 export class CryptographyMock implements Cryptography {
-  generateTokenResult: string = 'validToken'
+  generateTokenResult = 'validToken'
   verifyResult = {
     accountId: '123',
     userId: '123',

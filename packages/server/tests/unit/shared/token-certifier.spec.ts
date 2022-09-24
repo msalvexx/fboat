@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@fboat/core/iam'
+import { UnauthorizedError } from '@fboat/core/iam/models'
 import { TokenCertifierController } from '@/server/shared/controllers/token-certifier'
 
 import { AuthenticationCertifierMock, mockAccount } from '@/tests/mocks/iam'

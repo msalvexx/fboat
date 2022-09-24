@@ -1,4 +1,4 @@
-import { Article } from '@fboat/core/content-system'
+import { Article } from '@fboat/core/content-system/models'
 import { GetArticleRepository, SaveArticleRepository } from '@/server/content-system/protocols'
 
 export const mockArticleParams = (): Article.Params => ({

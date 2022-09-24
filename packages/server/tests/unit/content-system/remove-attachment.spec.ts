@@ -22,7 +22,7 @@ describe('Remove Attachment', () => {
   })
 
   test('Should return url path where the file was storage', async () => {
-    const fileToRemove: string = 'any-file'
+    const fileToRemove = 'any-file'
     fs.writeFileSync(resolve(storageFolder, `${fileToRemove}.txt`), Buffer.from('any'))
 
     await sut.remove({ fileName: fileToRemove })

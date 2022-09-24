@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@fboat/core/iam'
+import { UnauthorizedError } from '@fboat/core/iam/models'
 
 import { mockAccount } from '@/tests/mocks/iam'
 import { AuthenticationSut } from './factory'

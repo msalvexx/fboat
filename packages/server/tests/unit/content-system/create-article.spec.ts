@@ -1,4 +1,4 @@
-import { CreateArticle } from '@fboat/core/content-system'
+import { CreateArticle } from '@fboat/core/content-system/protocols'
 import { ArticleServiceSut } from './factory'
 
 describe('Create Article', () => {

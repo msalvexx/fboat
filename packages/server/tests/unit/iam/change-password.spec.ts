@@ -1,4 +1,4 @@
-import { PersistDataChangeError } from '@fboat/core/iam'
+import { PersistDataChangeError } from '@fboat/core/iam/models'
 
 import { mockAccount, mockChangePasswordParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from './factory'

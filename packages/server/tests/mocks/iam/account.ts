@@ -1,4 +1,4 @@
-import { Account, PersistDataChangeError } from '@fboat/core/iam'
+import { Account, PersistDataChangeError } from '@fboat/core/iam/models'
 import { GetAccountByEmailRepository, AccountRepository, GetAccountByAccountId, SaveAccountRepository } from '@/server/iam/protocols'
 import { MockUserParams, defaultUser, mockUserParams } from './user'
 
@@ -36,10 +36,10 @@ export const mockAccount = (params: MockAccountParams = defaultAccount): Account
 export class AccountRepositoryMock implements AccountRepository {
   updateAccount: Account
   insertAccount: Account
-  readResult: any = undefined
-  insertResult: boolean = true
-  updateResult: boolean = true
-  readByAccountIdResult: any = undefined
+  readResult = undefined
+  insertResult = true
+  updateResult = true
+  readByAccountIdResult = undefined
 
   async insert (account: SaveAccountRepository.Params): Promise<SaveAccountRepository.Result> {
     this.insertAccount = account

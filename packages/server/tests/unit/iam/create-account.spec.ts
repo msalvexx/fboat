@@ -1,4 +1,4 @@
-import { EmailAlreadyInUseError, PersistDataChangeError } from '@fboat/core/iam'
+import { EmailAlreadyInUseError, PersistDataChangeError } from '@fboat/core/iam/models'
 
 import { mockAccount, mockCreateAccountParams } from '@/tests/mocks/iam'
 import { AccountServiceSut } from '@/tests/unit/iam/factory'

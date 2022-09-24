@@ -1,4 +1,5 @@
-import { AuthenticationCertifier, UnauthorizedError } from '@fboat/core/iam'
+import { UnauthorizedError } from '@fboat/core/iam/models'
+import { AuthenticationCertifier } from '@fboat/core/iam/protocols'
 import { mockAccount } from './account'
 
 export class AuthenticationCertifierMock implements AuthenticationCertifier {

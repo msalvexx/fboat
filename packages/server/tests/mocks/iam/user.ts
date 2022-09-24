@@ -1,4 +1,4 @@
-import { User } from '@fboat/core/iam'
+import { User } from '@fboat/core/iam/models'
 
 export type MockUserParams = {
   userId?: string

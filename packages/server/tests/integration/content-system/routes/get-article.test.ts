@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@fboat/core/shared'
+import { ResourceNotFoundError } from '@fboat/core/shared/models'
 import { MySQLConnectionManager } from '@/server/shared/infra'
 import { refreshDatabase, startTestServer, stopTestServer } from '@/tests/integration/configs/helpers.integration'
 

@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@fboat/core/iam'
+import { UnauthorizedError } from '@fboat/core/iam/models'
 import { MySQLConnectionManager } from '@/server/shared/infra'
 
 import { refreshDatabase, startTestServer, stopTestServer } from '@/tests/integration/configs/helpers.integration'

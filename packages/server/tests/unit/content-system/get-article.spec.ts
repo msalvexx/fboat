@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@fboat/core/shared'
+import { ResourceNotFoundError } from '@fboat/core/shared/models'
 import { mockArticleParams } from '@/tests/mocks/content-system'
 import { ArticleServiceSut } from './factory'
 
