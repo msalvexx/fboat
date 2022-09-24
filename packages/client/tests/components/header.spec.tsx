@@ -3,11 +3,11 @@ import { screen } from '@testing-library/react'
 import { render } from '@/tests/helpers'
 import { mockAccountModel } from '@/tests/mocks'
 
-import { AuthenticateUser } from '@fboat/core/iam/protocols'
+import { Account } from '@/client/domain/models'
 import { Header } from '@/client/presentation/components'
 
 type SutParams = {
-  account?: AuthenticateUser.Result
+  account?: Account
   hidePrimaryAction?: boolean
 }
 const defaultSut = { account: mockAccountModel(), hidePrimaryAction: false }
