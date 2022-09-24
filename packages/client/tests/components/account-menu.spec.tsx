@@ -19,11 +19,19 @@ const renderSut = ({ account }: SutParams): void => {
 }
 
 describe('Account Menu', () => {
-  test('Should the correct email', () => {
+  test('Should present the correct email', () => {
     const account = mockAccountModel()
 
     renderSut({ account })
 
     expect(screen.getByTestId('avatar-subtitle')).toContainHTML(account.email)
+  })
+
+  test('Should present the correct name', () => {
+    const account = mockAccountModel()
+
+    renderSut({ account })
+
+    expect(screen.getByTestId('avatar-title')).toContainHTML(account.name)
   })
 })
