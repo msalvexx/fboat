@@ -43,7 +43,7 @@ const Header: React.FC<Props> = ({ button, buttonHidden }: Props) => {
               <a href="#">Sobre o projeto</a>
             </ul>
             {options}
-            <div hidden={buttonHidden} data-action><>{ button }</></div>
+            <div hidden={buttonHidden} data-testid='primary-action-wrapper' data-action><>{ button }</></div>
             { isLogged && <AccountMenu /> }
           </div>
       </nav>

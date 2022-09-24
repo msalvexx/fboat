@@ -1,18 +1,19 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { render } from '@/tests/helpers'
+import { mockAccountModel } from '@/tests/mocks'
 
 import { AuthenticateUser } from '@fboat/core/iam/protocols'
 import { Header } from '@/client/presentation/components'
-import { mockAccountModel } from '@/tests/mocks'
 
 type SutParams = {
   account?: AuthenticateUser.Result
+  hidePrimaryAction?: boolean
 }
-
-const renderSut = ({ account = mockAccountModel() }: SutParams = { account: mockAccountModel() }): void => {
+const defaultSut = { account: mockAccountModel(), hidePrimaryAction: false }
+const renderSut = ({ account = mockAccountModel(), hidePrimaryAction = false }: SutParams = defaultSut): void => {
   render({
-    Page: () => <Header/>,
+    Page: () => <Header buttonHidden={hidePrimaryAction}/>,
     history: ['/'],
     account
   })
@@ -33,5 +34,11 @@ describe('Header Component', () => {
     expect(() => screen.getByTestId('account-menu')).not.toThrow()
     expect(() => screen.getByTestId('new-article-action')).not.toThrow()
     expect(() => screen.getByTestId('login-action')).toThrow()
+  })
+
+  test('Should not show any button action', () => {
+    renderSut({ hidePrimaryAction: true })
+
+    expect(screen.getByTestId('primary-action-wrapper')).not.toBeVisible()
   })
 })
