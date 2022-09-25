@@ -2,7 +2,7 @@ import { HttpRequest, HttpResponse, HttpClient } from '@/client/domain/protocols
 
 import axios, { AxiosResponse } from 'axios'
 
-export class AxiosHttpClient implements HttpClient {
+export class AxiosHttpClient<R = any> implements HttpClient<R> {
   async request (data: HttpRequest): Promise<HttpResponse> {
     let axiosResponse: AxiosResponse
     try {

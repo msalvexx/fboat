@@ -8,13 +8,14 @@ import { AuthenticateUser } from '@fboat/core/iam/protocols'
 
 import { Input, SubmitButton, FormStatus, Footer, Header, currentAccountState } from '@/client/presentation/components'
 import { ForgotPassword, loginState } from './components'
+import { Handler } from '@/client/domain'
 
 type Props = {
   validator: Validator
-  service: AuthenticateUser
+  authenticate: Handler<AuthenticateUser.Result>
 }
 
-const Login: React.FC<Props> = ({ validator, service }) => {
+const Login: React.FC<Props> = ({ validator, authenticate }) => {
   const [state, setState] = useRecoilState(loginState)
   const { setCurrentAccountCredentials } = useRecoilValue(currentAccountState)
 
@@ -31,7 +32,7 @@ const Login: React.FC<Props> = ({ validator, service }) => {
     const { email, password } = state
     let newState = {}
     try {
-      const account = await service?.authenticate({ email, password })
+      const account = await authenticate({ email, password })
       setCurrentAccountCredentials({
         email,
         token: account.token,

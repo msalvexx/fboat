@@ -1,33 +1,40 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { act, screen } from '@testing-library/react'
 import { faker } from '@faker-js/faker'
 
 import { populateField, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
-import { AuthenticateUserSpy } from '@/tests/mocks'
 
 import { AccountCredentials } from '@/client/domain/models'
 import { InvalidCredentialsError } from '@/client/domain'
 import { FieldError } from '@/client/presentation/protocols'
 import { Login } from '@/client/presentation/pages'
+import { AuthenticateUser } from '@fboat/core'
 
 type SutTypes = {
-  service: AuthenticateUserSpy
+  service: jest.Mock
   setCurrentAccountMock: (account: AccountCredentials) => void
+  result: AuthenticateUser.Result
 }
 
 const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
-  const service = new AuthenticateUserSpy()
+  const service = jest.fn()
+  const result = {
+    personName: faker.name.fullName(),
+    token: faker.datatype.uuid(),
+    avatar: faker.image.avatar()
+  }
+  service.mockResolvedValue(result)
   const { setCurrentAccountMock } = render({
-    Page: () => <Login service={service} validator={() => errors}/>,
+    Page: () => <Login authenticate={service} validator={() => errors}/>,
     history: ['/login']
   })
-  return { service, setCurrentAccountMock }
+  return { service, setCurrentAccountMock, result }
 }
 
 const simulateValidSubmit = async (): Promise<{ email: string, password: string }> => {
   const email = populateField('email')
   const password = populateField('password')
-  await simulateSubmit()
+  await act(async () => await simulateSubmit())
   return { email, password }
 }
 
@@ -73,13 +80,13 @@ describe('Login Page', () => {
 
     const { email, password } = await simulateValidSubmit()
 
-    expect(service.params).toStrictEqual({ email, password })
+    expect(service).toHaveBeenCalledWith({ email, password })
   })
 
   test('Should present error if authentication fails', async () => {
     const { service } = renderSut()
     const error = new InvalidCredentialsError()
-    service.result = error
+    service.mockRejectedValueOnce(error)
 
     await simulateValidSubmit()
 
@@ -88,14 +95,14 @@ describe('Login Page', () => {
   })
 
   test('Should call UpdateCurrentAccount on success', async () => {
-    const { service, setCurrentAccountMock } = renderSut()
+    const { setCurrentAccountMock, result } = renderSut()
 
     const { email } = await simulateValidSubmit()
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith({
-      avatar: service.result.avatar,
-      token: service.result.token,
-      name: service.result.personName,
+      avatar: result.avatar,
+      token: result.token,
+      name: result.personName,
       email
     })
     expect(location.pathname).toBe('/')

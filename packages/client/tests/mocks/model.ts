@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { Account, getAvailableRoleNames } from '@fboat/core'
+import { Account } from '@fboat/core/iam/models'
 import { AccountCredentials } from '@/client/domain/models'
 
 export const mockAccountCredentials = (): AccountCredentials => ({
@@ -23,6 +23,6 @@ export const mockAccountModel = (): Account => new Account({
     userId: faker.datatype.uuid(),
     email: faker.internet.email(),
     password: faker.datatype.uuid(),
-    roles: faker.helpers.arrayElements(getAvailableRoleNames())
+    roles: faker.helpers.arrayElements(['Administrator', 'Writer'])
   }
 })

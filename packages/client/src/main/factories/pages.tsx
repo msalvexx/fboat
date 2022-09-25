@@ -6,7 +6,7 @@ import { setupValidator } from './validator'
 import { makeAuthenticationService } from './services'
 
 export const Login: React.FC<any> = () => <Pages.Login
-  service={makeAuthenticationService()}
+  authenticate={makeAuthenticationService()}
   validator={setupValidator(Schemas.loginBodySchema)}
 />
 export const Home: React.FC<any> = () => <Pages.Home/>

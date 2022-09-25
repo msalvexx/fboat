@@ -42,9 +42,9 @@ const AdminOptions: React.FC<AdminOptionsProps> = ({ user }) => {
 }
 
 const AccountMenu: React.FC = () => {
-  const { getCurrectAccountData, getCurrentAccountCredentials } = useRecoilValue(currentAccountState)
+  const { getCurrentAccount, getCurrentAccountCredentials } = useRecoilValue(currentAccountState)
   const { avatar, email, name } = getCurrentAccountCredentials()
-  const { user } = getCurrectAccountData()
+  const { user } = getCurrentAccount()
   const [showMenuState, setMenuState] = useState(false)
   const ref = useOutsideClick(() => setMenuState(false))
   return <ul data-testid='account-menu'>
