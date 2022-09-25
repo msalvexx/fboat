@@ -11,6 +11,7 @@ export namespace TokenGenerator {
     accountId: string
     userId: string
     email: string
+    roles: string[]
   }
 
   export type Result = string

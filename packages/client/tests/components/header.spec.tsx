@@ -11,8 +11,8 @@ type SutParams = {
   hidePrimaryAction?: boolean
 }
 const defaultSut = { account: mockAccountModel(), hidePrimaryAction: false }
-const renderSut = ({ accountCredentials = mockAccountCredentials(), hidePrimaryAction = false }: SutParams = defaultSut): void => {
-  render({
+const renderSut = async ({ accountCredentials = mockAccountCredentials(), hidePrimaryAction = false }: SutParams = defaultSut): Promise<void> => {
+  await render({
     Page: () => <Header buttonHidden={hidePrimaryAction}/>,
     history: ['/'],
     accountCredentials
@@ -20,24 +20,24 @@ const renderSut = ({ accountCredentials = mockAccountCredentials(), hidePrimaryA
 }
 
 describe('Header Component', () => {
-  test('Should not show account menu when no account is logged', () => {
+  test('Should not show account menu when no account is logged', async () => {
     const accountCredentials = null
-    renderSut({ accountCredentials })
+    await renderSut({ accountCredentials })
 
     expect(() => screen.getByTestId('account-menu')).toThrow()
     expect(() => screen.getByTestId('login-action')).not.toThrow()
   })
 
-  test('Should show account menu when account is logged', () => {
-    renderSut()
+  test('Should show account menu when account is logged', async () => {
+    await renderSut()
 
     expect(() => screen.getByTestId('account-menu')).not.toThrow()
     expect(() => screen.getByTestId('new-article-action')).not.toThrow()
     expect(() => screen.getByTestId('login-action')).toThrow()
   })
 
-  test('Should not show any button action', () => {
-    renderSut({ hidePrimaryAction: true })
+  test('Should not show any button action', async () => {
+    await renderSut({ hidePrimaryAction: true })
 
     expect(screen.getByTestId('primary-action-wrapper')).not.toBeVisible()
   })

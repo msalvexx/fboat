@@ -2,6 +2,7 @@ import * as path from 'path'
 import * as webpack from 'webpack'
 
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin'
 import 'webpack-dev-server'
 
 const config: webpack.Configuration = {
@@ -54,7 +55,8 @@ const config: webpack.Configuration = {
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:3000')
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new NodePolyfillPlugin()
   ]
 }
 

@@ -13,65 +13,66 @@ type SutParams = {
 }
 
 type SutTypes = {
+  getCurrentAccountMock: () => Promise<Account>
   setCurrentAccountMock: (account: AccountCredentials) => void
   navigate: jest.Mock
 }
 
-const renderSut = ({ account, accountCredentials }: SutParams): SutTypes => {
-  const { setCurrentAccountMock, navigate } = render({
+const renderSut = async ({ account, accountCredentials }: SutParams): Promise<SutTypes> => {
+  const { setCurrentAccountMock, navigate, getCurrentAccountMock } = await render({
     Page: () => <AccountMenu />,
     history: ['/'],
     account,
     accountCredentials
   })
-  return { setCurrentAccountMock, navigate }
+  return { setCurrentAccountMock, navigate, getCurrentAccountMock }
 }
 
 describe('Account Menu', () => {
-  test('Should present the correct email', () => {
+  test('Should present the correct email', async () => {
     const accountCredentials = mockAccountCredentials()
 
-    renderSut({ accountCredentials })
+    await renderSut({ accountCredentials })
 
     expect(screen.getByTestId('avatar-subtitle')).toContainHTML(accountCredentials.email)
   })
 
-  test('Should present the correct name', () => {
+  test('Should present the correct name', async () => {
     const accountCredentials = mockAccountCredentials()
 
-    renderSut({ accountCredentials })
+    await renderSut({ accountCredentials })
 
     expect(screen.getByTestId('avatar-title')).toContainHTML(accountCredentials.name)
   })
 
-  test('Should present the correct photo', () => {
+  test('Should present the correct photo', async () => {
     const accountCredentials = mockAccountCredentials()
 
-    renderSut({ accountCredentials })
+    await renderSut({ accountCredentials })
 
     expect(screen.getByTestId('avatar-photo')).toHaveAttribute('src', accountCredentials.avatar)
   })
 
-  test('Should show admin options if user has permission', () => {
+  test('Should show admin options if user has permission', async () => {
     const account = mockAccountModel({ roles: ['Administrator'] })
 
-    renderSut({ account })
+    await renderSut({ account })
 
     expect(() => screen.getByTestId('list-accounts-action')).not.toThrow()
     expect(() => screen.getByTestId('create-account-action')).not.toThrow()
   })
 
-  test('Should not show create account option if user not has permission', () => {
+  test('Should not show create account option if user not has permission', async () => {
     const account = mockAccountModel({ roles: ['Writer'] })
 
-    renderSut({ account })
+    await renderSut({ account })
 
     expect(() => screen.getByTestId('list-accounts-action')).toThrow()
     expect(() => screen.getByTestId('create-account-action')).toThrow()
   })
 
   test('Should call setCurrentAccount with null', async () => {
-    const { setCurrentAccountMock, navigate } = renderSut({})
+    const { setCurrentAccountMock, navigate } = await renderSut({})
 
     await act(async () => {
       const logout = screen.getByTestId('logout')

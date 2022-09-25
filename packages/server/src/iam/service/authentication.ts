@@ -1,4 +1,4 @@
-import { Account, UnauthorizedError, AuthenticateUser, Authenticator, AuthenticationCertifier } from '@fboat/core'
+import { Account, UnauthorizedError, AuthenticateUser, Authenticator, AuthenticationCertifier, getAvailableRoleNames } from '@fboat/core'
 import { GetAccountByEmailRepository, Cryptography, Hasher } from '@/server/iam/protocols'
 
 export class AuthenticationService implements Authenticator, AuthenticationCertifier {
@@ -15,7 +15,12 @@ export class AuthenticationService implements Authenticator, AuthenticationCerti
     const retrievedAccount = new Account(retrievedAccountParams)
     const isMatch = await this.hasher.compare(digest, retrievedAccount.user.password)
     if (!isMatch) throw new UnauthorizedError()
-    const token = await this.crypto.generate({ accountId: retrievedAccount.accountId, userId: retrievedAccount.user.userId, email })
+    const token = await this.crypto.generate({ 
+      accountId: retrievedAccount.accountId, 
+      userId: retrievedAccount.user.userId, 
+      email, 
+      roles: retrievedAccount.user.roles.map(x => x.name)
+    })
     return {
       token,
       personName: retrievedAccount.personalData.fullName,

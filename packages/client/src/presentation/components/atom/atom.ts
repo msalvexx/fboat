@@ -7,6 +7,6 @@ export const currentAccountState = atom({
   default: {
     getCurrentAccountCredentials: null as () => AccountCredentials,
     setCurrentAccountCredentials: null as (account: AccountCredentials | undefined) => void,
-    getCurrentAccount: null as () => Account
+    getCurrentAccount: null as () => Promise<Account>
   }
 })

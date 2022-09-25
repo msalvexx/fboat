@@ -10,5 +10,13 @@
     "@types/rimraf": "^3.0.2",
     "rimraf": "^3.0.2",
     "typescript": "^4.8.3"
+  },
+  "scripts": {
+    "start": "npm run start:client & npm run start:server",
+    "start:client": "cd packages/client && npm start",
+    "start:server": "cd packages/server && make start-deps && npm start",
+    "build:server": "cd packages/server && npm run build",
+    "build:client": "cd packages/client && npm run build",
+    "build:core": "cd packages/core && npm run build"
   }
 }

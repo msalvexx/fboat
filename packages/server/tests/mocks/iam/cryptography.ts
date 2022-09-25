@@ -5,7 +5,8 @@ export class CryptographyMock implements Cryptography {
   verifyResult = {
     accountId: '123',
     userId: '123',
-    email: 'valid@mail.com'
+    email: 'valid@mail.com',
+    roles: ['Administrator']
   }
 
   async generate (params: TokenGenerator.Params): Promise<TokenGenerator.Result> {
