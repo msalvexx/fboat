@@ -1,11 +1,19 @@
 import { Handler, HttpRequest, HttpResourceHandler, HttpResponseHandler, HttpResponseMapper, HttpStatusCode, HttpStatusHandler, ResourceHandler } from '@/client/domain'
 import { makeAxiosHttpClient } from '@/client/main/factories'
+import { currentAccountState } from '@/client/presentation/components'
 import { ForbiddenError, ResourceNotFoundError, UnauthorizedError } from '@fboat/core'
+import { useRecoilValue } from 'recoil'
 
 export class HttpResourceHandlerBuilder<T = any> {
   private constructor (private instance: ResourceHandler) {}
 
   public static resource<T> (request: HttpRequest): HttpResourceHandlerBuilder {
+    const { getCurrentAccountCredentials } = useRecoilValue(currentAccountState)
+    const credentials = getCurrentAccountCredentials()
+    if (credentials) {
+      request.headers = request.headers ?? {}
+      request.headers = { ...request.headers, Authorization: credentials.token }
+    }
     return new HttpResourceHandlerBuilder<T>(new HttpResourceHandler(makeAxiosHttpClient<T>(), request))
   }
 
