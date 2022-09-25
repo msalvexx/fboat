@@ -1,7 +1,7 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import { render } from '@/tests/helpers'
-import { mockAccountCredentials } from '@/tests/mocks'
+import { mockAccountCredentials, mockAccountModel } from '@/tests/mocks'
 
 import { Account } from '@fboat/core'
 import { AccountCredentials } from '@/client/domain'
@@ -12,13 +12,19 @@ type SutParams = {
   accountCredentials?: AccountCredentials
 }
 
-const renderSut = ({ account, accountCredentials }: SutParams): void => {
-  render({
+type SutTypes = {
+  setCurrentAccountMock: (account: AccountCredentials) => void
+  navigate: jest.Mock
+}
+
+const renderSut = ({ account, accountCredentials }: SutParams): SutTypes => {
+  const { setCurrentAccountMock, navigate } = render({
     Page: () => <AccountMenu />,
     history: ['/'],
     account,
     accountCredentials
   })
+  return { setCurrentAccountMock, navigate }
 }
 
 describe('Account Menu', () => {
@@ -44,5 +50,36 @@ describe('Account Menu', () => {
     renderSut({ accountCredentials })
 
     expect(screen.getByTestId('avatar-photo')).toHaveAttribute('src', accountCredentials.avatar)
+  })
+
+  test('Should show admin options if user has permission', () => {
+    const account = mockAccountModel({ roles: ['Administrator'] })
+
+    renderSut({ account })
+
+    expect(() => screen.getByTestId('list-accounts-action')).not.toThrow()
+    expect(() => screen.getByTestId('create-account-action')).not.toThrow()
+  })
+
+  test('Should not show create account option if user not has permission', () => {
+    const account = mockAccountModel({ roles: ['Writer'] })
+
+    renderSut({ account })
+
+    expect(() => screen.getByTestId('list-accounts-action')).toThrow()
+    expect(() => screen.getByTestId('create-account-action')).toThrow()
+  })
+
+  test('Should call setCurrentAccount with null', async () => {
+    const { setCurrentAccountMock, navigate } = renderSut({})
+
+    await act(async () => {
+      const logout = screen.getByTestId('logout')
+      fireEvent.click(logout)
+      await waitFor(() => logout)
+    })
+
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
+    expect(navigate).toHaveBeenCalledWith('/login')
   })
 })

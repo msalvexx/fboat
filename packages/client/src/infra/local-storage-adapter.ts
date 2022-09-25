@@ -10,6 +10,6 @@ export class LocalStorageAdapter implements Storage {
   }
 
   get (key: string): any {
-    return JSON.parse(localStorage.getItem(key) ?? '')
+    return JSON.parse(localStorage.getItem(key))
   }
 }

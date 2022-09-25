@@ -9,7 +9,11 @@ export const mockAccountCredentials = (): AccountCredentials => ({
   email: faker.internet.email()
 })
 
-export const mockAccountModel = (): Account => new Account({
+type AccountModelParams = {
+  roles?: string[]
+}
+
+export const mockAccountModel = ({ roles }: AccountModelParams = {}): Account => new Account({
   accountId: faker.datatype.uuid(),
   personalData: {
     birthDate: faker.date.past(),
@@ -23,6 +27,6 @@ export const mockAccountModel = (): Account => new Account({
     userId: faker.datatype.uuid(),
     email: faker.internet.email(),
     password: faker.datatype.uuid(),
-    roles: faker.helpers.arrayElements(['Administrator', 'Writer'])
+    roles: roles ?? faker.helpers.arrayElements(['Administrator', 'Writer'])
   }
 })

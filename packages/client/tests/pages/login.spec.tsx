@@ -14,6 +14,7 @@ type SutTypes = {
   service: jest.Mock
   setCurrentAccountMock: (account: AccountCredentials) => void
   result: AuthenticateUser.Result
+  navigate: jest.Mock
 }
 
 const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
@@ -24,11 +25,11 @@ const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
     avatar: faker.image.avatar()
   }
   service.mockResolvedValue(result)
-  const { setCurrentAccountMock } = render({
+  const { setCurrentAccountMock, navigate } = render({
     Page: () => <Login authenticate={service} validator={() => errors}/>,
     history: ['/login']
   })
-  return { service, setCurrentAccountMock, result }
+  return { service, setCurrentAccountMock, result, navigate }
 }
 
 const simulateValidSubmit = async (): Promise<{ email: string, password: string }> => {
@@ -95,7 +96,7 @@ describe('Login Page', () => {
   })
 
   test('Should call UpdateCurrentAccount on success', async () => {
-    const { setCurrentAccountMock, result } = renderSut()
+    const { setCurrentAccountMock, result, navigate } = renderSut()
 
     const { email } = await simulateValidSubmit()
 
@@ -105,6 +106,6 @@ describe('Login Page', () => {
       name: result.personName,
       email
     })
-    expect(location.pathname).toBe('/')
+    expect(navigate).toHaveBeenCalledWith('/')
   })
 })

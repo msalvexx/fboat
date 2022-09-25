@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Styles from './login-styles.scss'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 
 import { Validator } from '@/client/presentation/protocols'
@@ -16,11 +16,13 @@ type Props = {
 }
 
 const Login: React.FC<Props> = ({ validator, authenticate }) => {
+  const resetLoginState = useResetRecoilState(loginState)
   const [state, setState] = useRecoilState(loginState)
   const { setCurrentAccountCredentials } = useRecoilValue(currentAccountState)
 
   const navigate = useNavigate()
 
+  useEffect(() => resetLoginState(), [])
   useEffect(() => validate(), [state.email])
   useEffect(() => validate(), [state.password])
 

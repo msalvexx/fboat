@@ -8,6 +8,13 @@ import { Account } from '@fboat/core'
 import { AccountCredentials } from '@/client/domain/models'
 import { currentAccountState } from '@/client/presentation/components'
 
+const navigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => navigate
+}))
+
 type Params = {
   Page: React.FC
   history: string[]
@@ -18,6 +25,7 @@ type Params = {
 
 type Result = {
   setCurrentAccountMock: (account: AccountCredentials) => void
+  navigate: jest.Mock
 }
 
 const setCurrentAccountMock = jest.fn()
@@ -38,8 +46,8 @@ export const render = ({ Page, history, accountCredentials = mockAccountCredenti
       </MemoryRouter>
     </RecoilRoot>
   )
-
   return {
-    setCurrentAccountMock
+    setCurrentAccountMock,
+    navigate
   }
 }
