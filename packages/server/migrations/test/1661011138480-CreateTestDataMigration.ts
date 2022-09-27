@@ -16,7 +16,7 @@ export class CreateTestDataMigration1661011138480 implements MigrationInterface 
   <p>Yes, there are some concepts which are distinct for some languages but the basics are still the same. It is no longer about “what is the syntax to do this”, but rather “how to solve this problem and make it run efficiently”.</p>
   <p>I have recently started learning C and it has been a like a whole new exciting world for me. As I said, many things I knew from other languages, however, stuff like memory allocation or pointers completely blew my mind. Finally, I could understand how it all works on a deeper level.</p>
   <p>And this is always fascinating when I look into something that used to be like a black box for me.</p>
-  <p>It has been a pleasure to share this idea with you and I hope you enjoyed my first post here on Medium 👋</p>
+  <p>It has been a pleasure to share this idea with you and I hope you enjoyed my first post here on Medium</p>
   `
   private readonly createUsers: string = `
   INSERT INTO usuarios
@@ -38,7 +38,7 @@ export class CreateTestDataMigration1661011138480 implements MigrationInterface 
   VALUES
     ('6b1eec7e-ac93-4fb6-8924-0327a750b1e6', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-1', 'Artigo 1', 'foto 1', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAxPC9kaXY+PC9odG1sPg==', 0, 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00'),
     ('74ed31a1-2877-4763-8c53-9956645e5f2c', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'artigo-2', 'Artigo 2', 'foto 2', 'resumo qualquer', 'PGh0bWw+PGRpdj5URVNURSAyPC9kaXY+PC9odG1sPg==', 0, 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00'),
-    ('3e8081e9-93be-4ab4-9a36-4165c563035e', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'a-sign-you-are-not-a-beginner-programmer-anymore', 'A Sign You Are Not A Beginner Programmer Anymore', 'https://miro.medium.com/max/2400/1*KRvhEGacBHexmoaBlbzKpQ.jpeg', 'And the single moment it all changed for me', '${this.article}', 0, 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00'),;
+    ('3e8081e9-93be-4ab4-9a36-4165c563035e', '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85', 'a-sign-you-are-not-a-beginner-programmer-anymore', 'A Sign You Are Not A Beginner Programmer Anymore', 'https://miro.medium.com/max/2400/1*KRvhEGacBHexmoaBlbzKpQ.jpeg', 'And the single moment it all changed for me', '${this.article}', 0, 1, '2022-12-23 00:00:00', '2022-12-23 00:00:00', '2022-12-23 00:00:00');
   `
 
   public async up (queryRunner: QueryRunner): Promise<void> {

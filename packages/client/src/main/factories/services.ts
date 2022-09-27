@@ -1,9 +1,9 @@
-import { AuthenticateUser, GetAccount } from '@fboat/core/iam/protocols'
-import { Handler } from '@/client/domain'
+import { AuthenticateUser, GetAccount, Account, GetArticle, Permission, User } from '@fboat/core'
+import { getCurrentAccountAdapter } from '@/client/main/adapters'
+import { Article, Handler } from '@/client/domain'
 import { HttpResourceHandlerBuilder } from './http-resource-builder'
 import { makeJwtDecrypter } from './infra'
-import { Account, Permission, User } from '@fboat/core'
-import { getCurrentAccountAdapter } from '../adapters'
+import { PageResult } from '@/client/domain/protocols/page'
 
 export const getApiUrl = (path: string): string => `${process.env.API_URL}${path}`
 
@@ -34,6 +34,31 @@ export const makeGetLoggedAccountInformation = (): Handler<Account> => {
     })
     .unauthorized()
     .map(x => new Account(x))
+    .build()
+}
+
+export const makeGetArticle = (slugOrId: string): Handler<GetArticle.Result> => {
+  return HttpResourceHandlerBuilder
+    .resource<GetAccount.Result>({
+      method: 'get',
+      url: getApiUrl(`/article/${slugOrId}`)
+    })
+    .notFound()
+    .map(x => ({
+      ...x,
+      creationDate: x.creationDate && new Date(x.creationDate),
+      updateDate: x.updateDate && new Date(x.updateDate)
+    }))
+    .build()
+}
+
+export const makeGetArticles = (): Handler<Article[]> => {
+  return HttpResourceHandlerBuilder
+    .resource<PageResult<Article>>({
+      method: 'get',
+      url: getApiUrl('/article')
+    })
+    .map(x => x.items.map(y => ({ ...y, publishDate: y.publishDate && new Date(y.publishDate) })))
     .build()
 }
 

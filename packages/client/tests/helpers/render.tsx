@@ -10,6 +10,10 @@ import { currentAccountState } from '@/client/presentation/components'
 
 const navigate = jest.fn()
 
+jest.mock('uikit', () => ({
+  slider: () => undefined
+}))
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => navigate
@@ -27,6 +31,7 @@ type Params = {
 type Result = {
   setCurrentAccountMock: (account: AccountCredentials) => void
   navigate: jest.Mock
+  container: HTMLElement
 }
 
 const setCurrentAccountMock = jest.fn()
@@ -41,7 +46,7 @@ export const render = ({ Page, history, accountCredentials = mockAccountCredenti
     [...states, { atom: currentAccountState, value: mockedState }].forEach(state => set(state.atom, state.value))
   }
 
-  reactRender(
+  const { container } = reactRender(
     <RecoilRoot initializeState={initializeState}>
       <MemoryRouter initialEntries={history}>
         <Page/>
@@ -51,6 +56,7 @@ export const render = ({ Page, history, accountCredentials = mockAccountCredenti
 
   return {
     setCurrentAccountMock,
-    navigate
+    navigate,
+    container
   }
 }

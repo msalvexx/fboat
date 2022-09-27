@@ -58,13 +58,15 @@ export namespace ListArticlesRepository {
   }
 
   type Article = {
-    title: string
-    content: string
-    summary: string
-    author: Author
-    coverPhoto: string
-    slug?: string
-    articleId: string
+    articleId: string,
+    author: Author,
+    coverPhoto: string,
+    slug: string,
+    title: string,
+    summary: string,
+    publishDate: Date,
+    isFeatured: boolean,
+    isPublished: boolean
   }
 
   export type Result = {
