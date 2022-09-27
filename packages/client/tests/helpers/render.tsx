@@ -1,8 +1,8 @@
 import React from 'react'
-import { render as reactRender, waitFor } from '@testing-library/react'
+import { render as reactRender } from '@testing-library/react'
 import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil'
 import { MemoryRouter } from 'react-router-dom'
-import { mockAccountCredentials, mockAccountModel } from '@/tests/mocks'
+import { mockAccountCredentials } from '@/tests/mocks'
 
 import { Account } from '@fboat/core'
 import { AccountCredentials } from '@/client/domain/models'
@@ -21,23 +21,21 @@ type Params = {
   accountCredentials?: AccountCredentials
   account?: Account
   states?: Array<{ atom: RecoilState<any>, value: any }>
+  hasPermissionMock?: jest.Mock
 }
 
 type Result = {
-  getCurrentAccountMock: () => Promise<Account>
   setCurrentAccountMock: (account: AccountCredentials) => void
   navigate: jest.Mock
 }
 
 const setCurrentAccountMock = jest.fn()
-const getCurrentAccountMock = jest.fn()
 
-export const render = async ({ Page, history, accountCredentials = mockAccountCredentials(), account = mockAccountModel(), states = [] }: Params): Promise<Result> => {
-  getCurrentAccountMock.mockResolvedValue(account)
+export const render = ({ Page, history, accountCredentials = mockAccountCredentials(), states = [], hasPermissionMock = jest.fn() }: Params): Result => {
   const mockedState = {
     setCurrentAccountCredentials: setCurrentAccountMock,
     getCurrentAccountCredentials: () => accountCredentials,
-    getCurrentAccount: getCurrentAccountMock
+    hasPermission: hasPermissionMock
   }
   const initializeState = ({ set }: MutableSnapshot): void => {
     [...states, { atom: currentAccountState, value: mockedState }].forEach(state => set(state.atom, state.value))
@@ -51,10 +49,7 @@ export const render = async ({ Page, history, accountCredentials = mockAccountCr
     </RecoilRoot>
   )
 
-  await waitFor(() => expect(getCurrentAccountMock).toHaveBeenCalled())
-
   return {
-    getCurrentAccountMock,
     setCurrentAccountMock,
     navigate
   }

@@ -17,7 +17,7 @@ type SutTypes = {
   navigate: jest.Mock
 }
 
-const renderSut = async (errors: FieldError[] | undefined = undefined): Promise<SutTypes> => {
+const renderSut = (errors: FieldError[] | undefined = undefined): SutTypes => {
   const service = jest.fn()
   const result = {
     personName: faker.name.fullName(),
@@ -25,7 +25,7 @@ const renderSut = async (errors: FieldError[] | undefined = undefined): Promise<
     avatar: faker.image.avatar()
   }
   service.mockResolvedValue(result)
-  const { setCurrentAccountMock, navigate } = await render({
+  const { setCurrentAccountMock, navigate } = render({
     Page: () => <Login authenticate={service} validator={() => errors}/>,
     history: ['/login']
   })
@@ -40,8 +40,8 @@ const simulateValidSubmit = async (): Promise<{ email: string, password: string 
 }
 
 describe('Login Page', () => {
-  test('Should start page with initial behavior', async () => {
-    await renderSut()
+  test('Should start page with initial behavior', () => {
+    renderSut()
 
     expect(screen.getByTestId('form-status-wrap').children).toHaveLength(0)
     testStatusForField('email')
@@ -51,7 +51,7 @@ describe('Login Page', () => {
   test('Should show password error if validation fails', async () => {
     const message = faker.random.word()
     const errors = [{ field: 'password', message }]
-    await renderSut(errors)
+    renderSut(errors)
 
     await simulateSubmit()
 
@@ -61,7 +61,7 @@ describe('Login Page', () => {
   test('Should show email error if validation fails', async () => {
     const message = faker.random.word()
     const errors = [{ field: 'email', message }]
-    await renderSut(errors)
+    renderSut(errors)
 
     await simulateSubmit()
 
@@ -69,7 +69,7 @@ describe('Login Page', () => {
   })
 
   test('Should show load spinner when a valid submit', async () => {
-    await renderSut()
+    renderSut()
 
     await simulateValidSubmit()
 
@@ -77,7 +77,7 @@ describe('Login Page', () => {
   })
 
   test('Should call authentication service with correct values', async () => {
-    const { service } = await renderSut()
+    const { service } = renderSut()
 
     const { email, password } = await simulateValidSubmit()
 
@@ -85,7 +85,7 @@ describe('Login Page', () => {
   })
 
   test('Should present error if authentication fails', async () => {
-    const { service } = await renderSut()
+    const { service } = renderSut()
     const error = new InvalidCredentialsError()
     service.mockRejectedValueOnce(error)
 
@@ -96,7 +96,7 @@ describe('Login Page', () => {
   })
 
   test('Should call UpdateCurrentAccount on success', async () => {
-    const { setCurrentAccountMock, result, navigate } = await renderSut()
+    const { setCurrentAccountMock, result, navigate } = renderSut()
 
     const { email } = await simulateValidSubmit()
 

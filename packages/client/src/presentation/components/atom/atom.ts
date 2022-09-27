@@ -1,5 +1,5 @@
 import { AccountCredentials } from '@/client/domain'
-import { Account } from '@fboat/core'
+import { Permission } from '@fboat/core'
 import { atom } from 'recoil'
 
 export const currentAccountState = atom({
@@ -7,6 +7,6 @@ export const currentAccountState = atom({
   default: {
     getCurrentAccountCredentials: null as () => AccountCredentials,
     setCurrentAccountCredentials: null as (account: AccountCredentials | undefined) => void,
-    getCurrentAccount: null as () => Promise<Account>
+    hasPermission: null as (permission: Permission) => boolean
   }
 })

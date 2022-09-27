@@ -2,7 +2,7 @@ import { AuthenticateUser, GetAccount } from '@fboat/core/iam/protocols'
 import { Handler } from '@/client/domain'
 import { HttpResourceHandlerBuilder } from './http-resource-builder'
 import { makeJwtDecrypter } from './infra'
-import { Account } from '@fboat/core'
+import { Account, Permission, User } from '@fboat/core'
 import { getCurrentAccountAdapter } from '../adapters'
 
 export const getApiUrl = (path: string): string => `${process.env.API_URL}${path}`
@@ -14,6 +14,7 @@ export const makeAuthenticationService = (): Handler<AuthenticateUser.Result> =>
       url: getApiUrl('/login')
     })
     .unauthorized()
+    .map()
     .build()
 }
 
@@ -39,4 +40,12 @@ export const makeGetLoggedAccountInformation = (): Handler<Account> => {
 export const getAccountInformationAdapter = async (): Promise<Account> => {
   const handler = makeGetLoggedAccountInformation()
   return await handler({})
+}
+
+export const permissionVerifierAdapter = (permission: Permission): boolean => {
+  const token = getToken()
+  if (!token) return false
+  const { userId, email, roles } = makeJwtDecrypter().verify(token)
+  const user = new User({ userId, email, roles })
+  return user.hasPermission(permission)
 }
