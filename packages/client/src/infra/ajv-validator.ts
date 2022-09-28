@@ -24,6 +24,7 @@ export const validate: Validation = (ajvValidate: ValidateFunction<unknown>) => 
   sanitize(fields)
   ajvValidate(fields)
   if (!ajvValidate.errors) return undefined
+  const providedKeys = Object.keys(fields)
   const messages = ajvValidate.errors
     .filter(error => error.keyword === 'errorMessage')
     .map(error => {
@@ -44,4 +45,5 @@ export const validate: Validation = (ajvValidate: ValidateFunction<unknown>) => 
           return { field: params.missingProperty, message }
       }
     })
+    .filter(error => providedKeys.includes(error.field))
 }
