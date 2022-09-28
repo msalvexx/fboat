@@ -32,4 +32,14 @@ describe('Edit Article Page', () => {
 
     testStatusForField('title', message)
   })
+
+  test('Should show content error if validation fails', async () => {
+    const message = faker.random.word()
+    const validatorMock = jest.fn(() => [{ field: 'content', message }])
+    renderSut({ validatorMock })
+
+    await simulateSubmit()
+
+    testStatusForField('content', message)
+  })
 })
