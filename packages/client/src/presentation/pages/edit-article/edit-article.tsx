@@ -23,31 +23,29 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle }) => {
     actions={[{ handler: () => {}, name: 'Salvar Rascunho' }]}
   />
 
-  if (loadArticle) {
-    setState({ ...state, isLoading: true, isEditMode: true })
-    useEffect(() => {
-      loadArticle({})
-        .then(({ content, summary: description, title, coverPhoto }) => setState({ ...state, title, coverPhoto, content, description, isLoading: false }))
-        .catch(error => {
-          setState({ ...state, isLoading: false })
-          console.error(error)
-        })
-    })
+  const load = (): void => {
+    if (!loadArticle) return
+    loadArticle({})
+      .then(({ summary: description, ...article }) => setState(old => ({ ...old, ...article, description })))
+      .catch(console.error)
   }
 
-  useEffect(() => validate(), [state.content])
-  useEffect(() => validate(), [state.title])
-  useEffect(() => validate(), [state.coverPhoto])
-  useEffect(() => validate(), [state.description])
+  const mode = state.articleId !== '' ? 'edit' : 'create'
+  const isEditMode = mode === 'edit'
 
-  const validate = (): void => {
-    const { content, coverPhoto, description, title } = state
-    const errors = validator({ content, coverPhoto, description, title })
-    const newState: any = { content: '', coverPhoto: '', description: '', title: '' }
+  const validate = (key: string): void => {
+    const errors = validator({ [key]: state[key] })
+    const newState: any = { [`${key}Error`]: '' }
     errors?.forEach(({ field, message }) => (newState[`${field}Error`] = message))
-    const isFormInvalid = !!newState.content || !!newState.coverPhoto || !!newState.description || !!newState.title
+    const isFormInvalid = !!newState.contentError || !!newState.coverPhotoError || !!newState.descriptionError || !!newState.titleError
     setState(old => ({ ...old, ...newState, isFormInvalid }))
   }
+
+  useEffect(() => load(), [])
+  useEffect(() => validate('content'), [state.content])
+  useEffect(() => validate('title'), [state.title])
+  useEffect(() => validate('coverPhoto'), [state.coverPhoto])
+  useEffect(() => validate('description'), [state.description])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
@@ -56,8 +54,8 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle }) => {
 
   return <>
     <Header button={component}/>
-    <section className={Styles.editArticle} data-testid='editor' data-mode={state.isEditMode ? 'edit' : 'create'}>
-      <h3 className='uk-text-lead'>{state.isEditMode ? 'Alterar artigo' : 'Novo artigo'}</h3>
+    <section className={Styles.editArticle} data-testid='editor' data-mode={mode} data-articleid={state.articleId}>
+      <h3 className='uk-text-lead'>{isEditMode ? 'Alterar artigo' : 'Novo artigo'}</h3>
       <form data-testid='form' onSubmit={handleSubmit}>
         <fieldset>
           <Input type="text" name="title" state={state} setState={setState} placeholder="Título"/>

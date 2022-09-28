@@ -29,9 +29,9 @@ const ImageUploader: React.FC<Props> = ({ multiple, message, state, setState, ..
           data-status={status}
           data-testid={props.name}
           readOnly
-          onFocus={e => { e.target.readOnly = false }}
+          onFocus={e => (e.target.readOnly = false)}
           multiple={multiple}
-          onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
+          onChange={e => setState({ ...state, [e.target.name]: e.target.value })}
         />
         <span> selecione a imagem</span>
       </div>

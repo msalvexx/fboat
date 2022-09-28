@@ -23,8 +23,8 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
             data-testid={props.name}
             readOnly
             data-value={state[props.name]}
-            onFocus={e => { e.target.readOnly = false }}
-            onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
+            onFocus={e => (e.target.readOnly = false)}
+            onChange={e => setState({ ...state, [e.target.name]: e.target.value })}
           />
           {props.icon && <span data-uk-icon={`icon: ${props.icon}`}></span>}
           {error && wasSubmitted && <span data-status={error && wasSubmitted ? 'invalid' : 'valid'} data-uk-icon='icon: close'></span>}

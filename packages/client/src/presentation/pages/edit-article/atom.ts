@@ -3,6 +3,7 @@ import { atom } from 'recoil'
 export const editArticleState = atom({
   key: 'editArticleState',
   default: {
+    articleId: '',
     content: '',
     contentError: '',
     wasSubmitted: false,
@@ -12,8 +13,6 @@ export const editArticleState = atom({
     descriptionError: '',
     coverPhoto: '',
     coverPhotoError: '',
-    isFormInvalid: false,
-    isLoading: false,
-    isEditMode: false
+    isFormInvalid: false
   }
 })

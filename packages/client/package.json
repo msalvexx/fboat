@@ -6,7 +6,7 @@
     "start": "webpack-dev-server --open",
     "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
     "build:core": "cd ../core && npm run build && cd ../client && npm i @fboat/core -w @fboat/client",
-    "test": "jest --passWithNoTests --runInBand --no-cache",
+    "test": "jest --passWithNoTests --runInBand --no-cache --silent",
     "test:watch": "npm test -- --watch",
     "test:watch:changed": "npm test -- --watch --onlyChanged",
     "test:integration": "npm test -- --config ./jest.integration.config.ts",
