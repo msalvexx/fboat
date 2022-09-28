@@ -25,6 +25,7 @@ const ImageUploader: React.FC<Props> = ({ multiple, message, state, setState, ..
           {...props}
           name={props.name}
           type="file"
+          data-value={state[props.name]}
           data-status={status}
           data-testid={props.name}
           readOnly

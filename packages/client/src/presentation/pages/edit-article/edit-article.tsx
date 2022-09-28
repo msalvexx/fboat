@@ -4,21 +4,36 @@ import { useRecoilState } from 'recoil'
 import Styles from './edit-article-styles.scss'
 import GlobalStyle from '@/client/presentation/styles/global.scss'
 
-import { ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
+import { GetArticle } from '@fboat/core'
+import { Handler } from '@/client/domain'
 import { Validator } from '@/client/presentation/protocols'
+import { ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
 import { editArticleState } from './atom'
 
 type Props = {
   validator: Validator
+  loadArticle?: Handler<GetArticle.Result>
 }
 
-const EditArticle: React.FC<Props> = ({ validator }) => {
+const EditArticle: React.FC<Props> = ({ validator, loadArticle }) => {
   const [state, setState] = useRecoilState(editArticleState)
   const component = <ButtonGroup
     className={GlobalStyle.ukButtonWhite}
     defaultAction={{ handler: () => {}, name: 'Publicar' }}
     actions={[{ handler: () => {}, name: 'Salvar Rascunho' }]}
   />
+
+  if (loadArticle) {
+    setState({ ...state, isLoading: true, isEditMode: true })
+    useEffect(() => {
+      loadArticle({})
+        .then(({ content, summary: description, title, coverPhoto }) => setState({ ...state, title, coverPhoto, content, description, isLoading: false }))
+        .catch(error => {
+          setState({ ...state, isLoading: false })
+          console.error(error)
+        })
+    })
+  }
 
   useEffect(() => validate(), [state.content])
   useEffect(() => validate(), [state.title])
@@ -39,11 +54,10 @@ const EditArticle: React.FC<Props> = ({ validator }) => {
     setState({ ...state, wasSubmitted: true })
   }
 
-  const isEditing = false
   return <>
     <Header button={component}/>
-    <section className={Styles.editArticle}>
-      <h3 className='uk-text-lead'>{isEditing ? 'Alterar artigo' : 'Novo artigo'}</h3>
+    <section className={Styles.editArticle} data-testid='editor' data-mode={state.isEditMode ? 'edit' : 'create'}>
+      <h3 className='uk-text-lead'>{state.isEditMode ? 'Alterar artigo' : 'Novo artigo'}</h3>
       <form data-testid='form' onSubmit={handleSubmit}>
         <fieldset>
           <Input type="text" name="title" state={state} setState={setState} placeholder="Título"/>

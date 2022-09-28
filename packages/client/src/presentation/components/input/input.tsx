@@ -22,6 +22,7 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
             data-status={error && wasSubmitted ? 'invalid' : 'valid'}
             data-testid={props.name}
             readOnly
+            data-value={state[props.name]}
             onFocus={e => { e.target.readOnly = false }}
             onChange={e => { setState({ ...state, [e.target.name]: e.target.value }) }}
           />

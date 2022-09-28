@@ -19,6 +19,8 @@ export const Router: React.FC = () => {
     <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
       <BrowserRouter>
         <Routes>
+          <Route path='/edit' element={<Pages.EditArticle />} />
+
           <Route element={
             <PrivateRoute permission={'CreateArticle'}>
               <Route path='/article/new' element={<Pages.EditArticle />} />
