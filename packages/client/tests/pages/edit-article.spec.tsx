@@ -1,6 +1,6 @@
 import React from 'react'
-import { screen, waitFor } from '@testing-library/react'
-import { render, simulateSubmit, testStatusForField } from '@/tests/helpers'
+import { act, screen, waitFor } from '@testing-library/react'
+import { attachFile, populateField, populateRichText, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
 import { mockArticle } from '@/tests/mocks'
 
 import { EditArticle } from '@/client/presentation/pages'
@@ -11,8 +11,27 @@ type SutParams = {
   loadArticleMock?: jest.Mock
 }
 
-const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined }: SutParams = {}): void => {
+type SutTypes = {
+  container: HTMLElement
+}
+
+const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined }: SutParams = {}): SutTypes =>
   render({ Page: () => <EditArticle loadArticle={loadArticleMock} validator={validatorMock} />, history: ['/'] })
+
+type ValidSubmitResult = {
+  content: string
+  title: string
+  description: string
+  coverPhoto: File
+}
+
+const simulateValidSubmit = async (container: HTMLElement): Promise<ValidSubmitResult> => {
+  const content = populateRichText(container, 'content')
+  const title = populateField('title')
+  const description = populateField('description')
+  const coverPhoto = attachFile('coverPhoto')
+  await act(async () => await simulateSubmit())
+  return { content, title, description, coverPhoto }
 }
 
 describe('Edit Article Page', () => {
@@ -91,5 +110,13 @@ describe('Edit Article Page', () => {
     expect(screen.getByTestId('description')).toHaveAttribute('data-value', article.summary)
     expect(screen.getByTestId('content')).toHaveAttribute('data-value', article.content)
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', article.coverPhoto)
+  })
+
+  test('Should show load spinner when a valid submit', async () => {
+    const { container } = renderSut()
+
+    await simulateValidSubmit(container)
+
+    expect(screen.queryByTestId('alert')).toHaveTextContent('Publicando artigo...')
   })
 })

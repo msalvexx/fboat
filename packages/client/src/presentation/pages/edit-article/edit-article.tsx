@@ -7,7 +7,7 @@ import GlobalStyle from '@/client/presentation/styles/global.scss'
 import { GetArticle } from '@fboat/core'
 import { Handler } from '@/client/domain'
 import { Validator } from '@/client/presentation/protocols'
-import { ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
+import { Alert, ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
 import { editArticleState } from './atom'
 
 type Props = {
@@ -49,12 +49,13 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle }) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
-    setState({ ...state, wasSubmitted: true })
+    setState({ ...state, wasSubmitted: true, savingChanges: true })
   }
 
   return <>
     <Header button={component}/>
     <section className={Styles.editArticle} data-testid='editor' data-mode={mode} data-articleid={state.articleId}>
+      {state.savingChanges && <Alert text='Publicando artigo...' theme='primary'/>}
       <h3 className='uk-text-lead'>{isEditMode ? 'Alterar artigo' : 'Novo artigo'}</h3>
       <form data-testid='form' onSubmit={handleSubmit}>
         <fieldset>

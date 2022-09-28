@@ -13,6 +13,7 @@ export const editArticleState = atom({
     descriptionError: '',
     coverPhoto: '',
     coverPhotoError: '',
-    isFormInvalid: false
+    isFormInvalid: false,
+    savingChanges: false
   }
 })

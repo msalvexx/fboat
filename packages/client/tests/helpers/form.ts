@@ -23,3 +23,15 @@ export const populateField = (fieldName: string, value = faker.random.word()): s
   fireEvent.input(input, { target: { value } })
   return value
 }
+
+export const attachFile = (fieldName: string, file = new File([''], 'anyfile.png', { type: 'image/png' })): File => {
+  const input = screen.getByTestId(fieldName)
+  fireEvent.input(input, { target: { files: [file] } })
+  return file
+}
+
+export const populateRichText = (container: HTMLElement, fieldName: string, value = faker.random.word()): string => {
+  const textarea = container.querySelector(`[data-testid=${fieldName}] [data-text]`)
+  textarea.innerHTML = value
+  return value
+}
