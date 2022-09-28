@@ -52,4 +52,14 @@ describe('Edit Article Page', () => {
 
     testStatusForField('description', message)
   })
+
+  test('Should show coverPhoto error if validation fails', async () => {
+    const message = faker.random.word()
+    const validatorMock = jest.fn(() => [{ field: 'coverPhoto', message }])
+    renderSut({ validatorMock })
+
+    await simulateSubmit()
+
+    testStatusForField('coverPhoto', message)
+  })
 })
