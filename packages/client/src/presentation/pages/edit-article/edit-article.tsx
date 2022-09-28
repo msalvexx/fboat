@@ -15,10 +15,11 @@ const EditArticle: React.FC = () => {
     defaultAction={{ handler: () => {}, name: 'Publicar' }}
     actions={[{ handler: () => {}, name: 'Salvar Rascunho' }]}
   />
+  const isEditing = false
   return <>
     <Header button={component}/>
     <section className={Styles.editArticle}>
-      <h3 className='uk-text-lead'>Novo artigo</h3>
+      <h3 className='uk-text-lead'>{isEditing ? 'Alterar artigo' : 'Novo artigo'}</h3>
       <form>
         <fieldset>
           <Input type="text" name="title" state={state} setState={setState} placeholder="Título"/>

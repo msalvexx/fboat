@@ -6,7 +6,7 @@ export const editArticleState = atom({
   default: {
     content: EditorState.createEmpty(),
     contentError: 'any error message here',
-    wasSubmitted: true,
+    wasSubmitted: false,
     title: '',
     titleError: 'any error message here',
     description: '',

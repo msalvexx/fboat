@@ -12,9 +12,10 @@ type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>
 const ImageUploader: React.FC<Props> = ({ multiple, message, state, setState, ...props }: Props) => {
   const wasSubmitted = state.wasSubmitted
   const error = state[`${props.name}Error`]
+  const status = error && wasSubmitted ? 'invalid' : 'valid'
   return <>
   <div
-    data-status={error && wasSubmitted ? 'invalid' : 'valid'}
+    data-status={status}
     data-class='js-upload'
     className={Styles.imageUploader}>
       <span data-uk-icon="icon: cloud-upload"></span>
@@ -24,6 +25,7 @@ const ImageUploader: React.FC<Props> = ({ multiple, message, state, setState, ..
           {...props}
           name={props.name}
           type="file"
+          data-status={status}
           data-testid={props.name}
           readOnly
           onFocus={e => { e.target.readOnly = false }}
