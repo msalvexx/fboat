@@ -1,5 +1,6 @@
 import React, { createRef } from 'react'
 import Styles from './input-styles.scss'
+import GlobalStyles from '@/client/presentation/styles/global.scss'
 
 type Props = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   icon?: string
@@ -28,7 +29,7 @@ const Input: React.FC<Props> = ({ state, setState, ...props }: Props) => {
           {error && wasSubmitted && <span data-status={error && wasSubmitted ? 'invalid' : 'valid'} data-uk-icon='icon: close'></span>}
         </div>
       </div>
-      {error && wasSubmitted && <label data-testid={`${props.name}-alert`} className={Styles.errorAlert}>{error}</label>}
+      {error && wasSubmitted && <label data-testid={`${props.name}-alert`} className={GlobalStyles.errorAlert}>{error}</label>}
     </>
   )
 }

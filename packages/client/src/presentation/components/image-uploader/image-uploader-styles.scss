@@ -2,7 +2,12 @@
 
 .imageUploader {
   @extend .uk-placeholder, .uk-text-center,;
-  
+  margin-bottom: 0;
+
+  &[data-status=invalid] {
+    @extend .uk-form-danger;
+  }
+
   background-color: white;
 
   span:nth-of-type(2) {

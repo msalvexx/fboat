@@ -11,6 +11,11 @@
   min-height: 50vh;
 }
 
+[data-content-editor][data-status=invalid] .rdw-editor-main {
+  color: #f0506e;
+  border-color: #f0506e !important;
+}
+
 .rdw-editor-wrapper {
   display: inline-block;
 }

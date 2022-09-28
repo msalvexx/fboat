@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useState } from 'react'
+import React from 'react'
 import Styles from './edit-article-styles.scss'
 
-import { EditorState, convertToRaw } from 'draft-js'
-import { Editor } from 'react-draft-wysiwyg'
-import draftToHtml from 'draftjs-to-html'
-
-import { ButtonGroup, Footer, Header, ImageUploader, Input } from '@/client/presentation/components'
+import { ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
 
 import GlobalStyle from '@/client/presentation/styles/global.scss'
+import { useRecoilState } from 'recoil'
+import { editArticleState } from './atom'
 
 const EditArticle: React.FC = () => {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
-  console.log(draftToHtml(convertToRaw(editorState.getCurrentContent())))
+  const [state, setState] = useRecoilState(editArticleState)
   const component = <ButtonGroup
     className={GlobalStyle.ukButtonWhite}
     defaultAction={{ handler: () => {}, name: 'Publicar' }}
@@ -24,14 +21,10 @@ const EditArticle: React.FC = () => {
       <h3 className='uk-text-lead'>Novo artigo</h3>
       <form>
         <fieldset>
-          <Input type="text" name="title" placeholder="Título"/>
-          <div data-content-editor>
-            <Editor
-              editorState={editorState}
-              onEditorStateChange={setEditorState}/>
-          </div>
-          <Input type="text" name="description" placeholder="Uma breve descrição"/>
-          <ImageUploader multiple={false} message='Adicione a capa do artigo arrastando até aqui'/>
+          <Input type="text" name="title" state={state} setState={setState} placeholder="Título"/>
+          <RichTextEditor name='content' state={state} setState={setState} />
+          <Input type="text" name="description" state={state} setState={setState} placeholder="Uma breve descrição"/>
+          <ImageUploader name='coverPhoto' state={state} setState={setState} multiple={false} message='Adicione a capa do artigo arrastando até aqui'/>
         </fieldset>
       </form>
     </section>

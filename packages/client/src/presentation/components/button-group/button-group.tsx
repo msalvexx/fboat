@@ -16,13 +16,13 @@ const ButtonGroup: React.FC<Props> = ({ className, actions, defaultAction }: Pro
   return <div className='uk-button-group'>
       <a onClick={defaultAction.handler} className={['uk-button', 'uk-button-default', className].join(' ')}>{defaultAction.name}</a>
       <div className='uk-inline'>
-          <button className={[Styles.dropdownIcon, 'uk-button', 'uk-button-default', className].join(' ')} type='button'>
+          <button data-testid={defaultAction.name} className={[Styles.dropdownIcon, 'uk-button', 'uk-button-default', className].join(' ')} >
             <span data-uk-icon='icon: triangle-down'></span>
           </button>
           <div className={Styles.buttonOptions} data-uk-dropdown='mode: click; target: !.uk-button-group;'>
               <ul className='uk-nav uk-dropdown-nav'>
                   {actions.map((action, index) => <li key={index}>
-                    <a onClick={action.handler}>{action.name}</a>
+                    <button data-testid={action.name} onClick={action.handler}>{action.name}</button>
                   </li>)}
               </ul>
           </div>

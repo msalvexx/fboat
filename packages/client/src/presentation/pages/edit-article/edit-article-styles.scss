@@ -2,8 +2,4 @@
 
 .editArticle {
   @extend content, section;
-
-  fieldset > div[data-content-editor] {
-    padding: 10px 0;
-  }
 }
