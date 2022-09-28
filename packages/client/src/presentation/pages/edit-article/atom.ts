@@ -5,13 +5,15 @@ export const editArticleState = atom({
   key: 'editArticleState',
   default: {
     content: EditorState.createEmpty(),
-    contentError: 'any error message here',
+    contentError: '',
     wasSubmitted: false,
     title: '',
-    titleError: 'any error message here',
+    titleError: '',
     description: '',
-    descriptionError: 'any error message here',
+    descriptionError: '',
     coverPhoto: '',
-    coverPhotoError: 'any error message here'
+    coverPhotoError: '',
+    isFormInvalid: false,
+    isLoading: false
   }
 })
