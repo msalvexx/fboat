@@ -31,8 +31,12 @@ const mockedState = {
   submitter: ''
 }
 
-const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), content = '' }: SutParams = {}): void => {
-  render({
+type SutTypes = {
+  navigate: jest.Mock
+}
+
+const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), content = '' }: SutParams = {}): SutTypes => {
+  const { navigate } = render({
     Page: () => <EditArticle
       saveArticle={saveArticleMock}
       loadArticle={loadArticleMock}
@@ -42,6 +46,7 @@ const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, sav
       { atom: editArticleState, value: { content, ...mockedState } }
     ]
   })
+  return { navigate }
 }
 
 type ValidSubmitResult = {
@@ -171,5 +176,15 @@ describe('Edit Article Page', () => {
     await simulateValidSubmit()
 
     expect(screen.queryByTestId('error-alert')).toHaveTextContent(error.message)
+  })
+
+  test('Should navigate to my article case article saved successfully', async () => {
+    const saveArticleMock = jest.fn()
+    const content = faker.lorem.text()
+    const { navigate } = renderSut({ saveArticleMock, content })
+
+    await simulateValidSubmit()
+
+    expect(navigate).toHaveBeenCalledWith('/my-articles')
   })
 })
