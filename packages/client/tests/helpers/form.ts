@@ -24,7 +24,7 @@ export const populateField = (fieldName: string, value = faker.random.word()): s
   return value
 }
 
-export const attachFile = (fieldName: string, file = new File([''], 'anyfile.png', { type: 'image/png' })): File => {
+export const attachFile = (fieldName: string, file = new File([''], `${faker.lorem.word()}.png`, { type: 'image/png' })): File => {
   const input = screen.getByTestId(fieldName)
   fireEvent.change(input, { target: { files: [file] } })
   return file

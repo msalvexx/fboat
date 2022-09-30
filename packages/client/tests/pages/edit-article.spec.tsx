@@ -9,6 +9,7 @@ import { EditArticle } from '@/client/presentation/pages'
 import { editArticleState } from '@/client/presentation/pages/edit-article/atom'
 
 type SutParams = {
+  uploadImageMock?: jest.Mock
   validatorMock?: jest.Mock
   loadArticleMock?: jest.Mock
   saveArticleMock?: jest.Mock
@@ -35,9 +36,13 @@ type SutTypes = {
   navigate: jest.Mock
 }
 
-const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), content = '' }: SutParams = {}): SutTypes => {
+const imageMock = { url: faker.image.imageUrl(), fileName: `${faker.lorem.word()}.png` }
+const defaultUploadImageMock = jest.fn(async () => await Promise.resolve(imageMock))
+
+const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), uploadImageMock = defaultUploadImageMock, content = '' }: SutParams = {}): SutTypes => {
   const { navigate } = render({
     Page: () => <EditArticle
+      uploadImage={uploadImageMock}
       saveArticle={saveArticleMock}
       loadArticle={loadArticleMock}
       validator={validatorMock} />,
@@ -144,7 +149,6 @@ describe('Edit Article Page', () => {
     expect(screen.getByTestId('title')).toHaveAttribute('data-value', article.title)
     expect(screen.getByTestId('summary')).toHaveAttribute('data-value', article.summary)
     expect(screen.getByTestId('content')).toHaveAttribute('data-value', article.content)
-    expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', article.coverPhoto)
   })
 
   test('Should show publishing alert when a valid submit', async () => {
@@ -155,6 +159,17 @@ describe('Edit Article Page', () => {
     expect(screen.queryByTestId('saving-alert')).toHaveTextContent('Publicando artigo...')
   })
 
+  test('Should call upload image with correct value', async () => {
+    const uploadImageMock = jest.fn()
+    const content = faker.lorem.text()
+    renderSut({ uploadImageMock, content })
+
+    const { coverPhoto } = await simulateValidSubmit()
+
+    expect(uploadImageMock).toBeCalledTimes(1)
+    expect(uploadImageMock).toHaveBeenCalledWith({ file: coverPhoto, extension: 'png' })
+  })
+
   test('Should call save article with correct values', async () => {
     const saveArticleMock = jest.fn()
     const content = faker.lorem.text()
@@ -163,18 +178,18 @@ describe('Edit Article Page', () => {
     const fields = await simulateValidSubmit()
 
     expect(saveArticleMock).toBeCalledTimes(1)
-    expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content })
+    expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content, coverPhoto: imageMock.url })
   })
 
   test('Should show unexpected error alert when save fails', async () => {
-    const saveArticleMock = jest.fn()
     const error = new UnexpectedError()
-    saveArticleMock.mockRejectedValueOnce(error)
+    const saveArticleMock = jest.fn(async () => await Promise.reject(error))
     const content = faker.lorem.text()
     renderSut({ saveArticleMock, content })
 
     await simulateValidSubmit()
 
+    await waitFor(() => saveArticleMock)
     expect(screen.queryByTestId('error-alert')).toHaveTextContent(error.message)
   })
 

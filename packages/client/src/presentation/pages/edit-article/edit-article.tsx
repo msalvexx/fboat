@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil'
 import Styles from './edit-article-styles.scss'
 import GlobalStyle from '@/client/presentation/styles/global.scss'
 
-import { GetArticle } from '@fboat/core'
+import { GetArticle, SaveAttachment } from '@fboat/core'
 import { Handler } from '@/client/domain'
 import { Validator } from '@/client/presentation/protocols'
 import { Alert, ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
@@ -14,9 +14,10 @@ type Props = {
   validator: Validator
   saveArticle: Handler<void>
   loadArticle?: Handler<GetArticle.Result>
+  uploadImage: Handler<SaveAttachment.Result>
 }
 
-const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) => {
+const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, uploadImage }) => {
   const resetState = useResetRecoilState(editArticleState)
   const [state, setState] = useRecoilState(editArticleState)
   const navigate = useNavigate()
@@ -25,7 +26,7 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) =
     resetState()
     if (!loadArticle) return
     loadArticle({})
-      .then(article => setState(old => ({ ...old, ...article })))
+      .then(({ coverPhoto, ...article }) => setState(old => ({ ...old, ...article })))
       .catch(console.error)
   }
 
@@ -52,10 +53,11 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) =
     const isPublished = submitter === 'publish'
     setState({ ...state, savingChanges: true })
     const { articleId, title, content, summary, coverPhoto } = state
-    let body: any = { isPublished, content, title, summary, coverPhoto }
+    let body: any = { isPublished, content, title, summary }
     articleId && (body = { articleId, ...body })
     try {
-      await saveArticle(body)
+      const { url } = await uploadImage({ file: coverPhoto, extension: coverPhoto.name.split('.').pop() })
+      await saveArticle({ ...body, coverPhoto: url })
       navigate('/my-articles')
     } catch (error) {
       setState({ ...state, mainError: error.message, savingChanges: false })

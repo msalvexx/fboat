@@ -11,7 +11,7 @@ export const editArticleState = atom({
     titleError: '',
     summary: '',
     summaryError: '',
-    coverPhoto: '',
+    coverPhoto: null as File,
     coverPhotoError: '',
     isFormInvalid: false,
     savingChanges: false,
