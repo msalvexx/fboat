@@ -1,37 +1,66 @@
 import React from 'react'
-import { act, screen, waitFor } from '@testing-library/react'
-import { attachFile, populateField, populateRichText, render, simulateSubmit, testStatusForField } from '@/tests/helpers'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
+import { attachFile, populateField, render, testStatusForField } from '@/tests/helpers'
 import { mockArticle } from '@/tests/mocks'
 
 import { EditArticle } from '@/client/presentation/pages'
+import { editArticleState } from '@/client/presentation/pages/edit-article/atom'
 import { faker } from '@faker-js/faker'
 
 type SutParams = {
   validatorMock?: jest.Mock
   loadArticleMock?: jest.Mock
+  saveArticleMock?: jest.Mock
+  content?: string
 }
 
-type SutTypes = {
-  container: HTMLElement
+const mockedState = {
+  articleId: '',
+  contentError: '',
+  wasSubmitted: false,
+  title: '',
+  titleError: '',
+  summary: '',
+  summaryError: '',
+  coverPhoto: '',
+  coverPhotoError: '',
+  isFormInvalid: false,
+  savingChanges: false,
+  mainError: '',
+  submitter: ''
 }
 
-const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined }: SutParams = {}): SutTypes =>
-  render({ Page: () => <EditArticle loadArticle={loadArticleMock} validator={validatorMock} />, history: ['/'] })
+const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), content = '' }: SutParams = {}): void => {
+  render({
+    Page: () => <EditArticle
+      saveArticle={saveArticleMock}
+      loadArticle={loadArticleMock}
+      validator={validatorMock} />,
+    history: ['/'],
+    states: [
+      { atom: editArticleState, value: { content, ...mockedState } }
+    ]
+  })
+}
 
 type ValidSubmitResult = {
-  content: string
   title: string
-  description: string
+  summary: string
   coverPhoto: File
 }
 
-const simulateValidSubmit = async (container: HTMLElement): Promise<ValidSubmitResult> => {
-  const content = populateRichText(container, 'content')
+const simulateSubmit = async (fieldName = 'publish'): Promise<void> => {
+  const button = screen.getByTestId(fieldName)
+  fireEvent.click(button)
+  await waitFor(() => button)
+}
+
+const simulateValidSubmit = async (fieldName = 'publish'): Promise<ValidSubmitResult> => {
   const title = populateField('title')
-  const description = populateField('description')
+  const summary = populateField('summary')
   const coverPhoto = attachFile('coverPhoto')
-  await act(async () => await simulateSubmit())
-  return { content, title, description, coverPhoto }
+  await simulateSubmit(fieldName)
+  return { title, summary, coverPhoto }
 }
 
 describe('Edit Article Page', () => {
@@ -40,8 +69,8 @@ describe('Edit Article Page', () => {
 
     expect(screen.getByTestId('title')).toHaveAttribute('data-value', '')
     expect(screen.getByTestId('title')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('description')).toHaveAttribute('data-value', '')
-    expect(screen.getByTestId('description')).toHaveAttribute('data-status', 'valid')
+    expect(screen.getByTestId('summary')).toHaveAttribute('data-value', '')
+    expect(screen.getByTestId('summary')).toHaveAttribute('data-status', 'valid')
     expect(screen.getByTestId('content')).toHaveAttribute('data-value', '')
     expect(screen.getByTestId('content')).toHaveAttribute('data-status', 'valid')
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', '')
@@ -68,14 +97,14 @@ describe('Edit Article Page', () => {
     testStatusForField('content', message)
   })
 
-  test('Should show description error if validation fails', async () => {
+  test('Should show summary error if validation fails', async () => {
     const message = faker.random.word()
-    const validatorMock = jest.fn(() => [{ field: 'description', message }])
+    const validatorMock = jest.fn(() => [{ field: 'summary', message }])
     renderSut({ validatorMock })
 
     await simulateSubmit()
 
-    testStatusForField('description', message)
+    testStatusForField('summary', message)
   })
 
   test('Should show coverPhoto error if validation fails', async () => {
@@ -107,16 +136,27 @@ describe('Edit Article Page', () => {
     await waitFor(() => expect(screen.getByTestId('editor')).toHaveAttribute('data-articleid', article.articleId))
 
     expect(screen.getByTestId('title')).toHaveAttribute('data-value', article.title)
-    expect(screen.getByTestId('description')).toHaveAttribute('data-value', article.summary)
+    expect(screen.getByTestId('summary')).toHaveAttribute('data-value', article.summary)
     expect(screen.getByTestId('content')).toHaveAttribute('data-value', article.content)
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', article.coverPhoto)
   })
 
   test('Should show load spinner when a valid submit', async () => {
-    const { container } = renderSut()
+    renderSut()
 
-    await simulateValidSubmit(container)
+    await simulateValidSubmit()
 
     expect(screen.queryByTestId('alert')).toHaveTextContent('Publicando artigo...')
+  })
+
+  test('Should call save article with correct values', async () => {
+    const saveArticleMock = jest.fn()
+    const content = faker.lorem.text()
+    renderSut({ saveArticleMock, content })
+
+    const fields = await simulateValidSubmit()
+
+    expect(saveArticleMock).toBeCalledTimes(1)
+    expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content })
   })
 })

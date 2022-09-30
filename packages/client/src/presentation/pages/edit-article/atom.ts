@@ -9,11 +9,13 @@ export const editArticleState = atom({
     wasSubmitted: false,
     title: '',
     titleError: '',
-    description: '',
-    descriptionError: '',
+    summary: '',
+    summaryError: '',
     coverPhoto: '',
     coverPhotoError: '',
     isFormInvalid: false,
-    savingChanges: false
+    savingChanges: false,
+    mainError: '',
+    submitter: ''
   }
 })

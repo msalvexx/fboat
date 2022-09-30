@@ -17,7 +17,7 @@ export const ViewArticle: React.FC<any> = () => {
   const { slugOrId } = useParams<Props>()
   return <Pages.ViewArticle loadArticle={makeGetArticle(slugOrId)} loadRelated={(makeGetArticles())} />
 }
-export const EditArticle: React.FC<any> = () => <Pages.EditArticle validator={setupValidator(ContentSystemSchemas.changeArticle)} />
+// export const EditArticle: React.FC<any> = () => <Pages.EditArticle validator={setupValidator(ContentSystemSchemas.changeArticle)} />
 export const MyArticles: React.FC<any> = () => <Pages.MyArticles />
 export const EditAccount: React.FC<any> = () => <Pages.EditAccount />
 export const ListAccounts: React.FC<any> = () => <Pages.ListAccounts />

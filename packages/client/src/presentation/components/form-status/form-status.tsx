@@ -5,7 +5,7 @@ import { Spinner } from '@/client/presentation/components'
 
 type Props = {
   state: {
-    isLoading: boolean
+    isLoading?: boolean
     mainError: string
   }
 }

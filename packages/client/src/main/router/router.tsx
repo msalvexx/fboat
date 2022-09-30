@@ -1,6 +1,6 @@
 import React from 'react'
 import { RecoilRoot } from 'recoil'
-import { BrowserRouter, Routes, Route, useNavigate, Outlet, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 
 import * as Pages from '@/client/main/factories'
 import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/client/main/adapters'
@@ -19,19 +19,19 @@ export const Router: React.FC = () => {
     <RecoilRoot initializeState={({ set }) => set(currentAccountState, state)}>
       <BrowserRouter>
         <Routes>
-          <Route path='/edit' element={<Pages.EditArticle />} />
+          {/* <Route path='/edit' element={<Pages.EditArticle />} /> */}
 
-          <Route element={
+          {/* <Route element={
             <PrivateRoute permission={'CreateArticle'}>
               <Route path='/article/new' element={<Pages.EditArticle />} />
             </PrivateRoute>}>
-          </Route>
+          </Route> */}
 
-          <Route element={
+          {/* <Route element={
             <PrivateRoute permission={'ChangeArticle'}>
               <Route path='/article/:slugOrId/edit' element={<Pages.EditArticle />} />
             </PrivateRoute>}>
-          </Route>
+          </Route> */}
 
           <Route element={
             <PrivateRoute>

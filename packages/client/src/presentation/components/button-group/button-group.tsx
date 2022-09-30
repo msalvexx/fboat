@@ -2,7 +2,8 @@ import React from 'react'
 import Styles from './button-group-styles.scss'
 
 type Action = {
-  handler: () => void
+  handler?: (fieldName: string) => Promise<void> | void
+  text: string
   name: string
 }
 
@@ -14,15 +15,19 @@ type Props = {
 
 const ButtonGroup: React.FC<Props> = ({ className, actions, defaultAction }: Props) => {
   return <div className='uk-button-group'>
-      <a onClick={defaultAction.handler} className={['uk-button', 'uk-button-default', className].join(' ')}>{defaultAction.name}</a>
+      <button
+        name={defaultAction.name}
+        data-testid={defaultAction.name}
+        className={['uk-button', 'uk-button-default', className].join(' ')}
+        onClick={() => defaultAction.handler(defaultAction.name)}>{defaultAction.text}</button>
       <div className='uk-inline'>
-          <button data-testid={defaultAction.name} className={[Styles.dropdownIcon, 'uk-button', 'uk-button-default', className].join(' ')} >
+          <button className={[Styles.dropdownIcon, 'uk-button', 'uk-button-default', className].join(' ')} >
             <span data-uk-icon='icon: triangle-down'></span>
           </button>
           <div className={Styles.buttonOptions} data-uk-dropdown='mode: click; target: !.uk-button-group;'>
               <ul className='uk-nav uk-dropdown-nav'>
                   {actions.map((action, index) => <li key={index}>
-                    <button data-testid={action.name} onClick={action.handler}>{action.name}</button>
+                    <button data-testid={action.name} name={action.name} onClick={() => action.handler(action.name)}>{action.text}</button>
                   </li>)}
               </ul>
           </div>
