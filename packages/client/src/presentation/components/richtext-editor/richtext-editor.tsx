@@ -30,11 +30,8 @@ const RichTextEditor: React.FC<Props> = ({ name, state, setState }) => {
     data-value={state[name]}
     className={Styles.richTextEditor}>
       <Editor
-        editorState={toDraft(state[name])}
-        onEditorStateChange={editorState => {
-          console.log(editorState)
-          setState({ ...state, [name]: toHtml(editorState.getCurrentContent()) })
-        }}
+        defaultEditorState={toDraft(state[name])}
+        onEditorStateChange={editorState => setState({ ...state, [name]: toHtml(editorState.getCurrentContent()) }) }
       />
       {error && wasSubmitted && <label data-testid={`${name}-alert`} className={GlobalStyles.errorAlert}>{error}</label>}
   </div>
