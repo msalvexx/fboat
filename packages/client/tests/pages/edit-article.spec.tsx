@@ -193,6 +193,18 @@ describe('Edit Article Page', () => {
     expect(screen.queryByTestId('error-alert')).toHaveTextContent(error.message)
   })
 
+  test('Should show unexpected error alert when upload fails', async () => {
+    const error = new UnexpectedError()
+    const uploadImageMock = jest.fn(async () => await Promise.reject(error))
+    const content = faker.lorem.text()
+    renderSut({ uploadImageMock, content })
+
+    await simulateValidSubmit()
+
+    await waitFor(() => uploadImageMock)
+    expect(screen.queryByTestId('error-alert')).toHaveTextContent(error.message)
+  })
+
   test('Should navigate to my article case article saved successfully', async () => {
     const saveArticleMock = jest.fn()
     const content = faker.lorem.text()
