@@ -30,7 +30,7 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
       .catch(console.error)
   }
 
-  const mode = state.articleId !== '' ? 'edit' : 'create'
+  const mode = loadArticle !== undefined ? 'edit' : 'create'
   const isEditMode = mode === 'edit'
 
   const validate = (key: string): void => {
