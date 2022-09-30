@@ -141,7 +141,7 @@ describe('Edit Article Page', () => {
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', article.coverPhoto)
   })
 
-  test('Should show load spinner when a valid submit', async () => {
+  test('Should show publishing alert when a valid submit', async () => {
     renderSut()
 
     await simulateValidSubmit()
