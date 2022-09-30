@@ -22,7 +22,7 @@ export class AxiosHttpClient<R = any> implements HttpClient<R> {
   }
 
   private getBody (data: HttpRequest): any {
-    if (data?.headers['Content-Type'] !== HttpContentType.formData) return data.body
+    if (data.headers?.['Content-Type'] !== HttpContentType.formData) return data.body
     const formData = new FormData()
     for (const propertyName in data.body) {
       formData.append(propertyName, data.body[propertyName])
