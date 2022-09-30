@@ -1,4 +1,4 @@
-import { SaveAttachment } from '@/server/content-system/protocols'
+import { SaveAttachment } from '@fboat/core/content-system/protocols'
 import { AbstractController } from '@/server/shared/controllers'
 
 export class FileUploadController extends AbstractController {
