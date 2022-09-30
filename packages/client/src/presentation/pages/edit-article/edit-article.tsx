@@ -1,14 +1,14 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useEffect, useRef } from 'react'
-import { useRecoilState } from 'recoil'
+import React, { useEffect } from 'react'
+import { useRecoilState, useResetRecoilState } from 'recoil'
 import Styles from './edit-article-styles.scss'
 import GlobalStyle from '@/client/presentation/styles/global.scss'
 
 import { GetArticle } from '@fboat/core'
 import { Handler } from '@/client/domain'
 import { Validator } from '@/client/presentation/protocols'
-import { Alert, ButtonGroup, Footer, FormStatus, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
+import { Alert, ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
 import { editArticleState } from './atom'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   validator: Validator
@@ -17,9 +17,12 @@ type Props = {
 }
 
 const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) => {
+  const resetState = useResetRecoilState(editArticleState)
   const [state, setState] = useRecoilState(editArticleState)
+  const navigate = useNavigate()
 
   const load = (): void => {
+    resetState()
     if (!loadArticle) return
     loadArticle({})
       .then(article => setState(old => ({ ...old, ...article })))
@@ -51,7 +54,12 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) =
     const { articleId, title, content, summary, coverPhoto } = state
     let body: any = { isPublished, content, title, summary, coverPhoto }
     articleId && (body = { articleId, ...body })
-    await saveArticle(body)
+    try {
+      await saveArticle(body)
+      navigate('/my-articles')
+    } catch (error) {
+      setState({ ...state, mainError: error.message, savingChanges: false })
+    }
   }
 
   const component = <ButtonGroup
@@ -63,7 +71,8 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) =
   return <>
     <Header button={component}/>
     <section className={Styles.editArticle} data-testid='editor' data-mode={mode} data-articleid={state.articleId}>
-      {state.savingChanges && <Alert text='Publicando artigo...' theme='primary'/>}
+      {state.savingChanges && <Alert data-testid='saving-alert' text='Publicando artigo...' theme='primary'/>}
+      {state.mainError && <Alert data-testid='error-alert' text={state.mainError} theme='danger'/>}
       <h3 className='uk-text-lead'>{isEditMode ? 'Alterar' : 'Criar'} artigo</h3>
       <form data-testid='form'>
         <Input
@@ -88,7 +97,6 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle }) =
           multiple={false}
           state={state}
           setState={setState} />
-        <FormStatus state={state} />
       </form>
     </section>
     <Footer/>

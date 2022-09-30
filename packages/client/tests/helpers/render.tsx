@@ -9,6 +9,7 @@ import { AccountCredentials } from '@/client/domain/models'
 import { currentAccountState } from '@/client/presentation/components'
 
 const navigate = jest.fn()
+const resetState = jest.fn()
 
 jest.mock('uikit', () => ({
   slider: () => undefined
@@ -17,6 +18,11 @@ jest.mock('uikit', () => ({
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => navigate
+}))
+
+jest.mock('recoil', () => ({
+  ...jest.requireActual('recoil'),
+  useResetRecoilState: () => resetState
 }))
 
 type Params = {

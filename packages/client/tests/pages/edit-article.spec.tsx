@@ -2,10 +2,11 @@ import React from 'react'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { attachFile, populateField, render, testStatusForField } from '@/tests/helpers'
 import { mockArticle } from '@/tests/mocks'
+import { faker } from '@faker-js/faker'
 
+import { UnexpectedError } from '@/client/domain'
 import { EditArticle } from '@/client/presentation/pages'
 import { editArticleState } from '@/client/presentation/pages/edit-article/atom'
-import { faker } from '@faker-js/faker'
 
 type SutParams = {
   validatorMock?: jest.Mock
@@ -146,7 +147,7 @@ describe('Edit Article Page', () => {
 
     await simulateValidSubmit()
 
-    expect(screen.queryByTestId('alert')).toHaveTextContent('Publicando artigo...')
+    expect(screen.queryByTestId('saving-alert')).toHaveTextContent('Publicando artigo...')
   })
 
   test('Should call save article with correct values', async () => {
@@ -158,5 +159,17 @@ describe('Edit Article Page', () => {
 
     expect(saveArticleMock).toBeCalledTimes(1)
     expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content })
+  })
+
+  test('Should show unexpected error alert when save fails', async () => {
+    const saveArticleMock = jest.fn()
+    const error = new UnexpectedError()
+    saveArticleMock.mockRejectedValueOnce(error)
+    const content = faker.lorem.text()
+    renderSut({ saveArticleMock, content })
+
+    await simulateValidSubmit()
+
+    expect(screen.queryByTestId('error-alert')).toHaveTextContent(error.message)
   })
 })
