@@ -25,3 +25,8 @@ export type HttpResponse<T = any> = {
   statusCode: HttpStatusCode
   body?: T
 }
+
+export enum HttpContentType {
+  formData = 'multipart/form-data',
+  json = 'application/json'
+}

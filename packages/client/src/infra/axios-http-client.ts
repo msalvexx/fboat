@@ -1,4 +1,4 @@
-import { HttpRequest, HttpResponse, HttpClient } from '@/client/domain/protocols'
+import { HttpRequest, HttpResponse, HttpClient, HttpContentType } from '@/client/domain/protocols'
 
 import axios, { AxiosResponse } from 'axios'
 
@@ -9,7 +9,7 @@ export class AxiosHttpClient<R = any> implements HttpClient<R> {
       axiosResponse = await axios.request({
         url: data.url,
         method: data.method,
-        data: data.body,
+        data: this.getBody(data),
         headers: data.headers
       })
     } catch (error) {
@@ -19,5 +19,14 @@ export class AxiosHttpClient<R = any> implements HttpClient<R> {
       statusCode: axiosResponse.status,
       body: axiosResponse.data
     }
+  }
+
+  private getBody (data: HttpRequest): any {
+    if (data?.headers['Content-Type'] !== HttpContentType.formData) return data.body
+    const formData = new FormData()
+    for (const propertyName in data.body) {
+      formData.append(propertyName, data.body[propertyName])
+    }
+    return formData
   }
 }
