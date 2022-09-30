@@ -52,9 +52,8 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     if (state.isFormInvalid || state.savingChanges) return
     const isPublished = submitter === 'publish'
     setState({ ...state, savingChanges: true })
-    const { articleId, title, content, summary, coverPhoto } = state
-    let body: any = { isPublished, content, title, summary }
-    articleId && (body = { articleId, ...body })
+    const { title, content, summary, coverPhoto } = state
+    const body = { isPublished, content, title, summary }
     try {
       const { url } = await uploadImage({ file: coverPhoto, extension: coverPhoto.name.split('.').pop() })
       await saveArticle({ ...body, coverPhoto: url })
