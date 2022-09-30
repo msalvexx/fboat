@@ -167,7 +167,7 @@ describe('Edit Article Page', () => {
     const { coverPhoto } = await simulateValidSubmit()
 
     expect(uploadImageMock).toBeCalledTimes(1)
-    expect(uploadImageMock).toHaveBeenCalledWith({ file: coverPhoto, extension: 'png' })
+    expect(uploadImageMock).toHaveBeenCalledWith({ file: coverPhoto })
   })
 
   test('Should call save article with correct values', async () => {

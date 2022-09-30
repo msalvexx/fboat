@@ -55,7 +55,7 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     const { title, content, summary, coverPhoto } = state
     const body = { isPublished, content, title, summary }
     try {
-      const { url } = await uploadImage({ file: coverPhoto, extension: coverPhoto.name.split('.').pop() })
+      const { url } = await uploadImage({ file: coverPhoto })
       await saveArticle({ ...body, coverPhoto: url })
       navigate('/my-articles')
     } catch (error) {
