@@ -29,7 +29,7 @@ export class EnvConfig {
     server: {
       host: getenv('SERVER_HOST', 'localhost'),
       port: getenv.int('SERVER_PORT', 3000),
-      url: `${getenv('SERVER_HOST', 'localhost')}:${getenv.int('SERVER_PORT', 3000)}`
+      url: `${getenv('SERVER_HOST', 'http://localhost')}:${getenv.int('SERVER_PORT', 3000)}`
     },
     fileUpload: {
       limits: { fileSize: 2 * 1024 * 1024 }
