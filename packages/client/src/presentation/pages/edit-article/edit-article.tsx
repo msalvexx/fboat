@@ -33,19 +33,20 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
   const mode = loadArticle !== undefined ? 'edit' : 'create'
   const isEditMode = mode === 'edit'
 
-  const validate = (key: string): void => {
-    const errors = validator({ [key]: state[key] })
-    const newState: any = { [`${key}Error`]: '' }
+  const validate = (): void => {
+    const { content, coverPhoto, summary, title } = state
+    const errors = validator({ content, coverPhoto, summary, title })
+    const newState: any = {}
     errors?.forEach(({ field, message }) => (newState[`${field}Error`] = message))
     const isFormInvalid = !!newState.contentError || !!newState.coverPhotoError || !!newState.summaryError || !!newState.titleError
     setState(old => ({ ...old, ...newState, isFormInvalid }))
   }
 
   useEffect(() => load(), [])
-  useEffect(() => validate('content'), [state.content])
-  useEffect(() => validate('title'), [state.title])
-  useEffect(() => validate('coverPhoto'), [state.coverPhoto])
-  useEffect(() => validate('summary'), [state.summary])
+  useEffect(() => validate(), [state.content])
+  useEffect(() => validate(), [state.title])
+  useEffect(() => validate(), [state.coverPhoto])
+  useEffect(() => validate(), [state.summary])
 
   const handler = async (submitter: string): Promise<void> => {
     setState({ ...state, wasSubmitted: true })
