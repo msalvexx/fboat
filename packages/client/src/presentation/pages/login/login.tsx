@@ -23,8 +23,8 @@ const Login: React.FC<Props> = ({ validator, authenticate }) => {
   const navigate = useNavigate()
 
   useEffect(() => resetLoginState(), [])
-  useEffect(() => validate('email'), [state.email])
-  useEffect(() => validate('password'), [state.password])
+  useEffect(() => validate(), [state.email])
+  useEffect(() => validate(), [state.password])
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
@@ -49,9 +49,10 @@ const Login: React.FC<Props> = ({ validator, authenticate }) => {
     }
   }
 
-  const validate = (key: string): void => {
-    const errors = validator({ [key]: state[key] })
-    const newState: any = { [`${key}Error`]: '' }
+  const validate = (): void => {
+    const { email, password } = state
+    const errors = validator({ email, password })
+    const newState: any = {}
     errors?.forEach(({ field, message }) => (newState[`${field}Error`] = message))
     const isFormInvalid = !!newState.emailError || !!newState.passwordError
     setState(old => ({ ...old, ...newState, isFormInvalid }))
