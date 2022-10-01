@@ -26,7 +26,12 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     resetState()
     if (!loadArticle) return
     loadArticle({})
-      .then(({ coverPhoto, ...article }) => setState(old => ({ ...old, ...article })))
+      .then(({ coverPhoto, ...article }) => {
+        setState(old => {
+          console.log({ ...old, ...article })
+          return { ...old, ...article }
+        })
+      })
       .catch(console.error)
   }
 

@@ -32,7 +32,7 @@ start-app: build-app start-deps
 start-deps:
 	@docker-compose up -d db
 	@echo 'Waiting migrations to run...'
-	@APP_ENV=test npm run typeorm migration:run -- -d src/main/configs/ormconfig.ts
+	@npm run migration:test
 
 stop-app:
 	@docker-compose down

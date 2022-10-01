@@ -39,7 +39,7 @@ export class EnvConfig {
       prefix: '/public'
     },
     cors: {
-      origin: ['test', 'dev'].includes(getenv('APP_ENV', 'dev')) ? '*': getenv('APP_CORS_ORIGIN')
+      origin: ['test', 'dev'].includes(getenv('APP_ENV', 'dev')) ? '*': getenv('APP_CORS_ORIGIN', '*')
     }
   }
 
