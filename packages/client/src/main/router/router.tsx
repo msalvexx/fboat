@@ -95,9 +95,9 @@ type Props = {
 }
 
 export const PrivateRoute = ({ permission, children }: Props): React.ReactElement => {
-  const navigate = useNavigate()
-  const isLogged = !!state.getCurrentAccountCredentials()
-  if (!isLogged) navigate('/login')
-  if (permission && !state.hasPermission(permission)) navigate('/')
+  const credentials = state.getCurrentAccountCredentials()
+  const isLogged = !!credentials
+  if (!isLogged) return <Navigate to="/login" />
+  if (permission && !state.hasPermission(permission)) return <Navigate to="/login" />
   return children
 }
