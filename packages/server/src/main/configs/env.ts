@@ -24,7 +24,7 @@ export class EnvConfig {
     },
     jwt: {
       secret: getenv('JWT_SECRET', '9336c65aec7c548318fe66fc15abff6a80d93f42'),
-      expiresIn: getenv('JWT_EXPIRES_IN', '1m')
+      expiresIn: getenv('JWT_EXPIRES_IN', '6h')
     },
     server: {
       host: getenv('SERVER_HOST', 'localhost'),
