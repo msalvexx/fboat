@@ -18,7 +18,7 @@ export const Home: React.FC<any> = () => <Pages.Home/>
 
 export const ViewArticle: React.FC<any> = () => {
   const { slugOrId } = useParams<AccountId>()
-  return <Pages.ViewArticle loadArticle={makeGetArticleApi(slugOrId)} loadRelated={(makeGetArticlesApi())} />
+  return <Pages.ViewArticle loadArticle={makeGetArticleApi(slugOrId, { isPublished: true })} loadRelated={(makeGetArticlesApi())} />
 }
 
 export const EditArticle: React.FC<any> = () => {

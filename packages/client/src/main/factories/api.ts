@@ -32,17 +32,19 @@ export const makeGetLoggedAccountInformationApi = (): Handler<Account> => {
     .build()
 }
 
-export const makeGetArticleApi = (slugOrId: string): Handler<GetArticle.Result> => {
+export const makeGetArticleApi = (slugOrId: string, params: any = {}): Handler<GetArticle.Result> => {
   return HttpResourceHandlerBuilder
-    .resource<GetAccount.Result>({
+    .resource<GetArticle.Result>({
     method: 'get',
-    url: getApiUrl(`/article/${slugOrId}`)
+    url: getApiUrl(`/article/${slugOrId}`),
+    params
   })
     .notFound()
     .map(x => ({
       ...x,
       creationDate: x.creationDate && new Date(x.creationDate),
-      updateDate: x.updateDate && new Date(x.updateDate)
+      revisionDate: x.revisionDate && new Date(x.revisionDate),
+      publishDate: x.publishDate && new Date(x.publishDate)
     }))
     .build()
 }
