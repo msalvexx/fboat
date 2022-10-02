@@ -3,6 +3,10 @@
 .avatar {
   @extend .uk-flex-inline;
 
+  img {
+    height: max-content;
+  }
+
   div {
     @extend .uk-flex, .uk-flex-column;
     margin-bottom: 0;
