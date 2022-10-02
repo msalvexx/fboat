@@ -23,7 +23,7 @@ export const ViewArticle: React.FC<any> = () => {
 
 export const EditArticle: React.FC<any> = () => {
   const { slugOrId } = useParams<AccountId>()
-  const schema = ContentSystemSchemas.createArticle
+  const schema = slugOrId ? ContentSystemSchemas.createArticle.without(['coverPhoto']) : ContentSystemSchemas.createArticle
   const saveArticle = slugOrId ? makeChangeArticleApi(slugOrId) : makeCreateArticleApi()
   const loadArticle = slugOrId ? makeGetArticleApi(slugOrId) : undefined
   const uploadImage = makeUploadImageApi()
