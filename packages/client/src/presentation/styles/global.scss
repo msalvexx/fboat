@@ -5,6 +5,7 @@ $navbar-text-color-emphasis: white !default;
 $navbar-background: #333 !default;
 
 $global-danger-lighten: #ff90a5 !default;
+$base-em-color: #666 !default;
 
 @import 'uikit/src/scss/variables-theme.scss';
 @import 'uikit/src/scss/mixins-theme.scss';
