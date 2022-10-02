@@ -27,7 +27,7 @@ const ButtonGroup: React.FC<Props> = ({ className, actions, defaultAction }: Pro
           <div className={Styles.buttonOptions} data-uk-dropdown='mode: click; target: !.uk-button-group;'>
               <ul className='uk-nav uk-dropdown-nav'>
                   {actions.map((action, index) => <li key={index}>
-                    <button data-testid={action.name} name={action.name} onClick={() => action.handler(action.name)}>{action.text}</button>
+                    <a data-testid={action.name} onClick={() => action.handler(action.name)}>{action.text}</a>
                   </li>)}
               </ul>
           </div>
