@@ -78,13 +78,13 @@ describe('Edit Article Page', () => {
   test('Will present correct initial create state', () => {
     renderSut()
 
-    expect(screen.getByTestId('title')).toHaveAttribute('data-value', '')
+    expect(screen.getByTestId('title')).toHaveAttribute('value', '')
     expect(screen.getByTestId('title')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('summary')).toHaveAttribute('data-value', '')
+    expect(screen.getByTestId('summary')).toHaveAttribute('value', '')
     expect(screen.getByTestId('summary')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('content')).toHaveAttribute('data-value', '')
+    expect(screen.getByTestId('content')).toHaveAttribute('value', '')
     expect(screen.getByTestId('content')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-value', '')
+    expect(screen.getByTestId('coverPhoto')).toHaveAttribute('value', '')
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-status', 'valid')
   })
 
@@ -146,9 +146,9 @@ describe('Edit Article Page', () => {
     await waitFor(() => expect(screen.getByTestId('editor')).toHaveAttribute('data-mode', 'edit'))
     await waitFor(() => expect(screen.getByTestId('editor')).toHaveAttribute('data-articleid', article.articleId))
 
-    expect(screen.getByTestId('title')).toHaveAttribute('data-value', article.title)
-    expect(screen.getByTestId('summary')).toHaveAttribute('data-value', article.summary)
-    expect(screen.getByTestId('content')).toHaveAttribute('data-value', article.content)
+    expect(screen.getByTestId('title')).toHaveAttribute('value', article.title)
+    expect(screen.getByTestId('summary')).toHaveAttribute('value', article.summary)
+    expect(screen.getByTestId('content')).toHaveAttribute('value', article.content)
   })
 
   test('Should show publishing alert when a valid submit', async () => {

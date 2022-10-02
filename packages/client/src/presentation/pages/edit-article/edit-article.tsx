@@ -6,7 +6,7 @@ import GlobalStyle from '@/client/presentation/styles/global.scss'
 import { GetArticle, SaveAttachment } from '@fboat/core'
 import { Handler } from '@/client/domain'
 import { Validator } from '@/client/presentation/protocols'
-import { Alert, ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor } from '@/client/presentation/components'
+import { Alert, ButtonGroup, Footer, Header, ImageUploader, Input, RichTextEditor, toEditorState, toHtml } from '@/client/presentation/components'
 import { editArticleState } from './atom'
 import { useNavigate } from 'react-router-dom'
 
@@ -26,12 +26,7 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     resetState()
     if (!loadArticle) return
     loadArticle({})
-      .then(({ coverPhoto, ...article }) => {
-        setState(old => {
-          console.log({ ...old, ...article })
-          return { ...old, ...article }
-        })
-      })
+      .then(({ coverPhoto, content, ...article }) => setState({ ...state, ...article, content: toEditorState(content) }))
       .catch(console.error)
   }
 
@@ -59,10 +54,13 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     const isPublished = submitter === 'publish'
     setState({ ...state, savingChanges: true })
     const { title, content, summary, coverPhoto } = state
-    const body = { isPublished, content, title, summary }
+    let body: any = { isPublished, content: toHtml(content), title, summary }
     try {
-      const { url } = await uploadImage({ file: coverPhoto })
-      await saveArticle({ ...body, coverPhoto: url })
+      if (coverPhoto) {
+        const { url } = await uploadImage({ file: coverPhoto })
+        body = { ...body, coverPhoto: url }
+      }
+      await saveArticle(body)
       navigate('/my-articles')
     } catch (error) {
       setState({ ...state, mainError: error.message, savingChanges: false })

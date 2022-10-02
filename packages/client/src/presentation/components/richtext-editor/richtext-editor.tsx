@@ -13,16 +13,18 @@ type Props = {
   setState?: any
 }
 
+export const toHtml = (editorState: EditorState): string => draftToHtml(convertToRaw(editorState.getCurrentContent()))
+
+export const toEditorState = (html: string): EditorState => {
+  const contentBlock = htmlToDraft(html)
+  if (!contentBlock) EditorState.createEmpty()
+  const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
+  return EditorState.createWithContent(contentState)
+}
+
 const RichTextEditor: React.FC<Props> = ({ name, state, setState }) => {
   const wasSubmitted = state.wasSubmitted
   const error = state[`${name}Error`]
-  const toDraft = (html: string): EditorState => {
-    const contentBlock = htmlToDraft(html)
-    if (!contentBlock) EditorState.createEmpty()
-    const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks)
-    return EditorState.createWithContent(contentState)
-  }
-  const toHtml = (contentState: ContentState): string => draftToHtml(convertToRaw(contentState))
   return <div
     data-content-editor
     data-status={error && wasSubmitted ? 'invalid' : 'valid'}
@@ -30,8 +32,8 @@ const RichTextEditor: React.FC<Props> = ({ name, state, setState }) => {
     data-value={state[name]}
     className={Styles.richTextEditor}>
       <Editor
-        defaultEditorState={toDraft(state[name])}
-        onEditorStateChange={editorState => setState({ ...state, [name]: toHtml(editorState.getCurrentContent()) }) }
+        editorState={state[name]}
+        onEditorStateChange={editorState => setState({ ...state, [name]: editorState }) }
       />
       {error && wasSubmitted && <label data-testid={`${name}-alert`} className={GlobalStyles.errorAlert}>{error}</label>}
   </div>
