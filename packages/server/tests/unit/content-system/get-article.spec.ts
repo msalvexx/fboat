@@ -15,6 +15,17 @@ describe('Get Article', () => {
     await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
   })
 
+  test('Should throw ArticleNotFound if article is unpublished', async () => {
+    const { articleService, repository } = sut
+    const params = mockArticleParams()
+    params.isPublished = false
+    repository.getResult = params
+
+    const promise = articleService.get({ idOrSlug: params.articleId })
+
+    await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
+  })
+
   test('Should return a valid article if the article was found', async () => {
     const { articleService, repository } = sut
     const params = mockArticleParams()
@@ -27,6 +38,6 @@ describe('Get Article', () => {
     expect(result.author.occupation).toBe('any occupation')
     expect(result.title).toBe('any title')
     expect(result.slug).toBe('any-title')
-    expect(result.isPublished).toStrictEqual(false)
+    expect(result.isPublished).toStrictEqual(true)
   })
 })

@@ -6,6 +6,7 @@ export const mockArticleParams = (): Article.Params => ({
   content: 'any content',
   summary: 'any summary',
   title: 'any title',
+  isPublished: true,
   coverPhoto: 'any photo',
   author: {
     accountId: '123',
