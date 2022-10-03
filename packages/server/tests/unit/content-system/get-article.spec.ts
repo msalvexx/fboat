@@ -15,17 +15,6 @@ describe('Get Article', () => {
     await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
   })
 
-  test('Should throw ArticleNotFound if article is unpublished', async () => {
-    const { articleService, repository } = sut
-    const params = mockArticleParams()
-    params.isPublished = false
-    repository.getResult = params
-
-    const promise = articleService.get({ idOrSlug: params.articleId })
-
-    await expect(promise).rejects.toThrowError(new ResourceNotFoundError())
-  })
-
   test('Should return a valid article if the article was found', async () => {
     const { articleService, repository } = sut
     const params = mockArticleParams()

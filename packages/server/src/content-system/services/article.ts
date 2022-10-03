@@ -25,7 +25,7 @@ export class ArticleService implements CreateArticle, GetArticle, UpdateArticle 
 
   private async getArticle (idOrSlug: string): Promise<Article> {
     const articleParams = await this.repository.get(idOrSlug)
-    if (articleParams === undefined || !articleParams.isPublished) throw new ResourceNotFoundError()
+    if (articleParams === undefined) throw new ResourceNotFoundError()
     return new Article(articleParams)
   }
 
