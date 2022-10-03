@@ -3,7 +3,7 @@ import { AbstractController } from '@/server/shared/controllers'
 import { ControllerSpy } from '@/tests/mocks/shared'
 import { mockArticle } from '@/tests/mocks/content-system'
 import { mockAccount } from '@/tests/mocks/iam'
-import { GetArticle, ResourceNotFoundError } from '@fboat/core'
+import { Account, GetArticle, ResourceNotFoundError } from '@fboat/core'
 
 export class HideUnpublishedArticleController extends AbstractController {
   override async handle (params: any): Promise<any> {
@@ -11,7 +11,8 @@ export class HideUnpublishedArticleController extends AbstractController {
     const article = result.body as GetArticle.Result
     if (!article.isPublished) {
       const isLogged = 'loggedAccount' in params
-      if (!isLogged) throw new ResourceNotFoundError()
+      const account = params.loggedAccount as Account
+      if (!isLogged || article.author.accountId !== account.accountId) throw new ResourceNotFoundError()
     }
     return null
   }
@@ -25,7 +26,7 @@ describe('Hide Unpublished Article Controller', () => {
     sut = new HideUnpublishedArticleController()
     spy = new ControllerSpy()
     spy.result = {
-      body: mockArticle(),
+      body: mockArticle({ authorId: '123' }),
       statusCode: 200
     }
     sut.setNext(spy)
@@ -45,6 +46,17 @@ describe('Hide Unpublished Article Controller', () => {
 
   test('Should throw ResourceNotFoundError case article is unpublished and user not logged', async () => {
     const promise = sut.handle({})
+
+    await expect(promise).rejects.toThrow(ResourceNotFoundError)
+  })
+
+  test('Should throw ResourceNotFoundError case article is unpublished and user logged is not the author', async () => {
+    const loggedAccount = mockAccount()
+    spy.result = {
+      body: mockArticle({ authorId: 'invalid account id' }),
+      statusCode: 200
+    }
+    const promise = sut.handle({ loggedAccount })
 
     await expect(promise).rejects.toThrow(ResourceNotFoundError)
   })

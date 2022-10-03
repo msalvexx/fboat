@@ -18,12 +18,13 @@ export const mockArticleParams = (): Article.Params => ({
 
 type ArticleParams = {
   isPublished?: boolean
+  authorId?: string
 }
 
-export const mockArticle = ({ isPublished = false }: ArticleParams = {}): Article => new Article({
+export const mockArticle = ({ isPublished = false, authorId = '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85' }: ArticleParams = {}): Article => new Article({
   articleId: '123',
   author: {
-    accountId: '8f5aaf39-d388-4e00-8bd4-440f6c5d2e85',
+    accountId: authorId,
     name: 'any name',
     occupation: 'any occupation',
     photo: 'any photo'
