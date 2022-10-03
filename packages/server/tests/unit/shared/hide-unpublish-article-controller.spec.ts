@@ -68,4 +68,15 @@ describe('Hide Unpublished Article Controller', () => {
 
     expect(spy.result).toStrictEqual(result)
   })
+
+  test('Should return the result case article is published', async () => {
+    spy.result = {
+      body: mockArticle({ isPublished: true }),
+      statusCode: 200
+    }
+
+    const result = await sut.handle({})
+
+    expect(spy.result).toStrictEqual(result)
+  })
 })
