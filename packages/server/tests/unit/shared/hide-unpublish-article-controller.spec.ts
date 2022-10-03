@@ -1,22 +1,9 @@
-import { AbstractController } from '@/server/shared/controllers'
+import { HideUnpublishedArticleController } from '@/server/shared/controllers'
+import { ResourceNotFoundError } from '@fboat/core'
 
 import { ControllerSpy } from '@/tests/mocks/shared'
 import { mockArticle } from '@/tests/mocks/content-system'
 import { mockAccount } from '@/tests/mocks/iam'
-import { Account, GetArticle, ResourceNotFoundError } from '@fboat/core'
-
-export class HideUnpublishedArticleController extends AbstractController {
-  override async handle (params: any): Promise<any> {
-    const result = await super.handle(params)
-    const article = result.body as GetArticle.Result
-    if (!article.isPublished) {
-      const isLogged = 'loggedAccount' in params
-      const account = params.loggedAccount as Account
-      if (!isLogged || article.author.accountId !== account.accountId) throw new ResourceNotFoundError()
-    }
-    return result
-  }
-}
 
 describe('Hide Unpublished Article Controller', () => {
   let sut: HideUnpublishedArticleController
