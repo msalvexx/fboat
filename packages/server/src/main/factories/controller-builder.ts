@@ -1,6 +1,6 @@
 import { Permission } from '@fboat/core'
 import { Controller } from '@/server/shared/protocols/controller'
-import { AccountToAuthorMapperController, AuthorizationController, MethodHandler, ServiceHandlerController, TokenCertifierController, FileUploadController } from '@/server/shared/controllers'
+import { AccountToAuthorMapperController, AuthorizationController, MethodHandler, ServiceHandlerController, TokenCertifierController, FileUploadController, HideUnpublishedArticleController } from '@/server/shared/controllers'
 
 import { makeAuthenticationService } from '@/server/main/factories'
 
@@ -37,6 +37,11 @@ export class ControllerBuilder {
 
   accountToAuthor (): ControllerBuilder {
     this.addHandler(new AccountToAuthorMapperController())
+    return this
+  }
+
+  hideUnpublishedArticle (): ControllerBuilder {
+    this.addHandler(new HideUnpublishedArticleController())
     return this
   }
 

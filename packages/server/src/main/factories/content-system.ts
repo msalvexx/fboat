@@ -11,6 +11,7 @@ export const makeGetArticle = (): Controller => {
   const service = makeArticleService()
   return ControllerBuilder
     .of(service)
+    .hideUnpublishedArticle()
     .service(service.get)
 }
 
