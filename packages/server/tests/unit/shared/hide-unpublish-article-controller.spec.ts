@@ -14,7 +14,7 @@ export class HideUnpublishedArticleController extends AbstractController {
       const account = params.loggedAccount as Account
       if (!isLogged || article.author.accountId !== account.accountId) throw new ResourceNotFoundError()
     }
-    return null
+    return result
   }
 }
 
@@ -59,5 +59,13 @@ describe('Hide Unpublished Article Controller', () => {
     const promise = sut.handle({ loggedAccount })
 
     await expect(promise).rejects.toThrow(ResourceNotFoundError)
+  })
+
+  test('Should return the result case user logged is the article author', async () => {
+    const loggedAccount = mockAccount()
+
+    const result = await sut.handle({ loggedAccount })
+
+    expect(spy.result).toStrictEqual(result)
   })
 })
