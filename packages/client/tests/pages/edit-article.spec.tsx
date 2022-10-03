@@ -7,13 +7,14 @@ import { faker } from '@faker-js/faker'
 import { UnexpectedError } from '@/client/domain'
 import { EditArticle } from '@/client/presentation/pages'
 import { editArticleState } from '@/client/presentation/pages/edit-article/atom'
+import { ContentState, EditorState } from 'draft-js'
 
 type SutParams = {
   uploadImageMock?: jest.Mock
   validatorMock?: jest.Mock
   loadArticleMock?: jest.Mock
   saveArticleMock?: jest.Mock
-  content?: string
+  content?: EditorState
 }
 
 const mockedState = {
@@ -39,7 +40,7 @@ type SutTypes = {
 const imageMock = { url: faker.image.imageUrl(), fileName: `${faker.lorem.word()}.png` }
 const defaultUploadImageMock = jest.fn(async () => await Promise.resolve(imageMock))
 
-const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), uploadImageMock = defaultUploadImageMock, content = '' }: SutParams = {}): SutTypes => {
+const renderSut = ({ validatorMock = jest.fn(), loadArticleMock = undefined, saveArticleMock = jest.fn(), uploadImageMock = defaultUploadImageMock, content = EditorState.createEmpty() }: SutParams = {}): SutTypes => {
   const { navigate } = render({
     Page: () => <EditArticle
       uploadImage={uploadImageMock}
@@ -82,9 +83,7 @@ describe('Edit Article Page', () => {
     expect(screen.getByTestId('title')).toHaveAttribute('data-status', 'valid')
     expect(screen.getByTestId('summary')).toHaveAttribute('value', '')
     expect(screen.getByTestId('summary')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('content')).toHaveAttribute('value', '')
     expect(screen.getByTestId('content')).toHaveAttribute('data-status', 'valid')
-    expect(screen.getByTestId('coverPhoto')).toHaveAttribute('value', '')
     expect(screen.getByTestId('coverPhoto')).toHaveAttribute('data-status', 'valid')
   })
 
@@ -148,7 +147,6 @@ describe('Edit Article Page', () => {
 
     expect(screen.getByTestId('title')).toHaveAttribute('value', article.title)
     expect(screen.getByTestId('summary')).toHaveAttribute('value', article.summary)
-    expect(screen.getByTestId('content')).toHaveAttribute('value', article.content)
   })
 
   test('Should show publishing alert when a valid submit', async () => {
@@ -161,7 +159,7 @@ describe('Edit Article Page', () => {
 
   test('Should call upload image with correct value', async () => {
     const uploadImageMock = jest.fn()
-    const content = faker.lorem.text()
+    const content = EditorState.createWithContent(ContentState.createFromText(faker.lorem.words()))
     renderSut({ uploadImageMock, content })
 
     const { coverPhoto } = await simulateValidSubmit()
@@ -172,19 +170,20 @@ describe('Edit Article Page', () => {
 
   test('Should call save article with correct values', async () => {
     const saveArticleMock = jest.fn()
-    const content = faker.lorem.text()
+    const textContent = faker.lorem.words()
+    const content = EditorState.createWithContent(ContentState.createFromText(textContent))
     renderSut({ saveArticleMock, content })
 
     const fields = await simulateValidSubmit()
 
     expect(saveArticleMock).toBeCalledTimes(1)
-    expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content, coverPhoto: imageMock.url })
+    expect(saveArticleMock).toHaveBeenCalledWith({ ...fields, isPublished: true, content: `<p>${textContent}</p>\n`, coverPhoto: imageMock.url })
   })
 
   test('Should show unexpected error alert when save fails', async () => {
     const error = new UnexpectedError()
     const saveArticleMock = jest.fn(async () => await Promise.reject(error))
-    const content = faker.lorem.text()
+    const content = EditorState.createWithContent(ContentState.createFromText(faker.lorem.words()))
     renderSut({ saveArticleMock, content })
 
     await simulateValidSubmit()
@@ -196,7 +195,7 @@ describe('Edit Article Page', () => {
   test('Should show unexpected error alert when upload fails', async () => {
     const error = new UnexpectedError()
     const uploadImageMock = jest.fn(async () => await Promise.reject(error))
-    const content = faker.lorem.text()
+    const content = EditorState.createWithContent(ContentState.createFromText(faker.lorem.words()))
     renderSut({ uploadImageMock, content })
 
     await simulateValidSubmit()
@@ -207,7 +206,7 @@ describe('Edit Article Page', () => {
 
   test('Should navigate to my article case article saved successfully', async () => {
     const saveArticleMock = jest.fn()
-    const content = faker.lorem.text()
+    const content = EditorState.createWithContent(ContentState.createFromText(faker.lorem.words()))
     const { navigate } = renderSut({ saveArticleMock, content })
 
     await simulateValidSubmit()
