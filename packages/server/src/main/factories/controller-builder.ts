@@ -1,6 +1,6 @@
 import { Permission } from '@fboat/core'
 import { Controller } from '@/server/shared/protocols/controller'
-import { AccountToAuthorMapperController, AuthorizationController, MethodHandler, ServiceHandlerController, TokenCertifierController, FileUploadController, HideUnpublishedArticleController } from '@/server/shared/controllers'
+import { AccountToAuthorMapperController, AuthorizationController, MethodHandler, ServiceHandlerController, TokenCertifierController, FileUploadController, HideUnpublishedArticleController, PrivateServiceController } from '@/server/shared/controllers'
 
 import { makeAuthenticationService } from '@/server/main/factories'
 
@@ -22,6 +22,11 @@ export class ControllerBuilder {
 
   tokenCertifier (): ControllerBuilder {
     this.addHandler(new TokenCertifierController(makeAuthenticationService()))
+    return this
+  }
+
+  privateService (): ControllerBuilder {
+    this.addHandler(new PrivateServiceController())
     return this
   }
 

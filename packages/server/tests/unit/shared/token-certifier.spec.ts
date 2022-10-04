@@ -16,12 +16,12 @@ describe('Authentication Controller', () => {
     sut.setNext(spy)
   })
 
-  test('Should throw UnauthorizedError if service throws', async () => {
+  test('Should call super handle without any account when provided invalid token', async () => {
     service.result = false
 
-    const promise = sut.handle({})
+    await sut.handle({})
 
-    await expect(promise).rejects.toThrow(new UnauthorizedError())
+    expect(spy.params).toStrictEqual({ })
   })
 
   test('Should add logged account on parameters on success authentication', async () => {

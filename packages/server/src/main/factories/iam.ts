@@ -37,6 +37,7 @@ export const makeGetAccount = (): Controller => {
   return ControllerBuilder
     .of(service)
     .tokenCertifier()
+    .privateService()
     .service(service.getAccount)
 }
 
@@ -45,6 +46,7 @@ export const makeCreateAccount = (): Controller => {
   return ControllerBuilder
     .of(service)
     .tokenCertifier()
+    .privateService()
     .authorization('CreateAccount')
     .onSuccess(201)
     .service(service.createAccount)
@@ -55,6 +57,7 @@ export const makeChangeAccount = (): Controller => {
   return ControllerBuilder
     .of(service)
     .tokenCertifier()
+    .privateService()
     .authorization('ChangeAccount')
     .onSuccess(204)
     .service(service.changeAccount)
@@ -65,6 +68,7 @@ export const makeChangePassword = (): Controller => {
   return ControllerBuilder
     .of(service)
     .tokenCertifier()
+    .privateService()
     .authorization('ChangePassword')
     .onSuccess(204)
     .service(service.changePassword)
@@ -75,6 +79,7 @@ export const makeListAccounts = (): Controller => {
   return ControllerBuilder
     .of(repository)
     .tokenCertifier()
+    .privateService()
     .authorization('ListAccounts')
     .service(repository.fetchPage)
 }

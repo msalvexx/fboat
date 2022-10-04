@@ -8,8 +8,12 @@ export class TokenCertifierController extends AbstractController {
 
   override async handle (params: any): Promise<any> {
     const token = params.authorization ?? ''
-    const loggedAccount = await this.authService.certificate(token)
-    params = { ...params, loggedAccount }
+    try {
+      const loggedAccount = await this.authService.certificate(token)
+      params = { ...params, loggedAccount }
+    } catch (e) {
+      console.log(`Error while validating token: ${e}`)
+    }
     return await super.handle(params)
   }
 }
