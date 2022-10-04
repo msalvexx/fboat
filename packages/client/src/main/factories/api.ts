@@ -37,6 +37,7 @@ export const makeGetArticleApi = (slugOrId: string, params: any = {}): Handler<G
     .resource<GetArticle.Result>({
     method: 'get',
     url: getApiUrl(`/article/${slugOrId}`),
+    headers: addAuthorization(),
     params
   })
     .notFound()
