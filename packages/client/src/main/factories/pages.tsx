@@ -37,3 +37,4 @@ export const EditArticle: React.FC<any> = () => {
 export const MyArticles: React.FC<any> = () => <Pages.MyArticles />
 export const EditAccount: React.FC<any> = () => <Pages.EditAccount />
 export const ListAccounts: React.FC<any> = () => <Pages.ListAccounts />
+export const NotFound: React.FC<any> = () => <Pages.Error title='404' message='Página não encontrada' />

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
+import { useRecoilState } from 'recoil'
+import { useNavigate } from 'react-router-dom'
 import Styles from './view-article-styles.scss'
 
-import { Header, Avatar, Footer, Spinner, Slider, ArticleProps } from '@/client/presentation/components'
-import { Article, Handler } from '@/client/domain'
 import { GetArticle } from '@fboat/core'
-import { useRecoilState } from 'recoil'
+import { Article, Handler } from '@/client/domain'
+import { Header, Avatar, Footer, Spinner, Slider, ArticleProps } from '@/client/presentation/components'
 import { articleResultState, relatedArticlesResultState } from './atom'
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 }
 
 const ViewArticle: React.FC<Props> = ({ loadArticle, loadRelated }) => {
+  const navigate = useNavigate()
   const [articleState, setArticleState] = useRecoilState(articleResultState)
   const [relatedState, setRelatedState] = useRecoilState(relatedArticlesResultState)
   const mapRelated = (related: Article[]): ArticleProps[] => related.map(x => ({
@@ -30,6 +32,7 @@ const ViewArticle: React.FC<Props> = ({ loadArticle, loadRelated }) => {
       .then(article => setArticleState(({ isLoading: false, value: article })))
       .catch(error => {
         setArticleState(({ ...articleState, isLoading: false }))
+        navigate('/404')
         console.error(error)
       })
 

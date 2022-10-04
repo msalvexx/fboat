@@ -27,7 +27,10 @@ const EditArticle: React.FC<Props> = ({ validator, loadArticle, saveArticle, upl
     if (!loadArticle) return
     loadArticle({})
       .then(({ coverPhoto, content, ...article }) => setState({ ...state, ...article, content: toEditorState(content) }))
-      .catch(console.error)
+      .catch(error => {
+        console.error(error)
+        navigate('/404')
+      })
   }
 
   const mode = loadArticle !== undefined ? 'edit' : 'create'

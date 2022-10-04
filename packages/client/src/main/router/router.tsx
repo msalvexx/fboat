@@ -82,7 +82,8 @@ export const Router: React.FC = () => {
 
           <Route path='/login' element={<Pages.Login />} />
           <Route path='/' element={<Pages.Home />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to='/404' />} />
+          <Route path="/404" element={<Pages.NotFound />} />
         </Routes>
       </BrowserRouter>
     </RecoilRoot>
