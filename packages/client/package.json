@@ -73,9 +73,11 @@
   },
   "dependencies": {
     "@fboat/core": "^1.0.0",
+    "@types/axios": "^0.14.0",
     "ajv": "^8.11.0",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^2.1.1",
+    "axios": "^1.2.1",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "html-to-draftjs": "^1.5.0",

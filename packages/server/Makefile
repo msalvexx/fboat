@@ -21,7 +21,9 @@ test-watch:
 	@npm test:watch
 
 dev: start-deps
-	@npm run dev
+	@npm run build:core
+	@npm run build
+	@npm start
 
 build-app:
 	@docker-compose build
@@ -31,8 +33,17 @@ start-app: build-app start-deps
 
 start-deps:
 	@docker-compose up -d db
-	@echo 'Waiting migrations to run...'
+	@make migrate-data
+
+migrate-data: wait-db
+	@echo 'Running migrations...'
 	@npm run migration:test
+
+wait-db:
+	@until $$(docker-compose logs db | grep 'MySQL init process done. Ready for start up.' &> /dev/null); do \
+		echo 'Waiting MySQL to become ready...'; \
+		sleep 4; \
+	done
 
 stop-app:
 	@docker-compose down

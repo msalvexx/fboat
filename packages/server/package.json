@@ -19,7 +19,7 @@
     "test:coverage": "npm t -- --coverage --config ./jest.coverage.config.ts",
     "test:coveralls": "npm run test:coverage && coveralls < coverage/lcov.info",
     "typeorm": "typeorm-ts-node-esm",
-    "migration:test": "npm run typeorm migration:run -- -d src/main/configs/ormconfig.ts"
+    "migration:test": "set APP_ENV=test && npm run typeorm migration:run -- -d src/main/configs/ormconfig.ts"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,7 @@
     "@fboat/core": "^1.0.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
-    "cross-env": "^0.0.2-security",
+    "cross-env": "^7.0.3",
     "fastify": "^4.4.0",
     "fastify-file-upload": "^4.0.0",
     "fastify-plugin": "^4.2.0",

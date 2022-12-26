@@ -17,7 +17,7 @@ export class EnvConfig {
         'iam/infra/repositories/entities/index.{js,ts}',
         'content-system/infra/repositories/entities/index.{js,ts}'
       ].map(x => path.resolve(`${getenv('APP_ENV', 'dev') !== 'test' ? 'dist/src' : 'src'}/${x}`)),
-      migrations: ['test', 'dev'].includes(getenv('APP_ENV', 'dev')) ? ['migrations/**/*.{js,ts}'].map(x => path.resolve(x)) : []
+      migrations: ['test'].includes(getenv('APP_ENV', 'dev')) ? ['migrations/**/*.{js,ts}'].map(x => path.resolve(x)) : []
     },
     bcrypt: {
       salt: getenv.int('BCRYPT_SALT', 14)
